@@ -1,0 +1,75 @@
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\ECR System v2.csprojResolveAssemblyReference.cache
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\MainWindow.g.cs
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\UserControls\LuseUserControl.g.cs
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\App.g.cs
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\ECR System v2_MarkupCompile.cache
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\ECR System v2_MarkupCompile.lref
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\ECR System v2.exe.config
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\ECR System v2.exe
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\ECR System v2.pdb
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Dragablz.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Ionic.Zip.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\LiveCharts.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\LiveCharts.Wpf.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\LumenWorks.Framework.IO.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\MahApps.Metro.IconPacks.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\MaterialDesignColors.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\MaterialDesignExtensions.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\MaterialDesignThemes.Wpf.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Newtonsoft.Json.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\unvell.ReoGrid.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Dragablz.pdb
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Dragablz.xml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\LiveCharts.pdb
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\LiveCharts.xml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\LiveCharts.Wpf.pdb
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\LiveCharts.Wpf.xml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\LumenWorks.Framework.IO.pdb
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\LumenWorks.Framework.IO.xml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\MahApps.Metro.IconPacks.pdb
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\MahApps.Metro.IconPacks.xml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\MaterialDesignExtensions.xml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\MaterialDesignThemes.Wpf.pdb
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\MaterialDesignThemes.Wpf.xml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\unvell.ReoGrid.xml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\de\MaterialDesignExtensions.resources.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\UserControls\FundUserControl.g.cs
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\App.baml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\MainWindow.baml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\UserControls\FundUserControl.baml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\UserControls\LuseUserControl.baml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\ECR System v2.g.resources
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\ECR_System_v2.Properties.Resources.resources
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\ECR System v2.csproj.GenerateResource.Cache
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\ECR System v2.exe
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\ECR System v2.pdb
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\UserControls\ClientUserControl.g.cs
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\UserControls\ClientUserControl.baml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\AWSSDK.CognitoIdentity.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\AWSSDK.CognitoIdentityProvider.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\AWSSDK.Core.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\AWSSDK.SecurityToken.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\AWSSDK.CognitoIdentity.pdb
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\AWSSDK.CognitoIdentity.xml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\AWSSDK.CognitoIdentityProvider.pdb
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\AWSSDK.CognitoIdentityProvider.xml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\AWSSDK.Core.pdb
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\AWSSDK.Core.xml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\AWSSDK.SecurityToken.pdb
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\AWSSDK.SecurityToken.xml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Newtonsoft.Json.xml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\NPOI.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\NPOI.OOXML.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\NPOI.OpenXml4Net.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\NPOI.OpenXmlFormats.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\NPOI.xml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\GemBox.Spreadsheet.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Spire.Common.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Spire.License.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Spire.Pdf.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Spire.XLS.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Microsoft.mshtml.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\GemBox.Spreadsheet.xml

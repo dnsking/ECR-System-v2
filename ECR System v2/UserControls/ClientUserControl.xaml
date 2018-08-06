@@ -1,0 +1,231 @@
+﻿<UserControl x:Class="ECR_System_v2.UserControls.ClientUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ECR_System_v2.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+        xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:controls="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+        xmlns:model="clr-namespace:MaterialDesignExtensions.Model;assembly=MaterialDesignExtensions"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="#ffffff"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+    
+    <Grid Margin="16 0 16 0">
+        <StackPanel>
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Expander HorizontalAlignment="Stretch"
+                      Header="Add Client" Margin="8"  Name="AddClientExpander" Background="#ffffff" >
+                    
+                    <StackPanel Orientation="Horizontal"
+                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                            Margin="16">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+
+                                <TextBox 
+				    x:Name="ClientNameTextBox"
+				    materialDesign:HintAssist.Hint="Client Name" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="180"/>
+
+                                <TextBox 
+				    x:Name="ClientPhysicalAddressTextBox"
+				    materialDesign:HintAssist.Hint="Client Physical Address" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="180" Margin="8 0 0 0"/>
+                            </StackPanel>
+
+                            <TextBox 
+				    x:Name="ClientEmailAddressTextBox"
+				    materialDesign:HintAssist.Hint="Client Email Address" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Left" Width="180" Margin="0 8 0 0"/>
+                        </StackPanel>
+                        <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="AddClient" Margin="16 0 0 0" Width="100" VerticalAlignment="Top">
+                            Done
+                        </Button>
+                    </StackPanel>
+                </Expander>
+
+                <ComboBox Grid.Column="1" HorizontalAlignment="Right" materialDesign:HintAssist.Hint="Statements" Width="200" materialDesign:HintAssist.IsFloating="True"
+                                  MaxDropDownHeight="200" Background="#ffffff"
+                                  VerticalAlignment="Center" Margin="16 0 0 0" Name="ClientsListCombo">
+
+                </ComboBox>
+            </Grid>
+
+            <StackPanel Orientation="Horizontal">
+
+                <CheckBox  Name="PurchasesCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Margin="0 0 8 8" VerticalAlignment="Center" IsChecked="True">
+                    Purchases
+                </CheckBox>
+                <CheckBox Name="RedemptionsCheckBox" Style="{StaticResource MaterialDesignCheckBox}" Margin="0 0 8 8" VerticalAlignment="Center" IsChecked="True">
+                    Redemptions
+                </CheckBox>
+            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <RadioButton Style="{StaticResource MaterialDesignRadioButton}" Margin="0 0 8 8" VerticalAlignment="Center" IsChecked="True">
+                        Show Units
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource MaterialDesignRadioButton}" Margin="0 0 8 8" VerticalAlignment="Center">
+                        Show Amount
+                    </RadioButton>
+                </StackPanel>
+                <ComboBox  HorizontalAlignment="Right" Grid.Column="1" materialDesign:HintAssist.Hint="Statements" Width="200" materialDesign:HintAssist.IsFloating="True"
+                                  MaxDropDownHeight="200"
+                                  VerticalAlignment="Center" Margin="16 0 0 0" Name="TimeLineCombo">
+
+                    <ComboBoxItem IsSelected="True">This Year</ComboBoxItem>
+                    <ComboBoxItem>This Quater</ComboBoxItem>
+                    <ComboBoxItem>This Month</ComboBoxItem>
+                    <ComboBoxItem >This Week</ComboBoxItem>
+                </ComboBox>
+
+            </Grid>
+
+            <materialDesign:Transitioner Name="ClientSelectionTransitioner">
+                <materialDesign:TransitionerSlide>
+                    <materialDesign:TransitionerSlide.OpeningEffects>
+                        <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
+                    </materialDesign:TransitionerSlide.OpeningEffects>
+                    <StackPanel>
+
+
+                        <lvc:CartesianChart Name="UnitsCartesianChart"  LegendLocation="Right"  Height="200" >
+                            <lvc:CartesianChart.Resources>
+                                <Style TargetType="lvc:LineSeries">
+                                    <Setter Property="StrokeThickness" Value="1"></Setter>
+                                    <Setter Property="Fill" Value="#4EFFFFFF"></Setter>
+                                    <Setter Property="PointGeometrySize" Value="3"></Setter>
+                                    <Setter Property="LineSmoothness" Value="0"></Setter>
+                                </Style>
+                                <Style TargetType="lvc:DefaultLegend">
+                                    <Setter Property="Foreground" Value="#424242"></Setter>
+                                </Style>
+                                <Style TargetType="lvc:Axis">
+                                    <Setter Property="ShowLabels" Value="True"></Setter>
+                                    <Setter Property="IsEnabled" Value="False"></Setter>
+                                    <Setter Property="Foreground" Value="#424242"></Setter>
+                                </Style>
+                            </lvc:CartesianChart.Resources>
+                            <lvc:CartesianChart.AxisX>
+                                <lvc:Axis Title="Date" IsEnabled="False" ShowLabels="False" ></lvc:Axis>
+                            </lvc:CartesianChart.AxisX>
+                            <lvc:CartesianChart.AxisY>
+                                <lvc:Axis Title="Value" IsEnabled="False" ShowLabels="False" ></lvc:Axis>
+                            </lvc:CartesianChart.AxisY>
+                        </lvc:CartesianChart>
+
+                        <DataGrid Name="AllClientTranstionsDataGrid"  HorizontalAlignment="Left" Grid.Row="0"   IsReadOnly='True' CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
+                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="Transparent" >
+                            <DataGrid.Columns>
+
+                                <DataGridTextColumn 
+                                            Header="Date"
+                                                         Width="1*"
+                        Binding="{Binding DateInMillisFormted}"
+                                            />
+                                <DataGridTextColumn 
+                                            Header="Client Name"
+                                                         Width="1*"
+                        Binding="{Binding Client}"
+                                            />
+
+                                <DataGridTextColumn 
+                                            Header="Transaction Type"
+                                                         Width="1*"
+                        Binding="{Binding TransactionTypeFormated}"
+                                            />
+                                <DataGridTextColumn 
+                                            Header="Amount"
+                                                         Width="1*"
+                        Binding="{Binding AmountFormated}"
+                                            />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </materialDesign:TransitionerSlide>
+                <materialDesign:TransitionerSlide>
+                    <materialDesign:TransitionerSlide.OpeningEffects>
+                        <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
+                    </materialDesign:TransitionerSlide.OpeningEffects>
+                    <StackPanel>
+                        <Expander HorizontalAlignment="Stretch"
+                      Header="New Transaction" Margin="8"  Name="NewTransactionExpander"  Background="#ffffff"  >
+                            <StackPanel Orientation="Horizontal"
+                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                            Margin="16">
+
+                                <ComboBox materialDesign:HintAssist.Hint="Transaction" Width="200" materialDesign:HintAssist.IsFloating="True"
+                                  MaxDropDownHeight="200"
+                                  VerticalAlignment="Center" Margin="16 0 0 0" Name="TransactionCombo">
+
+                                    <ComboBoxItem IsSelected="True">Unit Purchase</ComboBoxItem>
+                                    <ComboBoxItem>Unit Redemption</ComboBoxItem>
+                                </ComboBox>
+                                <TextBox PreviewTextInput="NumberValidationTextBox"
+				    x:Name="NumberofUnitsTextBox"
+				    materialDesign:HintAssist.Hint="Number of Units" Width="180"  Margin="8 0 0 0"/>
+                                <TextBox 
+				    x:Name="UnitPriceTextBox" PreviewTextInput="NumberValidationTextBox"
+				    materialDesign:HintAssist.Hint="Unit Price" Width="180"  Margin="8 0 0 0"/>
+
+                                <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="NewTranaction" Margin="8 0 0 0" Width="100">
+                                    Done
+                                </Button>
+                            </StackPanel>
+                        </Expander>
+                        <DataGrid Name="SingleClientTranstionsDataGrid"  HorizontalAlignment="Left" Grid.Row="0"   IsReadOnly='True' CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
+                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="Transparent" >
+                            <DataGrid.Columns>
+
+                                <DataGridTextColumn 
+                                            Header="Date"
+                                                         Width="1*"
+                        Binding="{Binding DateInMillisFormted}"
+                                            />
+                                <DataGridTextColumn 
+                                            Header="Client Name"
+                                                         Width="1*"
+                        Binding="{Binding Client}"
+                                            />
+
+                                <DataGridTextColumn 
+                                            Header="Transaction Type"
+                                                         Width="1*"
+                        Binding="{Binding TransactionTypeFormated}"
+                                            />
+                                <DataGridTextColumn 
+                                            Header="Amount"
+                                                         Width="1*"
+                        Binding="{Binding AmountFormated}"
+                                            />
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </StackPanel>
+       
+                </materialDesign:TransitionerSlide>
+            </materialDesign:Transitioner>
+        </StackPanel>
+    </Grid>
+    
+</UserControl>
