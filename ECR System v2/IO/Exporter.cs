@@ -42,7 +42,7 @@ namespace ECR_System_v2.IO
         {
             DirectoryInfo d = new DirectoryInfo(@"C:\Users\pc\Desktop\Current Project Resources\ECR\Zica Clients\pdfs");//Assuming Test is your Folder
             FileInfo[] Files = d.GetFiles("*xlsecr.xls.pdf"); //Getting Text files
-            string str = "";
+            string str = ""; 
             double n = Files.Length;
             double i = 0;
             foreach (FileInfo file in Files)
