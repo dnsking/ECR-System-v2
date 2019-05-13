@@ -138,21 +138,25 @@ namespace ECR_System_v2.IO
                             String newsheetName = Name.Replace("/", " ").Replace(".", " ");
                             if (newsheetName.Length > 30)
                                 newsheetName = newsheetName.Substring(0, 29);
-                            sents.Add(Email);
                             String statementPath = GetExportPdf(newsheetName);
-                            if (statementPath.Length > 0 && sents.Contains(lastAddress))
+                            if (statementPath.Length > 0 && sents.Contains(lastAddress)  && !sents.Contains(Email))
                             {
 
                                 Console.WriteLine("Sending to  " + Name + " Email " + Email);
                                 SendMail(Name, statementPath, Email);
+                                File.AppendAllText(@"C:\Users\pc\Desktop\Current Project Resources\ECR\Zica Clients\sent.txt", Email + Environment.NewLine);
+
+                             //   System.IO.File.WriteAllText(@"C:\sent.txt", Email);
                             }
                             else
                             {
+                                File.AppendAllText(@"C:\Users\pc\Desktop\Current Project Resources\ECR\Zica Clients\failed.txt", Email + Environment.NewLine);
 
                                 //Console.WriteLine("Failed for  " + Name + " Email " + Email);
                             }
 
 
+                            sents.Add(Email);
                         }
 
 
