@@ -14,7 +14,8 @@ namespace ECR_System_v2
     public partial class App : Application
     {
         public static Boolean IsDebug = true;
-        public static String URL = "https://2bfe6vyg88.execute-api.us-east-1.amazonaws.com/EcrSys";
+        public static String URL = "http://127.0.0.1:5000/";
+       // public static String URL = "https://2bfe6vyg88.execute-api.us-east-1.amazonaws.com/EcrSys";
 
         public static int ErrorReponseCode = 0;
         public static int SuccessReponseCode = 1;
