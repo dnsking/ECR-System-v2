@@ -11,6 +11,7 @@ namespace ECR_System_v2.Data
 
         public String Fund { set; get; }
         public String ClientName { set; get; }
+        public String ClientId { set; get; }
         public String ClientPhysicalAdress { set; get; }
         public String ClientEmailAdress { set; get; }
         public Double DateCreated { set; get; }

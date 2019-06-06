@@ -37,15 +37,18 @@ namespace ECR_System_v2.UserControls
         }
         private async void AddClient(object sender, RoutedEventArgs e)
         {
+            var mNow = DateUtils.TicksToMillis(DateTime.Now.Ticks);
             Client mClient = new Client();
             mClient.Fund = mFund.Name;
             mClient.ClientName = ClientNameTextBox.Text;
             mClient.ClientEmailAdress = ClientEmailAddressTextBox.Text;
             mClient.ClientPhysicalAdress = ClientPhysicalAddressTextBox.Text;
+            mClient.DateCreated = mNow;
+            mClient.ClientId = ClientIdTextBox.Text;
             mClient.Open = App.Open;
             await mDataLoader.addFundUnitClients(mClient);
             AddClientExpander.IsExpanded = false;
-            UiUnits.ClearText(new TextBox[] { ClientNameTextBox, ClientEmailAddressTextBox, ClientPhysicalAddressTextBox });
+            UiUnits.ClearText(new TextBox[] { ClientNameTextBox, ClientEmailAddressTextBox, ClientPhysicalAddressTextBox, ClientIdTextBox });
             loadClient();
         }
         private async void NewTranaction(object sender, RoutedEventArgs e)
@@ -55,7 +58,7 @@ namespace ECR_System_v2.UserControls
 
             FundUnitTrans mFundUnitTrans = new FundUnitTrans();
             mFundUnitTrans.Amount = Double.Parse(NumberofUnitsTextBox.Text) * Double.Parse(UnitPriceTextBox.Text)* multiple;
-            mFundUnitTrans.Client = mClients[ClientsListCombo.SelectedIndex - 1].ClientName;
+            mFundUnitTrans.Client = mClients[ClientsListCombo.SelectedIndex - 1].ClientId;
             mFundUnitTrans.DateInMillis = mNow;
             mFundUnitTrans.Fund = mFund.Name;
             mFundUnitTrans.Units = Double.Parse(NumberofUnitsTextBox.Text) * multiple;
@@ -83,20 +86,35 @@ namespace ECR_System_v2.UserControls
             e.Handled = regex.IsMatch(e.Text);
         }
         private List<Client> mClientList;
+        private void ClientSearch(object sender,TextCompositionEventArgs e)
+        {
+            ClientsListCombo.IsDropDownOpen = true;
+            if (e.Text.Length > 0)
+            {
+
+            }
+            else {
+                loadClient();
+            }
+        }
         private async void loadClient() {
 
             Client mClient = new Client();
             mClient.Fund = mFund.Name;
             mClient.ClientName = App.AllClients;
+            mClient.ClientId = App.AllClients;
+            //mClients = new Client[] { }.ToList();
             mClients =await mDataLoader.fetchFundUnitClients(mFund.Name, App.Open) as Client[];
+           
             mClientList = mClients.ToList();
+            //mClientList = new Client[] { mClients[0], mClients[1], mClients[2] }.ToList();
             mClientList.Insert(0, mClient);
 
             ClientsListCombo.ItemsSource = mClientList;
             ClientsListCombo.SelectionChanged += (a, b) =>
             {
                 if(ClientsListCombo.SelectedIndex>-1)
-                initClientList(mClientList[ClientsListCombo.SelectedIndex].ClientName, 7);
+                initClientList(mClientList[ClientsListCombo.SelectedIndex].ClientId, 7);
             };
             
 
@@ -109,41 +127,45 @@ namespace ECR_System_v2.UserControls
                 ((bool)PurchasesCheckBox.IsChecked ? App.Purchase : App.Redemption);
             var mFirstDayOfQuater = DateUtils.TicksToMillis(DateUtils.FirstDayOfQuater(DateTime.Now).Ticks);
             var mNow = DateUtils.TicksToMillis(DateTime.Now.Ticks);
-            Console.WriteLine(mNow);
+            ////Console.WriteLine(mNow);
+            ////Console.WriteLine(mNow);
             var mFundUnitTrans = await mDataLoader.fetchFundUnitTransItems(mFund.Name, mNow, client, TransactionType) as FundUnitTrans[];
-            if (client.Equals(App.AllClients))
-            {
+              if (client.Equals(App.AllClients))
+              {
                 AllClientTranstionsDataGrid.ItemsSource = mFundUnitTrans;
                 long start = DateUtils.TicksToMillis(DateTime.Now.Ticks);
-                long end = DateUtils.TicksToMillis(DateTime.Now.AddMonths(-3).Ticks);
+                  long end = DateUtils.TicksToMillis(DateTime.Now.AddMonths(-3).Ticks);
 
 
-                Double[] mValues = await mDataLoader.fetchFundUnitTransItemsValueRangeTotal(mFund.Name, start, end, days, client, TransactionType);
-                UnitsCartesianChart.DisableAnimations = true;
-                SeriesCollection mSeriesCollection = new SeriesCollection
-            {
-                new LineSeries
-                {
-                    Title = "Total Number of Units",
-                    Values = new ChartValues<double> (mValues.Reverse() ),
-
-                    Foreground=(SolidColorBrush)new BrushConverter().ConvertFromString("#424242"),
-                    LineSmoothness = 1,
-                    StrokeThickness=4,PointGeometry = null
-                    ,Stroke=(SolidColorBrush)new BrushConverter().ConvertFromString("#9C27B0")
-                    ,Fill=Brushes.Transparent
-                }
-            };
-                UnitsCartesianChart.Series = mSeriesCollection;
                 ClientSelectionTransitioner.SelectedIndex = 0;
                 UiUnits.AnimateSlider(ClientSelectionTransitioner, 0);
-            }
-            else
-            {
-                SingleClientTranstionsDataGrid.ItemsSource = mFundUnitTrans;
-                ClientSelectionTransitioner.SelectedIndex = 1;
-                UiUnits.AnimateSlider(ClientSelectionTransitioner, 1);
-            }
+                Double[] mValues = await mDataLoader.fetchFundUnitTransItemsValueRangeTotal(mFund.Name, start, end, days, client, TransactionType);
+                  UnitsCartesianChart.DisableAnimations = true;
+                  SeriesCollection mSeriesCollection = new SeriesCollection
+              {
+                  new LineSeries
+                  {
+                      Title = "Total Number of Units",
+                      Values = new ChartValues<double> (mValues.Reverse() ),
+
+                      Foreground=(SolidColorBrush)new BrushConverter().ConvertFromString("#424242"),
+                      LineSmoothness = 1,
+                      StrokeThickness=4,PointGeometry = null
+                      ,Stroke=(SolidColorBrush)new BrushConverter().ConvertFromString("#9C27B0")
+                      ,Fill=Brushes.Transparent
+                  }
+              };
+                  UnitsCartesianChart.Series = mSeriesCollection;
+              }
+              else
+              {
+                  SingleClientTranstionsDataGrid.ItemsSource = mFundUnitTrans;
+                  ClientSelectionTransitioner.SelectedIndex = 1;
+                  UiUnits.AnimateSlider(ClientSelectionTransitioner, 1);
+              }
+
+            //AllClientTranstionsDataGrid.ItemsSource = new FundUnitTrans[] { mFundUnitTrans[0], mFundUnitTrans[1] };
+            Console.WriteLine("initClientList complete");
 
         }
 

@@ -20,6 +20,11 @@ namespace ECR_System_v2.Utils
         {
             return Regex.Replace(str,"[^A-Za-z]+", "");
         }
+
+        public static String RemoveNumbers(String str)
+        {
+            return Regex.Replace(str, @"[\d-]", "");
+        }
         public static String KeepOnlyNumbers(String number)
         {
             return Regex.Replace(number,"[^\\.0123456789]", "");

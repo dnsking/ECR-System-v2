@@ -16,7 +16,7 @@ namespace ECR_System_v2.Data
         public Double Units { set; get; }
         public long DateInMillis { set; get; }
         public String DateInMillisFormted { get { return
-                 new DateTime( DateUtils.MillisToTicks(DateInMillis)).ToString("dd mmm YYYY"); } }
+                 new DateTime( DateUtils.MillisToTicks(DateInMillis)).ToString("dd MMM yyyy"); } }
 
         public String TransactionTypeFormated {  get{ return App.TransactionTypes[TransactionType]; } }
         public String AmountFormated { get { return StringUtils.Format(Amount); } }

@@ -16,6 +16,10 @@ using Spire.Pdf;
 using Spire.Xls.Converter;
 using System.Net.Mail;
 using System.Net;
+using ECR_System_v2.Loaders;
+using ECR_System_v2.Utils;
+using ECR_System_v2.Data;
+using System.Globalization;
 
 namespace ECR_System_v2.IO
 {
@@ -29,7 +33,8 @@ namespace ECR_System_v2.IO
                         EnableSsl = true
                     };
                 MailMessage msg = new MailMessage("Ecrzambialtd@gmail.com", EmailAddress, "ZICA Property Fund Client Statement", "Good afternoon " + clientName + "," + System.Environment.NewLine + " Please find your attached ZICA Client statement principal sum invested in the ZICA property Fund." + System.Environment.NewLine + System.Environment.NewLine + " Kind regards, ECR Unit Trust Team");
-                System.Net.Mime.ContentType contentType = new System.Net.Mime.ContentType();
+
+            System.Net.Mime.ContentType contentType = new System.Net.Mime.ContentType();
                 contentType.MediaType = System.Net.Mime.MediaTypeNames.Application.Pdf;
                 contentType.Name = new FileInfo(statementPath).Name;
                 msg.Attachments.Add(new Attachment(statementPath, contentType));
@@ -63,14 +68,20 @@ namespace ECR_System_v2.IO
         }
 
 
+        private DataLoader mDataLoader;
         public async void SendEmailAddressAndFile(String path)
         {
+            mDataLoader = new DataLoader();
             try
             {
-                await Task.Run(() => {
+                await Task.Run(async () =>
+                {
                     String lastAddress = "marychiwala.mc@gmail.com";
                     ArrayList sents = new ArrayList();
-                    
+
+                    var lines = File.ReadAllLines(@"C:\Users\pc\Desktop\Current Project Resources\ECR\Zica Clients\sent.txt");
+                    foreach (var line in lines)
+                        sents.Add(line);
 
                     XSSFWorkbook workbook = new XSSFWorkbook(new FileInfo(path));
 
@@ -78,7 +89,7 @@ namespace ECR_System_v2.IO
                     //IFormulaEvaluator evaluator = CreateHelper.CreateFormulaEvaluator();
 
 
-                    XSSFSheet sheet = (XSSFSheet)workbook.GetSheetAt(3);
+                    XSSFSheet sheet = (XSSFSheet)workbook.GetSheetAt(6);
                     String sheetName = sheet.SheetName;
                     IEnumerator rowIterator = sheet.GetEnumerator();
                     List<Object> data = new List<Object>();
@@ -110,14 +121,15 @@ namespace ECR_System_v2.IO
                             }
 
                             else if (mCellIndex == 2 && mCellValue.Length > 0 && !mCellValue.Equals("ZICA PROPERTY FUND REGISTER")
-                                && !mCellValue.Equals("Name") && !mCellValue.Equals("Total")) { Name = mCellValue; }
-
+                                && !mCellValue.Contains("Name") && !mCellValue.Equals("Total")) { Name = mCellValue; }
+                            /*
                             else if ((mCellIndex == 6 && mRowIndex < 16 && mCellValue.Contains("@"))
-                            || (mCellIndex == 7 && mRowIndex > 16 && mCellValue.Contains("@"))) { Email = mCellValue; }
+                            || (mCellIndex == 7 && mRowIndex > 16 && mCellValue.Contains("@"))) { Email = mCellValue; }*/
+                            else if (mCellIndex == 7) { Email = mCellValue; }
                             else if (mCellIndex == 3) { MemberId = mCellValue; }
 
-                            else if (mCellIndex == 5) { Amount = mCellValue; }
-                            else if (mCellIndex == 6) { Units = mCellValue; }
+                            else if (mCellIndex == 4) { Amount = mCellValue; }
+                            else if (mCellIndex == 5) { Units = mCellValue; }
 
 
 
@@ -131,7 +143,31 @@ namespace ECR_System_v2.IO
                         {
                             preDate = date;
                         }
-                        if (Name.Replace(" ", "").Length > 4 && Email.Length>0)
+                        Name = StringUtils.RemoveNumbers(Name);
+                        if (Name.Replace(" ", "").Length > 4 && MemberId.Length > 0)
+                        {
+                            /*var mNow = DateUtils.TicksToMillis(DateTime.Now.Ticks);
+                            Client mClient = new Client();
+                            mClient.Fund = "ZICA";
+                            mClient.ClientName = Name;
+                            mClient.ClientEmailAdress = Email;
+                            mClient.ClientPhysicalAdress = "";
+                            mClient.DateCreated = mNow;
+                            mClient.ClientId = MemberId;
+                            mClient.Open = App.Open;
+                            await mDataLoader.addFundUnitClients(mClient);*/
+                            var mNow = DateUtils.TicksToMillis(DateTime.ParseExact("03/04/2019", "dd/MM/yyyy",null).Ticks);
+                            FundUnitTrans mFundUnitTrans = new FundUnitTrans();
+                            mFundUnitTrans.Amount =Double.Parse(Amount);
+                            mFundUnitTrans.Client = MemberId;
+                            mFundUnitTrans.DateInMillis = mNow;
+                            mFundUnitTrans.Fund = "ZICA";
+                            mFundUnitTrans.Units = Double.Parse(Units);
+                            mFundUnitTrans.TransactionType = 0;
+                            await mDataLoader.addFundUnitTransItem(mFundUnitTrans);
+                            Console.WriteLine("Added Client " + Name+" amount "+Amount);
+                        }
+                        /*if (Name.Replace(" ", "").Length > 4 && Email.Length>0)
                         {
                             //Console.WriteLine("date: " + date + " Name: " + Name + " Amount: " + Amount + " Units: " + Units);
                             //Console.WriteLine("templatesheet " + templatesheet.SheetName);
@@ -139,18 +175,39 @@ namespace ECR_System_v2.IO
                             if (newsheetName.Length > 30)
                                 newsheetName = newsheetName.Substring(0, 29);
                             String statementPath = GetExportPdf(newsheetName);
-                            if (statementPath.Length > 0 && sents.Contains(lastAddress)  && !sents.Contains(Email))
+                            sents.Add("chabum2003@gmail.com");
+                            sents.Add("martin.mukendwa@yahoo.com");
+                            sents.Add("alexkapam@gmail.com");
+                            sents.Add("achabooka@zesco.co.zm");
+                            sents.Add("chishimba49@yahoo.com");
+                            sents.Add("fredm@southernsun.co.zm");
+                            sents.Add("harrykamanga47@yahoo.com");
+                            sents.Add("kenny.kapusu@gmail.com");
+                            sents.Add("kachingwe2011@gmail.com");
+                            sents.Add("sikawala90@gmail.com");
+                            sents.Add("bryan@gammazenith.co.zm");
+                            sents.Add("nainip@vopzambia.adventist.org");
+                           
+                            File.AppendAllText(@"C:\Users\pc\Desktop\Current Project Resources\ECR\Zica Clients\all2.txt", Name+" : "+ Email + Environment.NewLine);
+                            File.AppendAllText(@"C:\Users\pc\Desktop\Current Project Resources\ECR\Zica Clients\no_emails.txt", Name + " Email" + Email + Environment.NewLine);
+
+                            if (statementPath.Length > 0 && sents.Contains(Email))
                             {
 
                                 Console.WriteLine("Sending to  " + Name + " Email " + Email);
-                                SendMail(Name, statementPath, Email);
-                                File.AppendAllText(@"C:\Users\pc\Desktop\Current Project Resources\ECR\Zica Clients\sent.txt", Email + Environment.NewLine);
+                           //   SendMail(Name, statementPath, Email);
+                             File.AppendAllText(@"C:\Users\pc\Desktop\Current Project Resources\ECR\Zica Clients\sent_name.txt",Name +" Email"+ Email + Environment.NewLine);
 
                              //   System.IO.File.WriteAllText(@"C:\sent.txt", Email);
                             }
+                            else if (statementPath.Length > 0 && sents.Contains(lastAddress)&&sents.Contains(Email))
+                            {
+                               // File.AppendAllText(@"C:\Users\pc\Desktop\Current Project Resources\ECR\Zica Clients\repeated.txt", Name + " : " + Email + Environment.NewLine);
+
+                            }
                             else
                             {
-                                File.AppendAllText(@"C:\Users\pc\Desktop\Current Project Resources\ECR\Zica Clients\failed.txt", Email + Environment.NewLine);
+                            //    File.AppendAllText(@"C:\Users\pc\Desktop\Current Project Resources\ECR\Zica Clients\failed.txt", Email + Environment.NewLine);
 
                                 //Console.WriteLine("Failed for  " + Name + " Email " + Email);
                             }
@@ -158,13 +215,18 @@ namespace ECR_System_v2.IO
 
                             sents.Add(Email);
                         }
+                        else if(Name.Replace(" ", "").Length > 4) {
+                            File.AppendAllText(@"C:\Users\pc\Desktop\Current Project Resources\ECR\Zica Clients\none.txt", Name + " : " + Email + Environment.NewLine);
+                        }*/
 
 
                     }
 
                 });
             }
-            catch(Exception e) { }
+            catch(Exception e) {
+                Console.WriteLine("Import error "+e.Message);
+            }
         }
         public async void ExportPdfs()
         {
@@ -685,7 +747,7 @@ namespace ECR_System_v2.IO
 
                         else if (rowIndex == 4 && mCellIndex == 1)
                         {
-                            cell.SetCellValue(DateTime.ParseExact(mItem.Date,"dd/M/yyyy",null));
+                            cell.SetCellValue(DateTime.ParseExact(mItem.Date,"dd/MM/yyyy",null));
                         }
 
                         else if (rowIndex == 9 && mCellIndex == 3)
@@ -694,7 +756,7 @@ namespace ECR_System_v2.IO
                         }
                         else if (rowIndex == 10 && mCellIndex == 1)
                         {
-                            cell.SetCellValue(DateTime.ParseExact("30/04/2019", "dd/M/yyyy", null));
+                            cell.SetCellValue(DateTime.ParseExact("30/04/2019", "dd/MM/yyyy", null));
                         }
                     
 

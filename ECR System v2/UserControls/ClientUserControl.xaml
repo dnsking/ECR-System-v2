@@ -40,18 +40,26 @@
                                 <TextBox 
 				    x:Name="ClientNameTextBox"
 				    materialDesign:HintAssist.Hint="Client Name" 
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="180"/>
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="180" Margin="0 8 0 0"/>
+                                <TextBox 
+				    x:Name="ClientIdTextBox"
+				    materialDesign:HintAssist.Hint="Client Id" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Left" Width="180" Margin="8 8 0 0"/>
+
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox 
+				    x:Name="ClientEmailAddressTextBox"
+				    materialDesign:HintAssist.Hint="Client Email Address" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Left" Width="180" Margin="0 8 0 0"/>
 
                                 <TextBox 
 				    x:Name="ClientPhysicalAddressTextBox"
 				    materialDesign:HintAssist.Hint="Client Physical Address" 
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="180" Margin="8 0 0 0"/>
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="180" Margin="8 8 0 0"/>
+
                             </StackPanel>
 
-                            <TextBox 
-				    x:Name="ClientEmailAddressTextBox"
-				    materialDesign:HintAssist.Hint="Client Email Address" 
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Left" Width="180" Margin="0 8 0 0"/>
                         </StackPanel>
                         <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="AddClient" Margin="16 0 0 0" Width="100" VerticalAlignment="Top">
                             Done
@@ -59,10 +67,14 @@
                     </StackPanel>
                 </Expander>
 
-                <ComboBox Grid.Column="1" HorizontalAlignment="Right" materialDesign:HintAssist.Hint="Statements" Width="200" materialDesign:HintAssist.IsFloating="True"
+                <ComboBox Grid.Column="1" HorizontalAlignment="Right" materialDesign:HintAssist.Hint="Client" Width="200" materialDesign:HintAssist.IsFloating="True"
                                   MaxDropDownHeight="200" Background="#ffffff"
-                                  VerticalAlignment="Center" Margin="16 0 0 0" Name="ClientsListCombo">
-
+                                 PreviewTextInput="ClientSearch" VerticalAlignment="Center" Margin="16 0 0 0" Name="ClientsListCombo" IsTextSearchEnabled="True" IsEditable="True">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
                 </ComboBox>
             </Grid>
 
@@ -134,7 +146,7 @@
                             </lvc:CartesianChart.AxisY>
                         </lvc:CartesianChart>
 
-                        <DataGrid Name="AllClientTranstionsDataGrid"  HorizontalAlignment="Left" Grid.Row="0"   IsReadOnly='True' CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
+                        <DataGrid Name="AllClientTranstionsDataGrid" EnableColumnVirtualization="True" EnableRowVirtualization="True" MaxHeight="250"  HorizontalAlignment="Left" Grid.Row="0"   IsReadOnly='True' CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
                       materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="Transparent" >
                             <DataGrid.Columns>
 
@@ -194,7 +206,7 @@
                             </StackPanel>
                         </Expander>
                         <DataGrid Name="SingleClientTranstionsDataGrid"  HorizontalAlignment="Left" Grid.Row="0"   IsReadOnly='True' CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
-                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="Transparent" >
+                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" EnableRowVirtualization="True" EnableColumnVirtualization="True" MaxHeight="250" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="Transparent" >
                             <DataGrid.Columns>
 
                                 <DataGridTextColumn 

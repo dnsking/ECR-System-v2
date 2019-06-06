@@ -148,7 +148,7 @@ namespace ECR_System_v2.Loaders
             var result = await client.GetAsync("/getsecuritiesPresentValueRangeTotal/" + fundName + "/" + start + "/" + end + "/" + days);
 
             string resultContent = await result.Content.ReadAsStringAsync();
-            //Console.WriteLine(resultContent);
+            ////Console.WriteLine(resultContent);
             if (resultContent != null & resultContent.Length > 0)
             {
                 Double[] resultConten = JsonConvert.DeserializeObject<Double[]>(resultContent);
@@ -190,7 +190,7 @@ namespace ECR_System_v2.Loaders
             var result = await client.GetAsync("/getsecuritiesPresentValueTotal/" + fundName + "/" + date + "/" + type);
 
             string resultContent = await result.Content.ReadAsStringAsync();
-            //Console.WriteLine(resultContent);
+            ////Console.WriteLine(resultContent);
             if (resultContent != null & resultContent.Length > 0)
             {
                 Double resultConten = JsonConvert.DeserializeObject<Double>(resultContent);
@@ -220,7 +220,7 @@ namespace ECR_System_v2.Loaders
 
             string resultContent = await result.Content.ReadAsStringAsync();
 
-            //Console.WriteLine(resultContent);
+            ////Console.WriteLine(resultContent);
             if (resultContent != null & resultContent.Length > 0)
             {
 
@@ -271,7 +271,7 @@ namespace ECR_System_v2.Loaders
                 new StringContent("{\"Action\":\"addfund\",\"fund\":" + JsonConvert.SerializeObject(mFund) + "}"));
 
             string resultContent = await result.Content.ReadAsStringAsync();
-            Console.WriteLine("AddFund " + resultContent);
+            //Console.WriteLine("AddFund " + resultContent);
             if (resultContent != null & resultContent.Length > 0)
             {
                 resultContent = resultContent.Substring(1, resultContent.Length - 2);
@@ -342,7 +342,7 @@ namespace ECR_System_v2.Loaders
             client.DefaultRequestHeaders.Accept.Clear();
             
 
-            var result = await client.GetAsync("/sharesfor/"+nDays+"/name");
+            var result = await client.GetAsync("/sharesfor/"+nDays+"/"+ name);
 
 
 
@@ -364,10 +364,10 @@ namespace ECR_System_v2.Loaders
 
 
 
-            var result = await client.GetAsync("/getSharesForRange/"+ name+"/"+ start+"/"+end+"/"+ days);
+            var result = await client.GetAsync("/sharesForRange/" + name+"/"+ start+"/"+end+"/"+ days);
 
             string resultContent = await result.Content.ReadAsStringAsync();
-            //Console.WriteLine(resultContent);
+            ////Console.WriteLine(resultContent);
             if (resultContent != null & resultContent.Length > 0)
             {
                 //resultContent = resultContent.Substring(1, resultContent.Length - 2);
@@ -396,7 +396,7 @@ namespace ECR_System_v2.Loaders
             string resultContent = await result.Content.ReadAsStringAsync();
             //resultContent = resultContent.Replace("System.Windows.Controls.ListBoxItem: ", "");
            
-            Console.WriteLine("fetchFunds " + resultContent);
+            //Console.WriteLine("fetchFunds " + resultContent);
             if (resultContent != null & resultContent.Length>0)
             {
                 resultContent = resultContent.Substring(1, resultContent.Length - 2);
@@ -468,7 +468,7 @@ namespace ECR_System_v2.Loaders
 
             
             string resultContent = await result.Content.ReadAsStringAsync();
-           Console.WriteLine("fetchSecuritiesPresentValueRange "+resultContent);
+           //Console.WriteLine("fetchSecuritiesPresentValueRange "+resultContent);
             if (resultContent != null & resultContent.Length > 0)
             {
                 resultContent = resultContent.Substring(1, resultContent.Length - 2);
@@ -493,7 +493,7 @@ namespace ECR_System_v2.Loaders
 
                 formData.Add(new StringContent(type), "fundtype");
             }
-            var result = await client.PostAsync("/getsecuritiesPresentValueRangeTotalTypeAll/"+ fundName+"/"+ start+"/"+ end+"/", formData);
+            var result = await client.PostAsync("/getsecuritiesPresentValueRangeTotalTypeAll/"+ fundName+"/"+ start+"/"+ end+"/"+ days, formData);
 
             string resultContent = await result.Content.ReadAsStringAsync();
 
@@ -523,7 +523,7 @@ namespace ECR_System_v2.Loaders
 
 
             string resultContent = await result.Content.ReadAsStringAsync();
-            //Console.WriteLine(resultContent);
+            ////Console.WriteLine(resultContent);
             if (resultContent != null & resultContent.Length > 0)
             {
                 resultContent = resultContent.Substring(1, resultContent.Length - 2);
@@ -557,7 +557,7 @@ namespace ECR_System_v2.Loaders
             
             string resultContent = await result.Content.ReadAsStringAsync();
             
-            //Console.WriteLine(resultContent);
+            ////Console.WriteLine(resultContent);
             if (resultContent != null & resultContent.Length > 0)
             {
                 resultContent = resultContent.Substring(1, resultContent.Length - 2);
@@ -605,7 +605,7 @@ namespace ECR_System_v2.Loaders
             }
 
 
-            var result = await client.PostAsync("/getDetailedIncomeSche/"+ fundName+"/"+ date+"/"+ enddate+"/", formData);
+            var result = await client.PostAsync("/getDetailedIncomeSche/"+ fundName+"/"+ date+"/"+ enddate, formData);
 
 
             string resultContent = await result.Content.ReadAsStringAsync();
@@ -795,11 +795,11 @@ namespace ECR_System_v2.Loaders
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(App.URL);
             client.DefaultRequestHeaders.Accept.Clear();
-            var result = await client.GetAsync("/getFundUnitTransItems/" + fundName+"/"+ date+"/"+ TransactionType+"/"+ clientName);
+            var result = await client.GetAsync("/getFundUnitTransItems/" + fundName+"/"+ date+"/" + clientName  +"/"+ TransactionType);
 
             string resultContent = await result.Content.ReadAsStringAsync();
-            Console.WriteLine("fetchFundUnitTransItems");
-            Console.WriteLine(resultContent);
+            //Console.WriteLine("fetchFundUnitTransItems");
+            //Console.WriteLine(resultContent);
             if (resultContent != null & resultContent.Length > 0)
             {
              //   resultContent = resultContent.Substring(1, resultContent.Length - 2);
@@ -818,12 +818,12 @@ namespace ECR_System_v2.Loaders
             client.BaseAddress = new Uri(App.URL);
             client.DefaultRequestHeaders.Accept.Clear();
 
-            var result = await client.GetAsync("/getFundUnitTransItemsValueRangeTotal/"+ fundName+"/"+ start+"/"+ end+"/"+ days+"/"+ TransactionType+"/"+ clientName);
+            var result = await client.GetAsync("/getFundUnitTransItemsValueRangeTotal/"+ fundName+"/"+ start+"/"+ end+"/"+ days + "/" + clientName + "/"+ TransactionType);
 
             
             string resultContent = await result.Content.ReadAsStringAsync();
-            Console.WriteLine("fetchFundUnitTransItemsValueRangeTotal");
-            Console.WriteLine(resultContent);
+            //Console.WriteLine("fetchFundUnitTransItemsValueRangeTotal");
+            //Console.WriteLine(resultContent);
             if (resultContent != null & resultContent.Length > 0)
             {
                // resultContent = resultContent.Substring(1, resultContent.Length - 2);
