@@ -20,6 +20,15 @@ using ECR_System_v2.Loaders;
 using ECR_System_v2.Utils;
 using ECR_System_v2.Data;
 using System.Globalization;
+using org.apache.pdfbox.pdmodel.font;
+
+using static java.awt.Color;
+using static org.apache.pdfbox.pdmodel.font.PDType1Font;
+using java.awt;
+using org.apache.pdfbox.pdmodel;
+using org.apache.pdfbox.pdmodel.common;
+using be.quodlibet.boxable;
+using be.quodlibet.boxable.datatable;
 
 namespace ECR_System_v2.IO
 {
@@ -284,6 +293,50 @@ namespace ECR_System_v2.IO
             }
             catch(Exception e) { }
         }
+        public static async void ExportPdf( FundUnitTrans[] mFundUnitTrans) {
+            await Task.Run(() =>
+            {
+                Console.WriteLine("Exporting PDF");
+
+                
+                
+
+                float PADDING = 50f;
+
+                PDDocument document = new PDDocument();
+                PDPage page = new PDPage(PDRectangle.A4);
+
+                float startY = page.getMediaBox().getHeight() - PADDING;
+
+                PDPageContentStream contentStream = new PDPageContentStream(document, page);
+
+                float margin = 50;
+                float yStartNewPage = page.getMediaBox().getHeight() - (2 * margin);
+                float tableWidth = page.getMediaBox().getWidth() - (2 * margin);
+                float yStart = yStartNewPage;
+                float bottomMargin = 70;
+                float yPosition = 550;
+
+                java.util.List data = new java.util.ArrayList();
+
+                data.add(new java.util.ArrayList(
+                               java.util.Arrays.asList("Description", "Transaction Value", "Acc. Transaction Value"
+                               , "Change in Units", "Acc. No. of Units", "Unit Price"
+                               , "Total Capital Gains", "Gross Investment Amount")));
+              
+                BaseTable dataTable = new BaseTable(yStart, yStartNewPage, bottomMargin, tableWidth, margin, document, page, true, true);
+                DataTable t = new DataTable(dataTable, page);
+                t.addListToTable(data, DataTable.HASHEADER);
+                dataTable.draw();
+
+                contentStream.close();
+                document.addPage(page);
+                document.save("./test.pdf");
+                document.close();
+
+                Console.WriteLine("Complete Exporting PDF");
+            });
+            }
         public async void Import(String path)
         {
 
@@ -497,8 +550,8 @@ namespace ECR_System_v2.IO
 
                     HSSFCellStyle style = Row.Sheet.Workbook.CreateCellStyle() as HSSFCellStyle;
                     style.SetFont(fontHeader);
-                    style.Alignment = HorizontalAlignment.Center;
-                    style.VerticalAlignment = VerticalAlignment.Bottom;
+                    style.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Center;
+                    style.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Bottom;
                     return style;
                 }
 

@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ECR_System_v2.Data;
+using ECR_System_v2.IO;
 using ECR_System_v2.Loaders;
 using ECR_System_v2.Loaders.Listeners;
 using ECR_System_v2.Utils;
@@ -31,6 +32,9 @@ namespace ECR_System_v2.UserControls
         private DataLoader mDataLoader;
         private Client[] mClients;
 
+        private String prevClient;
+        private int prevDays;
+
         public ClientUserControl()
         {
             InitializeComponent();
@@ -47,9 +51,19 @@ namespace ECR_System_v2.UserControls
             mClient.ClientId = ClientIdTextBox.Text;
             mClient.Open = App.Open;
             await mDataLoader.addFundUnitClients(mClient);
-            AddClientExpander.IsExpanded = false;
+           // AddClientExpander.IsExpanded = false;
             UiUnits.ClearText(new TextBox[] { ClientNameTextBox, ClientEmailAddressTextBox, ClientPhysicalAddressTextBox, ClientIdTextBox });
             loadClient();
+        }
+
+        private  void SendReport(object sender, RoutedEventArgs e)
+        {
+            DialogGrid.IsOpen = true;
+
+            LottieAnimationView.PauseAnimation();
+            LottieAnimationView.FileName = "./Resources/4900-files-transfer-animation.json";
+             LottieAnimationView.PlayAnimation();
+            Exporter.ExportPdf(null);
         }
         private async void NewTranaction(object sender, RoutedEventArgs e)
         {
@@ -99,6 +113,9 @@ namespace ECR_System_v2.UserControls
         }
         private async void loadClient() {
 
+
+
+           // FileName = "Resources/4900-files-transfer-animation.json"
             Client mClient = new Client();
             mClient.Fund = mFund.Name;
             mClient.ClientName = App.AllClients;
@@ -116,13 +133,22 @@ namespace ECR_System_v2.UserControls
                 if(ClientsListCombo.SelectedIndex>-1)
                 initClientList(mClientList[ClientsListCombo.SelectedIndex].ClientId, 7);
             };
-            
+            PurchasesCheckBox.Checked += (a, b)=>{
+                initClientList(prevClient, prevDays);
+            };
+
+
+            RedemptionsCheckBox.Checked += (a, b) => {
+                initClientList(prevClient, prevDays);
+            };
 
             if (ClientsListCombo.SelectedIndex == -1)
                 ClientsListCombo.SelectedIndex = 0;
         }
         private async void initClientList(String client,int days)
         {
+            prevDays = days;
+            prevClient = client;
             int TransactionType = ((bool)PurchasesCheckBox.IsChecked && (bool)RedemptionsCheckBox.IsChecked) ? App.All :
                 ((bool)PurchasesCheckBox.IsChecked ? App.Purchase : App.Redemption);
             var mFirstDayOfQuater = DateUtils.TicksToMillis(DateUtils.FirstDayOfQuater(DateTime.Now).Ticks);
@@ -136,7 +162,10 @@ namespace ECR_System_v2.UserControls
                 long start = DateUtils.TicksToMillis(DateTime.Now.Ticks);
                   long end = DateUtils.TicksToMillis(DateTime.Now.AddMonths(-3).Ticks);
 
-
+                double totalAmount = 0;
+                foreach (var item in mFundUnitTrans)
+                    totalAmount += item.Amount;
+                AllClientTranstionsTotalsTextBlock.Text =MathUtils.round(totalAmount,2).ToString();
                 ClientSelectionTransitioner.SelectedIndex = 0;
                 UiUnits.AnimateSlider(ClientSelectionTransitioner, 0);
                 Double[] mValues = await mDataLoader.fetchFundUnitTransItemsValueRangeTotal(mFund.Name, start, end, days, client, TransactionType);
@@ -160,7 +189,12 @@ namespace ECR_System_v2.UserControls
               else
               {
                   SingleClientTranstionsDataGrid.ItemsSource = mFundUnitTrans;
-                  ClientSelectionTransitioner.SelectedIndex = 1;
+
+                double totalAmount = 0;
+                foreach (var item in mFundUnitTrans)
+                    totalAmount += item.Amount;
+                SingleClientTranstionsTotalsTextBlock.Text = MathUtils.round(totalAmount, 2).ToString();
+                ClientSelectionTransitioner.SelectedIndex = 1;
                   UiUnits.AnimateSlider(ClientSelectionTransitioner, 1);
               }
 
