@@ -365,7 +365,7 @@ namespace ECR_System_v2
 
             Fund mFund = new Fund();
             mFund.Name = FundNameTextBox.Text;
-            mFund.Currency = CurrencyListBox.SelectedItem.ToString();
+            mFund.Currency = CurrencyListBox.SelectedValue.ToString();
             mFund.HasClient = HasClinetsCheckBox.IsChecked.ToString();
             mFund.UnitPriceFloating = UnitPriceFloatingRadioBtn.IsChecked.ToString();
             mFund.UnitPriceFixed = UnitPriceFixedTextBox.Text;

@@ -56,14 +56,27 @@ namespace ECR_System_v2.UserControls
             loadClient();
         }
 
-        private  void SendReport(object sender, RoutedEventArgs e)
+        private async void SendReport(object sender, RoutedEventArgs e)
         {
             DialogGrid.IsOpen = true;
 
             LottieAnimationView.PauseAnimation();
             LottieAnimationView.FileName = "./Resources/4900-files-transfer-animation.json";
-             LottieAnimationView.PlayAnimation();
-            Exporter.ExportPdf(null);
+            LottieAnimationView.PlayAnimation();
+
+            var mNow = DateUtils.TicksToMillis(DateTime.Now.Ticks);
+            for (int i=0;i < mClients.Length; i++)
+            {
+                Client mClient = mClients[i];
+                var mFundUnitTrans = await mDataLoader.fetchFundUnitTransItems(mFund.Name, mNow, mClient.ClientId, App.All) as FundUnitTrans[];
+
+                await Task.Run(() =>
+                {
+
+                    Exporter.ExportPdf(mFundUnitTrans, mFund, mClient.ClientName);
+                });
+            }
+
         }
         private async void NewTranaction(object sender, RoutedEventArgs e)
         {

@@ -293,10 +293,8 @@ namespace ECR_System_v2.IO
             }
             catch(Exception e) { }
         }
-        public static async void ExportPdf( FundUnitTrans[] mFundUnitTrans) {
-            await Task.Run(() =>
-            {
-                Console.WriteLine("Exporting PDF");
+        public static  void ExportPdf( FundUnitTrans[] mFundUnitTrans, Fund mFund,String clientName) {
+           Console.WriteLine("Exporting PDF for "+ clientName);
 
                 
                 
@@ -323,6 +321,22 @@ namespace ECR_System_v2.IO
                                java.util.Arrays.asList("Description", "Transaction Value", "Acc. Transaction Value"
                                , "Change in Units", "Acc. No. of Units", "Unit Price"
                                , "Total Capital Gains", "Gross Investment Amount")));
+                if (mFundUnitTrans != null)
+                {
+                    double previousAmount = 0;
+                    double previousUnits = 0;
+                    foreach (FundUnitTrans mFundUnitTran in mFundUnitTrans)
+                    {
+                        String description = (mFundUnitTran.TransactionType== App.Purchase)?"Purchase of Units": "Redemption of Units";
+                        previousAmount = (mFundUnitTran.TransactionType == App.Purchase) ? previousAmount+mFundUnitTran.Amount : previousAmount - mFundUnitTran.Amount;
+                        previousUnits = (mFundUnitTran.TransactionType == App.Purchase) ? previousUnits + mFundUnitTran.Units : previousUnits - mFundUnitTran.Units;
+                        double unitprice = mFundUnitTran.Amount / mFundUnitTran.Units;
+                        data.add(new java.util.ArrayList(
+                                       java.util.Arrays.asList(description, mFundUnitTran.Amount+" "+ mFund.Currency, previousAmount + " " + mFund.Currency
+                                       , mFundUnitTran.Units.ToString(), previousUnits.ToString(), unitprice.ToString()
+                                       , "0", previousAmount)));
+                    }
+                }
               
                 BaseTable dataTable = new BaseTable(yStart, yStartNewPage, bottomMargin, tableWidth, margin, document, page, true, true);
                 DataTable t = new DataTable(dataTable, page);
@@ -331,11 +345,11 @@ namespace ECR_System_v2.IO
 
                 contentStream.close();
                 document.addPage(page);
-                document.save("./test.pdf");
+                document.save("./"+ clientName+" test.pdf");
                 document.close();
 
                 Console.WriteLine("Complete Exporting PDF");
-            });
+           
             }
         public async void Import(String path)
         {
