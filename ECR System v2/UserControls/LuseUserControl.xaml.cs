@@ -64,7 +64,7 @@ namespace ECR_System_v2.UserControls
         }
         private async void loadShares(String days="90")
         {
-            var Index = await mDataLoader.fetchSharesFor(days, App.LuseIndex) as Share[];
+           // var Index = await mDataLoader.fetchSharesFor(days, App.LuseIndex) as Share[];
             mShares = await mDataLoader.fetchShares(days) as Share[];
             mFormatedShares = new FormatedShare[mShares.Length];
             int i = 0;
@@ -73,9 +73,12 @@ namespace ECR_System_v2.UserControls
                 mFormatedShares[i] = new FormatedShare(mShare, getColorFromShare(mShare));
                 i++;
             }
-            LuseValue.Text = Index[0].Price;
-            LuseChangeValue.Text = StringUtils.Format(Double.Parse(Index[0].Change));
-            LuseChangePer.Text   = StringUtils.Format(Double.Parse(Index[0].PercentageChange))+"%";
+         //   Console.WriteLine("Index[0].LusaName " + Index[0].LusaName + " Index[0].Price " + Index[0].Price  + " Index[0].Change " + Index[0].Change + " Index[0].PercentageChange " + Index[0].PercentageChange);
+         //   LuseValue.Text = Index[0].Price;
+           // LuseChangeValue.Text = StringUtils.Format(Double.Parse(Index[0].Change));
+           // LuseChangePer.Text   = StringUtils.Format(Double.Parse(Index[0].PercentageChange))+"%";
+
+
 
             SharePricesListView.ItemsSource = mFormatedShares;
         }
@@ -154,7 +157,12 @@ namespace ECR_System_v2.UserControls
         }
         private String getColorFromShare(Share mShare)
         {
-            float changePercentage = float.Parse(mShare.PercentageChange);
+            float changePercentage = 0;
+            try
+            {
+                 changePercentage = float.Parse(mShare.PercentageChange);
+            }
+            catch(Exception e) { }
             if (changePercentage < -30)
                 return "#FF4D94";
 

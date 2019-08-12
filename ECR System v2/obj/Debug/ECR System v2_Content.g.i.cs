@@ -10,5 +10,7 @@
 
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/2495-file-transfer.json")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/4900-files-transfer-animation.json")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/5095-google-form.json")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/4920-google-forms.json")]
 
 

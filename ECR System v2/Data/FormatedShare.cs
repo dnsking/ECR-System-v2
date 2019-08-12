@@ -13,6 +13,7 @@ namespace ECR_System_v2.Data
     {
         public FormatedShare(Share mShare,String color)
         {
+           // Console.WriteLine("mShare.LusaName " + mShare.LusaName + " mShare.Price " + mShare.Price);
             LusaName = mShare.LusaName;
             Price = MathUtils.round(Double.Parse(mShare.Price), 2).ToString() +" ZMW";
             TradeSummaryName = mShare.TradeSummaryName;

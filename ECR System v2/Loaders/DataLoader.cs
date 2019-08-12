@@ -93,6 +93,7 @@ namespace ECR_System_v2.Loaders
             var result = await client.GetAsync("/shares/" + nDays);
 
             string resultContent = await result.Content.ReadAsStringAsync();
+            Console.WriteLine("resultContent " + resultContent);
 
             Share[] resultConten = JsonConvert.DeserializeObject<Share[]>(resultContent);
 
@@ -187,10 +188,10 @@ namespace ECR_System_v2.Loaders
             client.BaseAddress = new Uri(App.URL);
             client.DefaultRequestHeaders.Accept.Clear();
 
-            var result = await client.GetAsync("/getsecuritiesPresentValueTotal/" + fundName + "/" + date + "/" + type);
+            var result = await client.GetAsync("/getsecuritiesPresentValueTotalWithType/" + fundName + "/" + date + "/" + type);
 
             string resultContent = await result.Content.ReadAsStringAsync();
-            ////Console.WriteLine(resultContent);
+            Console.WriteLine("getsecuritiesPresentValueTotalWithType "+resultContent);
             if (resultContent != null & resultContent.Length > 0)
             {
                 Double resultConten = JsonConvert.DeserializeObject<Double>(resultContent);
@@ -220,7 +221,7 @@ namespace ECR_System_v2.Loaders
 
             string resultContent = await result.Content.ReadAsStringAsync();
 
-            ////Console.WriteLine(resultContent);
+            Console.WriteLine("getsecuritiesPresentValueTotalAll " + resultContent);
             if (resultContent != null & resultContent.Length > 0)
             {
 
@@ -575,7 +576,7 @@ namespace ECR_System_v2.Loaders
             client.BaseAddress = new Uri(App.URL);
             client.DefaultRequestHeaders.Accept.Clear();
             
-            var result = await client.GetAsync("/getBalaneces/"+ fundName+"/"+ date+"/"+ enddate+"/"+ fundType);
+            var result = await client.GetAsync("/getBalaneces/"+ fundName + "/" + fundType + "/"+ date+"/"+ enddate);
 
 
             string resultContent = await result.Content.ReadAsStringAsync();
@@ -862,7 +863,7 @@ namespace ECR_System_v2.Loaders
                 return new ReturnResult() { };
             }
         }
-        /*
+        
         public async Task<Token> login(Account mAccount)
         {
             HttpClient client = new HttpClient();
@@ -902,6 +903,6 @@ namespace ECR_System_v2.Loaders
             {
                 return null;
             }
-        }*/
+        }
     }
 }

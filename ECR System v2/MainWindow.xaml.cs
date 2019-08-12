@@ -41,8 +41,9 @@ namespace ECR_System_v2
 
             DragPanel.DragEnter += new DragEventHandler(DragFile_DragEnter);
             DragPanel.Drop += new DragEventHandler(DragFile_DragDrop);
-           // new Exporter().SendMails();
-            
+            DragPanel.DragLeave += new DragEventHandler(DragFile_DragExist);
+            // new Exporter().SendMails();
+
         }
         private void selectFund(Fund mFund)
         {
@@ -54,7 +55,7 @@ namespace ECR_System_v2
         {
                 Array szFile = (Array)e.Data.GetData(DataFormats.FileDrop);
                String szFilePath = szFile.GetValue(0).ToString();
-                new Exporter().SendEmailAddressAndFile(szFilePath);
+             //   new Exporter().SendEmailAddressAndFile(szFilePath);
                 /*
                 
               ImportPane.Visibility = Visibility.Visible;
@@ -65,8 +66,23 @@ namespace ECR_System_v2
         private void DragFile_DragEnter(object sender, DragEventArgs e)
         {
 
-            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effects = DragDropEffects.Copy;
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                OpenAnimation();
+                e.Effects = DragDropEffects.Copy; }
 
+        }
+
+        private void DragFile_DragExist(object sender, DragEventArgs e)
+        {
+
+            DragOverlay.Visibility = Visibility.Collapsed;
+        }
+        private void OpenAnimation()
+        {
+            DragOverlay.Visibility = Visibility.Visible;
+            LottieAnimationView.PauseAnimation();
+            LottieAnimationView.FileName = "./Resources/4920-google-form.json";
+            LottieAnimationView.PlayAnimation();
         }
 
         private void selectClient(Fund mFund)
@@ -88,8 +104,8 @@ namespace ECR_System_v2
             Account mAccount = new Account();
             mAccount.Name = SignInUserNameTextBox.Text;
             mAccount.Password = SignInPasswordBox.Password;
-            login();
-            /*
+            //   login();
+        App.URL= "http://"+ ConnectionNameTextBox.Text + ":5000/" ;
             Token value = await mDataLoader.login(mAccount);
 
             AccountNotExists.Visibility = Visibility.Collapsed;
@@ -108,7 +124,7 @@ namespace ECR_System_v2
             else
             {
                 NoInternetAccessError_0.Visibility = Visibility.Visible;
-            }*/
+            }
         }
         private async void SignUp(object sender, RoutedEventArgs e)
         {
