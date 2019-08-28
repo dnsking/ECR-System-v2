@@ -12,5 +12,6 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/4900-files-transfer-animation.json")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/5095-google-form.json")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/4920-google-forms.json")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/4547-simple-sliding-bars.json")]
 
 

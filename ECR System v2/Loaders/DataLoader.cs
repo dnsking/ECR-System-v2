@@ -140,6 +140,21 @@ namespace ECR_System_v2.Loaders
                 return new Security[] { };
             }
         }
+
+        public async Task<Double> fetchTotalsFundTransFor(String fundName)
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(App.URL);
+            client.DefaultRequestHeaders.Accept.Clear();
+
+            var result = await client.GetAsync("/getTotalsFundTransFor/" + fundName);
+
+            string resultContent = await result.Content.ReadAsStringAsync();
+            Console.WriteLine("fetchTotalsFundTransFor " + resultContent);
+
+            Double resultConten = JsonConvert.DeserializeObject<Double>(resultContent);
+            return resultConten;
+        }
         public async Task<Double[]> fetchSecuritiesPresentValueRange(String fundName, long start, long end, int days)
         {
             HttpClient client = new HttpClient();
@@ -149,7 +164,7 @@ namespace ECR_System_v2.Loaders
             var result = await client.GetAsync("/getsecuritiesPresentValueRangeTotal/" + fundName + "/" + start + "/" + end + "/" + days);
 
             string resultContent = await result.Content.ReadAsStringAsync();
-            ////Console.WriteLine(resultContent);
+            Console.WriteLine("fetchSecuritiesPresentValueRange " + resultContent);
             if (resultContent != null & resultContent.Length > 0)
             {
                 Double[] resultConten = JsonConvert.DeserializeObject<Double[]>(resultContent);
@@ -498,11 +513,13 @@ namespace ECR_System_v2.Loaders
 
             string resultContent = await result.Content.ReadAsStringAsync();
 
-            
+
+            Console.WriteLine("pre fetchSecuritiesPresentValueRangeType " + resultContent);
             if (resultContent != null & resultContent.Length > 0)
             {
-              //  resultContent = resultContent.Substring(1, resultContent.Length - 2);
-               // resultContent = resultContent.Replace(@"\", "");
+                //  resultContent = resultContent.Substring(1, resultContent.Length - 2);
+                // resultContent = resultContent.Replace(@"\", "");
+                Console.WriteLine("fetchSecuritiesPresentValueRangeType " + resultContent);
                 Double[][] resultConten = JsonConvert.DeserializeObject<List<Double[]>>(resultContent).ToArray();
 
                 return resultConten;

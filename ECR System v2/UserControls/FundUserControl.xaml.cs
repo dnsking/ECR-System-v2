@@ -489,6 +489,7 @@ namespace ECR_System_v2.UserControls
             long end = DateUtils.TicksToMillis(DateTime.Now.AddMonths(-3).Ticks);
 
             Double[] mValues = await mDataLoader.fetchSecuritiesPresentValueRange(mFund.Name,start,end,days) as Double[];
+            await mDataLoader.fetchTotalsFundTransFor(mFund.Name);
 
             FundValueCartesianChart.DisableAnimations = true;
             SeriesCollection mSeriesCollection = new SeriesCollection

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ECR_System_v2"
         xmlns:localusercontorls="clr-namespace:ECR_System_v2.UserControls"
         xmlns:lottieSharp="clr-namespace:LottieSharp;assembly=LottieSharp"
+        xmlns:rg="clr-namespace:unvell.ReoGrid;assembly=unvell.ReoGrid"
         mc:Ignorable="d"
         Title="ECR System v2" Height="350" Width="525"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
@@ -38,7 +39,7 @@
     <Grid  Name="DragPanel" AllowDrop="True" >
 
         <materialDesign:DialogHost CloseOnClickAway="True"  Name="DialogGrid"  Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}},Path=ActualHeight}" >
-            <materialDesign:DialogHost.DialogContent  >
+            <materialDesign:DialogHost.DialogContent>
 
                 <Grid Name="DialogContentHolder"  Height="540" Width="900" Margin="16">
                     <Grid  Visibility="Collapsed" Name="NewFundContent">
@@ -297,7 +298,7 @@
                                                     Government Bond
                                                 </RadioButton>
                                                 <RadioButton  Name="NewPurchaseContentGovernmentTBRadioBtn"  Style="{StaticResource MaterialDesignRadioButton}" Margin="0 0 8 8" VerticalAlignment="Center">
-                                                    Government Treasury Bill
+                                                    Treasury Bill
                                                 </RadioButton>
                                                 <RadioButton  Name="NewPurchaseContentListedEquityRadioBtn"  Style="{StaticResource MaterialDesignRadioButton}" Margin="0 0 8 8" VerticalAlignment="Center">
                                                     Listed Equity
@@ -416,6 +417,53 @@
 
                         </ScrollViewer>
                     </Grid>
+                    <Grid Visibility="Collapsed" Name="NewImportContent">
+                        <StackPanel>
+
+                            <StackPanel Grid.Row="1" Margin="0 16 0 0" Orientation="Horizontal">
+                                <RadioButton Name="ImportClientsNamesRadioButton" Style="{StaticResource MaterialDesignRadioButton}" Margin="0 0 4 8" VerticalAlignment="Center" IsChecked="True">
+                                    Clients Names
+                                </RadioButton>
+                                <iconPacks:PackIconMaterial Name="ImportClientsNamesIcon" Margin="0 0 16 8"  Foreground="#bebebe"  VerticalAlignment="Center" Kind="CheckCircle" Height="38"  />
+                                <RadioButton Name="ImportClientIdRadioButton" Style="{StaticResource MaterialDesignRadioButton}" Margin="0 0 4 8" VerticalAlignment="Center" >
+                                    Client ID
+                                </RadioButton>
+                                <iconPacks:PackIconMaterial Name="ImportClientIdIcon" Margin="0 0 16 8"  Foreground="#bebebe"  VerticalAlignment="Center" Kind="CheckCircle" Height="38"  />
+
+                                <RadioButton Name="ImportEmailAddressesRadioButton" Style="{StaticResource MaterialDesignRadioButton}" Margin="0 0 4 8" VerticalAlignment="Center" >
+                                     Email Addresses
+                                </RadioButton>
+                                <iconPacks:PackIconMaterial Name="ImportEmailAddressesIcon" Margin="0 0 16 8"  Foreground="#bebebe"  VerticalAlignment="Center" Kind="CheckCircle" Height="38"  />
+
+                                <RadioButton Name="ImportDateRadioButton" Style="{StaticResource MaterialDesignRadioButton}" Margin="0 0 4 8" VerticalAlignment="Center" >
+                                    Date
+                                </RadioButton>
+                                <iconPacks:PackIconMaterial Name="ImportDateIcon" Margin="0 0 16 8"  Foreground="#bebebe"  VerticalAlignment="Center" Kind="CheckCircle" Height="38"  />
+
+                                <RadioButton Name="ImportAmountRadioButton" Style="{StaticResource MaterialDesignRadioButton}" Margin="0 0 4 8" VerticalAlignment="Center" >
+                                    Amount
+                                </RadioButton>
+                                <iconPacks:PackIconMaterial Name="ImportAmountIcon" Margin="0 0 16 8"  Foreground="#bebebe"  VerticalAlignment="Center" Kind="CheckCircle" Height="38"  />
+
+
+                                <TextBox Name="InputUnitNameTextBox"  Margin="16 0 8 8"  materialDesign:HintAssist.Hint="Unit Price"  Width="200"  VerticalAlignment="Center" />
+                            </StackPanel>
+                                    <rg:ReoGridControl Margin="0 16 0 0" x:Name="excelGrid" Width="800"  Height="402" HorizontalAlignment="Center">
+                            </rg:ReoGridControl>
+                            <StackPanel Orientation="Horizontal">
+
+                                <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="8" Width="150" Click="ImportPrev">
+                                    Cancle
+                                </Button>
+                                <Button Style="{StaticResource MaterialDesignRaisedButton}" Margin="8" Width="150" Click="ImportNext">
+                                    Import
+                                </Button>
+                            </StackPanel>
+                           
+                        </StackPanel>
+                     
+                    </Grid>
+                   
 
                 </Grid>
             </materialDesign:DialogHost.DialogContent>
@@ -429,6 +477,12 @@
 
                             <Grid >
                                 <Image Source="Resources/erc_start_logo.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="68" Width="198" Margin="16 16 0 0"></Image>
+
+                                <TextBox Name="IpNameTextBox"  materialDesign:HintAssist.Hint="Local IP Address" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200" Margin="0 16 16 0"
+                                          VerticalAlignment="Top" HorizontalAlignment="Right" IsReadOnly="True">
+                                    127.0.0.1
+                                </TextBox>
                                 <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <materialDesign:Transitioner Name="AccountTransitioner" SelectedIndex="0" >
                                         <materialDesign:TransitionerSlide >
@@ -717,9 +771,15 @@
         <Grid Visibility="Collapsed" Name="DragOverlay"
             Background="#73fafafa" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Grid Width="400" Height="500" Background="#fafafa" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Center" Height="500">
+                    <iconPacks:PackIconFontAwesome  Foreground="#212121"  Kind="FileExcelSolid" Width="216" Height="216"  />
+                    <TextBlock Name="InputFileName" Style="{StaticResource MaterialDesignSubheadingTextBlock}"  HorizontalAlignment="Center" Foreground="#212121" ></TextBlock>
+
+                </StackPanel>
 
                 <lottieSharp:LottieAnimationView x:Name="LottieAnimationView"
                                                      AutoPlay="True"  VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                 Visibility="Collapsed"
                                                      
                                                   />
             </Grid>

@@ -52,6 +52,31 @@ namespace ECR_System_v2.IO
                 Console.WriteLine("Sent to "+ EmailAddress);
                
         }
+        public void SendMail( String EmailAddress)
+        {
+            var client = new SmtpClient("smtp.gmail.com", 587)
+            {
+                Credentials = new NetworkCredential("Ecrzambialtd@gmail.com", "stocksnshares"),
+                EnableSsl = true
+            };
+            client.Timeout = Int32.MaxValue;
+            MailMessage msg = new MailMessage("Ecrzambialtd@gmail.com", EmailAddress, "ECRUT AGM NOTICE", "Good afternoon SIR/MADAM"+ "," + System.Environment.NewLine + " Please be informed that we are still awaiting your response to the AGM meeting notice" + System.Environment.NewLine + System.Environment.NewLine + " Kind regards, ECR Unit Trust Team");
+            String[] attachemtnets = new String[] {
+            @"C:\Users\pc\Desktop\Current Project Resources\ECR\ECRUT\ECR AGM NOTICE AND PROXY FORM 2019.pdf",
+            @"C:\Users\pc\Desktop\Current Project Resources\ECR\ECRUT\ECRUT Audited Finacial 2018.PDF"};
+            foreach(var statementPath in attachemtnets)
+            {
+
+                System.Net.Mime.ContentType contentType = new System.Net.Mime.ContentType();
+                contentType.MediaType = System.Net.Mime.MediaTypeNames.Application.Pdf;
+                contentType.Name = new FileInfo(statementPath).Name;
+               // msg.Attachments.Add(new Attachment(statementPath, contentType));
+            }
+
+            client.Send(msg);
+            Console.WriteLine("Sent to " + EmailAddress);
+
+        }
         private  String GetExportPdf(String client)
         {
             DirectoryInfo d = new DirectoryInfo(@"C:\Users\pc\Desktop\Current Project Resources\ECR\Zica Clients\pdfs");//Assuming Test is your Folder
@@ -75,10 +100,222 @@ namespace ECR_System_v2.IO
 
 
         }
+        public async void LoadClients()
+        {
+            await Task.Run(() =>
+            {
 
+                var path = @"C:\Users\pc\Desktop\Current Project Resources\ECR\ECRUT\ECR UT Register 2018.xlsx";
+                XSSFWorkbook workbook = new XSSFWorkbook(new FileInfo(path));
+
+                var nCount = workbook.NumberOfSheets;
+                for (int i = 0; i < nCount; i++)
+                {
+                    XSSFSheet sheet = (XSSFSheet)workbook.GetSheetAt(i);
+                    String sheetName = sheet.SheetName;
+                    IEnumerator rowIterator = sheet.GetEnumerator();
+                    List<Object> data = new List<Object>();
+                    String preDate = "";
+                    Boolean first = true;
+                    List<String> Saved = new List<string>();
+                    while (rowIterator.MoveNext())
+                    {
+
+
+                        IRow row = (IRow)rowIterator.Current;
+                        IEnumerator<ICell> cellIterator = row.GetEnumerator();
+                        while (cellIterator.MoveNext())
+                        {
+                            ICell cell = cellIterator.Current;
+                            int mCellIndex = cell.ColumnIndex;
+                            int mRowIndex = cell.RowIndex;
+                            String mCellValue = CellVal(cell);
+                            if (mCellValue.Contains("@")&&!mCellValue.Contains("zsiclife"))
+                            {
+                                mCellValue = mCellValue.Replace(" ", "");
+                                if (mCellValue.Contains("/"))
+                                {
+                                    var mails = mCellValue.Split('/');
+                                    foreach(var mail in mails)
+                                    {
+
+                                        Console.WriteLine("email " + mail);
+                                        SendMail(mail);
+                                    }
+                                }
+                                else
+                                {
+
+                                    Console.WriteLine("email " + mCellValue);
+                                    SendMail(mCellValue);
+                                }
+                            }
+                            
+
+                        }
+
+                    }
+                }
+            });
+        }
+        public async static Task<String[]> FindClients(String path,int sheetIndex,int column) {
+            var Names = new List<String>();
+            try
+            {
+              await  Task.Run(() => {
+                  ArrayList sents = new ArrayList();
+
+
+                  XSSFWorkbook workbook = new XSSFWorkbook(new FileInfo(path));
+
+                  XSSFSheet sheet = (XSSFSheet)workbook.GetSheetAt(sheetIndex);
+                  String sheetName = sheet.SheetName;
+                  IEnumerator rowIterator = sheet.GetEnumerator();
+                  List<Object> data = new List<Object>();
+                  String preDate = "";
+                  Boolean first = true;
+                  List<String> Saved = new List<string>();
+                  while (rowIterator.MoveNext())
+                  {
+
+
+                      IRow row = (IRow)rowIterator.Current;
+                      IEnumerator<ICell> cellIterator = row.GetEnumerator();
+                      String date = "";
+                      String Name = "";
+                      String Amount = "";
+                      String MemberId = "";
+                      String Units = "";
+                      String Email = "";
+                      while (cellIterator.MoveNext())
+                      {
+                          ICell cell = cellIterator.Current;
+                          int mCellIndex = cell.ColumnIndex;
+                          int mRowIndex = cell.RowIndex;
+                          String mCellValue = CellVal(cell);
+
+                          if (mCellIndex == column && mCellValue.Length > 0 && !mCellValue.Equals("ZICA PROPERTY FUND REGISTER")
+                             && !mCellValue.Contains("Name") && !mCellValue.Equals("Total")
+                             && !mCellValue.ToLower().Contains("dollar") && !mCellValue.ToLower().Contains("paid")
+                             && !mCellValue.ToLower().Contains("amount")
+                             && mCellValue.Split(' ').Length > 0 && mCellValue.Replace(" ", "").Length > 4)
+                          {
+                              Name = StringUtils.RemoveNumbers(mCellValue);
+                              Console.WriteLine("mCellValue " + Name + " mCellIndex " + mCellIndex + " column " + column);
+                              Names.Add(Name);
+                          }
+
+
+
+
+                      }
+
+
+                  }
+
+              });
+                           
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Import error " + e.Message);
+            }
+            return Names.ToArray();
+
+        }
+        public async static Task<String[]> FindUnitsOrAmount(String path, int sheetIndex, int column)
+        {
+            var Names = new List<String>();
+            try
+            {
+                await Task.Run(() => {
+                    ArrayList sents = new ArrayList();
+
+
+                    XSSFWorkbook workbook = new XSSFWorkbook(new FileInfo(path));
+
+                    XSSFSheet sheet = (XSSFSheet)workbook.GetSheetAt(sheetIndex);
+                    String sheetName = sheet.SheetName;
+                    IEnumerator rowIterator = sheet.GetEnumerator();
+                    List<Object> data = new List<Object>();
+                    String preDate = "";
+                    Boolean first = true;
+                    List<String> Saved = new List<string>();
+                    while (rowIterator.MoveNext())
+                    {
+
+
+                        IRow row = (IRow)rowIterator.Current;
+                        IEnumerator<ICell> cellIterator = row.GetEnumerator();
+                        String date = "";
+                        String Value = "";
+                        String Amount = "";
+                        String MemberId = "";
+                        String Units = "";
+                        String Email = "";
+                        while (cellIterator.MoveNext())
+                        {
+                            ICell cell = cellIterator.Current;
+                            int mCellIndex = cell.ColumnIndex;
+                            int mRowIndex = cell.RowIndex;
+                            String mCellValue = CellVal(cell);
+                            double n;
+
+                            if (mCellIndex == column && mCellValue.Length > 0 && double.TryParse(mCellValue, out n))
+                            {
+                                Names.Add(mCellValue);
+                            }
+
+                        }
+
+
+                    }
+
+                });
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Import error " + e.Message);
+            }
+            return Names.ToArray();
+
+        }
 
         private DataLoader mDataLoader;
-        public async void SendEmailAddressAndFile(String path)
+        public async static void ImportClients(String fundName,String[] mImportClientsNames, String[] mImportClientId, String[] mImportEmailAddresses
+            , String[] mImportDate, String[] mImportAmount,double unitPrice)
+        {
+
+            DataLoader mDataLoader = new DataLoader();
+            for (int i=0;i< mImportClientsNames.Length; i++)
+            {
+                var mNow = DateUtils.TicksToMillis(DateTime.Now.Ticks);
+                Client mClient = new Client();
+                mClient.Fund = fundName;
+                mClient.ClientName = mImportClientsNames[i];
+                if (mImportEmailAddresses != null)
+                    mClient.ClientEmailAdress = mImportEmailAddresses[i];
+                else
+                    mClient.ClientEmailAdress = "";
+                mClient.ClientPhysicalAdress = "";
+                mClient.DateCreated = mNow;
+                mClient.ClientId = mImportClientId[i];
+                mClient.Open = App.Open;
+                await mDataLoader.addFundUnitClients(mClient);
+
+                mNow = DateUtils.TicksToMillis(DateTime.ParseExact(mImportDate[i].Replace('.','/').Replace(' ', '/'), "dd/MM/yyyy", null).Ticks);
+                FundUnitTrans mFundUnitTrans = new FundUnitTrans();
+                mFundUnitTrans.Amount = Double.Parse(mImportAmount[i]);
+                mFundUnitTrans.Client = mImportClientId[i];
+                mFundUnitTrans.DateInMillis = mNow;
+                mFundUnitTrans.Fund = fundName;
+                mFundUnitTrans.Units = Double.Parse(mImportAmount[i])/ unitPrice;
+                mFundUnitTrans.TransactionType = 0;
+                await mDataLoader.addFundUnitTransItem(mFundUnitTrans);
+            }
+        }
+        public async void ImportData(String path)
         {
             mDataLoader = new DataLoader();
             try
@@ -88,7 +325,7 @@ namespace ECR_System_v2.IO
                     String lastAddress = "marychiwala.mc@gmail.com";
                     ArrayList sents = new ArrayList();
 
-                    var lines = File.ReadAllLines(@"C:\Users\pc\Desktop\Current Project Resources\ECR\Zica Clients\sent.txt");
+                    var lines = File.ReadAllLines(IoUtils.GetMainDirectory()+"/sent.txt");
                     foreach (var line in lines)
                         sents.Add(line);
 
@@ -98,7 +335,7 @@ namespace ECR_System_v2.IO
                     //IFormulaEvaluator evaluator = CreateHelper.CreateFormulaEvaluator();
 
 
-                    XSSFSheet sheet = (XSSFSheet)workbook.GetSheetAt(6);
+                    XSSFSheet sheet = (XSSFSheet)workbook.GetSheetAt(0);
                     String sheetName = sheet.SheetName;
                     IEnumerator rowIterator = sheet.GetEnumerator();
                     List<Object> data = new List<Object>();

@@ -32,6 +32,7 @@ namespace ECR_System_v2
         private DataLoader mDataLoader;
         private DispatcherTimer timer;
         private Boolean doneLoading;
+        private String szFilePath;
 
         public MainWindow()
         {
@@ -42,8 +43,93 @@ namespace ECR_System_v2
             DragPanel.DragEnter += new DragEventHandler(DragFile_DragEnter);
             DragPanel.Drop += new DragEventHandler(DragFile_DragDrop);
             DragPanel.DragLeave += new DragEventHandler(DragFile_DragExist);
-            // new Exporter().SendMails();
 
+            IpNameTextBox.Text = ConnectionUtils.GetLocalIPAddress();
+
+            //new Exporter().ImportData(szFilePath);
+
+            //new Exporter().LoadClients();
+            // new Exporter().SendMails();
+            initInput();
+        }
+        private void ImportNext(object sender, RoutedEventArgs e)
+        {
+            if (mImportClientsNames!=null && mImportClientId!=null&& mImportAmount!=null&& mImportDate!=null)
+            {
+                ImportProgess.SelectedIndex = ImportProgess.SelectedIndex + 1;
+            }
+        }
+
+        private void ImportPrev(object sender, RoutedEventArgs e)
+        {
+
+            DialogGrid.IsOpen = false;
+        }
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            // Initialize the clipboard now that we have a window soruce to use
+            var windowClipboardManager = new ClipboardListener(this);
+            windowClipboardManager.ClipboardChanged += ClipboardChanged;
+        }
+        private String[] mImportClientsNames, mImportClientId, mImportEmailAddresses, mImportDate, mImportAmount;
+        private void ClipboardChanged(object sender, EventArgs e)
+        {
+            // Handle your clipboard update here, debug logging example:
+            if (DialogGrid.IsOpen && NewImportContent.IsVisible&&Clipboard.ContainsText())
+            {
+                Console.WriteLine(Clipboard.GetText());
+                if ((Boolean)ImportClientsNamesRadioButton.IsChecked) {
+                    ImportClientsNamesIcon.Foreground = Brushes.Green;
+                    mImportClientsNames = Clipboard.GetText().Split(  new[] { Environment.NewLine },StringSplitOptions.None);
+
+                }
+                else if ((Boolean)ImportClientIdRadioButton.IsChecked)
+                {
+                    ImportClientIdIcon.Foreground = Brushes.Green;
+                    mImportClientId = Clipboard.GetText().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                }
+                else if ((Boolean)ImportEmailAddressesRadioButton.IsChecked)
+                {
+                    ImportEmailAddressesIcon.Foreground = Brushes.Green;
+                    mImportEmailAddresses = Clipboard.GetText().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                }
+                else if ((Boolean)ImportDateRadioButton.IsChecked)
+                {
+                    ImportDateIcon.Foreground = Brushes.Green;
+                    mImportDate = Clipboard.GetText().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                }
+                else if ((Boolean)ImportAmountRadioButton.IsChecked)
+                {
+                    ImportAmountIcon.Foreground = Brushes.Green;
+                    mImportAmount = Clipboard.GetText().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                }
+            }
+        }
+        private  void initInput() {
+          /*  var alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToArray();
+            ImportNamesComboBox.ItemsSource = alpha;
+            ImportUnitsComboBox.ItemsSource = alpha;
+            ImportAmountComboBox.ItemsSource = alpha;
+            ImportNamesComboBox.SelectionChanged += async (a, b) =>
+            {
+                var names = await Exporter.FindClients(szFilePath, 0, ImportNamesComboBox.SelectedIndex);
+                Console.WriteLine("names " + names);
+                ImportNamesDataGrid.ItemsSource = names;
+            };
+            ImportUnitsComboBox.SelectionChanged += async (a, b) =>
+            {
+                var names = await Exporter.FindUnitsOrAmount(szFilePath, 0, ImportUnitsComboBox.SelectedIndex);
+                Console.WriteLine("names " + names);
+                ImportUnitsDataGrid.ItemsSource = names;
+            };
+            ImportAmountComboBox.SelectionChanged += async (a, b) =>
+            {
+                var names = await Exporter.FindUnitsOrAmount(szFilePath, 0, ImportAmountComboBox.SelectedIndex);
+                Console.WriteLine("names " + names);
+                ImportAmountDataGrid.ItemsSource = names;
+            };*/
         }
         private void selectFund(Fund mFund)
         {
@@ -54,19 +140,37 @@ namespace ECR_System_v2
         private void DragFile_DragDrop(object sender, DragEventArgs e)
         {
                 Array szFile = (Array)e.Data.GetData(DataFormats.FileDrop);
-               String szFilePath = szFile.GetValue(0).ToString();
-             //   new Exporter().SendEmailAddressAndFile(szFilePath);
-                /*
-                
-              ImportPane.Visibility = Visibility.Visible;
-              ImportingTextBlock.Text = "Saving";
-                */
-            
+                szFilePath = szFile.GetValue(0).ToString();
+            Console.WriteLine("szFilePath " + szFilePath);
+            DialogGrid.IsOpen = true;
+
+            NewFundContent.Visibility = Visibility.Collapsed;
+            NewPurchaseContent.Visibility = Visibility.Collapsed;
+            NewImportContent.Visibility = Visibility.Visible;
+            mImportClientsNames = null;
+            mImportClientId = null;
+            mImportEmailAddresses = null;
+            mImportDate = null;
+            mImportAmount = null;
+
+            excelGrid.Load(szFilePath);
+
+            //    new Exporter().ImportData(szFilePath);
+            /*
+
+          ImportPane.Visibility = Visibility.Visible;
+          ImportingTextBlock.Text = "Saving";
+            */
+
         }
         private void DragFile_DragEnter(object sender, DragEventArgs e)
         {
 
             if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
+
+                Array szFile = (Array)e.Data.GetData(DataFormats.FileDrop);
+                String szFilePath = szFile.GetValue(0).ToString();
+                InputFileName.Text = System.IO.Path.GetFileName(szFilePath);
                 OpenAnimation();
                 e.Effects = DragDropEffects.Copy; }
 
@@ -80,9 +184,9 @@ namespace ECR_System_v2
         private void OpenAnimation()
         {
             DragOverlay.Visibility = Visibility.Visible;
-            LottieAnimationView.PauseAnimation();
-            LottieAnimationView.FileName = "./Resources/4920-google-form.json";
-            LottieAnimationView.PlayAnimation();
+            //LottieAnimationView.PauseAnimation();
+           // LottieAnimationView.FileName = "./Resources/4920-google-forms.json";
+           // LottieAnimationView.PlayAnimation();
         }
 
         private void selectClient(Fund mFund)
@@ -417,6 +521,7 @@ namespace ECR_System_v2
         private void AddNewFund(object sender, RoutedEventArgs e)
         {
             NewFundContent.Visibility = Visibility.Visible;
+            NewImportContent.Visibility = Visibility.Collapsed;
             NewPurchaseContent.Visibility = Visibility.Collapsed;
             DialogGrid.IsOpen = true;
         }
@@ -427,11 +532,11 @@ namespace ECR_System_v2
         public void startSecurityPurchase()
         {
             NewFundContent.Visibility = Visibility.Collapsed;
+            NewImportContent.Visibility = Visibility.Collapsed;
             NewPurchaseContent.Visibility = Visibility.Visible;
             DialogGrid.IsOpen = true;
             
         }
-
         private async void StepperNext(object sender, RoutedEventArgs e)
         {
             StepperNavigationEventArgs step = e as StepperNavigationEventArgs;
@@ -504,15 +609,15 @@ namespace ECR_System_v2
                     else if ((Boolean)NewPurchaseContentGovernmentBondRadioBtn.IsChecked)
                     {
                         mSecurity.Type = NewPurchaseContentGovernmentBondRadioBtn.Content.ToString();
-                        mSecurity.Type = NewPurchaseContentFundPlacementsAndOtherInvestmentsRadioBtn.Content.ToString();
+                      //  mSecurity.Type = NewPurchaseContentFundPlacementsAndOtherInvestmentsRadioBtn.Content.ToString();
                         mSecurity.Value = Double.Parse(NominalValueTextBox.Text);
                         mSecurity.DailyInterest = Double.Parse(DailyInterestTextBox.Text);
                         mSecurity.MaturityDate = DateUtils.TicksToMillis(((DateTime)MaturityDatePicker.SelectedDate).Ticks);
                     }
                     else if ((Boolean)NewPurchaseContentGovernmentTBRadioBtn.IsChecked)
                     {
-                        mSecurity.Type = NewPurchaseContentGovernmentTBRadioBtn.Content.ToString();
-                        mSecurity.Type = NewPurchaseContentFundPlacementsAndOtherInvestmentsRadioBtn.Content.ToString();
+                        mSecurity.Type = "Government Treasury Bill";
+                       // mSecurity.Type = NewPurchaseContentFundPlacementsAndOtherInvestmentsRadioBtn.Content.ToString();
                         mSecurity.Value = Double.Parse(NominalValueTextBox.Text);
                         mSecurity.DailyInterest = Double.Parse(DailyInterestTextBox.Text);
                         mSecurity.MaturityDate = DateUtils.TicksToMillis(((DateTime)MaturityDatePicker.SelectedDate).Ticks);
