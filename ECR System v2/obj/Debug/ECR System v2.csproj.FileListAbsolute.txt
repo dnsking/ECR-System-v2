@@ -138,3 +138,4 @@ C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\o
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\ECR System v2.pdb
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\ICSharpCode.SharpZipLib.xml
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\ECR System v2.csprojResolveAssemblyReference.cache
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Resources\4547-simple-sliding-bars.json

@@ -460,6 +460,8 @@ namespace ECR_System_v2.Loaders
             var result = await client.GetAsync("/getsecuritiesPresentValueFull/"+ fundName+"/"+ start+"/"+ end+"/"+ funtype);
 
             string resultContent = await result.Content.ReadAsStringAsync();
+
+            Console.WriteLine("fetchSecurities " + resultContent);
             if (resultContent != null & resultContent.Length > 0)
             {
                // resultContent = resultContent.Substring(1, resultContent.Length - 2);
@@ -519,7 +521,7 @@ namespace ECR_System_v2.Loaders
             {
                 //  resultContent = resultContent.Substring(1, resultContent.Length - 2);
                 // resultContent = resultContent.Replace(@"\", "");
-                Console.WriteLine("fetchSecuritiesPresentValueRangeType " + resultContent);
+             //   Console.WriteLine("fetchSecuritiesPresentValueRangeType " + resultContent);
                 Double[][] resultConten = JsonConvert.DeserializeObject<List<Double[]>>(resultContent).ToArray();
 
                 return resultConten;
@@ -683,6 +685,7 @@ namespace ECR_System_v2.Loaders
             var result = await client.PostAsync("/getIncomestatementAssetsAndExpenses/"+ fundName+"/"+ date+"/"+ enddate, formData);
             
             string resultContent = await result.Content.ReadAsStringAsync();
+            Console.WriteLine("getIncomestatementAssetsAndExpenses " + resultContent);
             if (resultContent != null & resultContent.Length > 0)
             {
              //   resultContent = resultContent.Substring(1, resultContent.Length - 2);

@@ -25,7 +25,8 @@ namespace ECR_System_v2
         public static class Types
         {
             public static String PropertyType = "Property";
-            public static String GovernmentBondType         = "Government Bond";
+            public static String GovernmentBondType         = "Govt Bond";
+            public static String TermDepositType = "Term Deposit";
             public static String GovernmentTreasuryBillType = "Government Treasury Bill";
             public static String ListedEquityType = "Listed Equity";
             public static String UnlistedEquityType = "Unlisted Equity";

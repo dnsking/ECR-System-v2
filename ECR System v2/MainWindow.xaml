@@ -295,10 +295,13 @@
                                                     Property
                                                 </RadioButton>
                                                 <RadioButton  Name="NewPurchaseContentGovernmentBondRadioBtn" Style="{StaticResource MaterialDesignRadioButton}" Margin="0 0 8 8" VerticalAlignment="Center">
-                                                    Government Bond
+                                                    Govt Bond
+                                                </RadioButton>
+                                                <RadioButton  Name="NewPurchaseContentTBRadioBtn"  Style="{StaticResource MaterialDesignRadioButton}" Margin="0 0 8 8" VerticalAlignment="Center">
+                                                    Term Deposit
                                                 </RadioButton>
                                                 <RadioButton  Name="NewPurchaseContentGovernmentTBRadioBtn"  Style="{StaticResource MaterialDesignRadioButton}" Margin="0 0 8 8" VerticalAlignment="Center">
-                                                    Treasury Bill
+                                                   Govt Treasury Bill
                                                 </RadioButton>
                                                 <RadioButton  Name="NewPurchaseContentListedEquityRadioBtn"  Style="{StaticResource MaterialDesignRadioButton}" Margin="0 0 8 8" VerticalAlignment="Center">
                                                     Listed Equity
@@ -418,7 +421,7 @@
                         </ScrollViewer>
                     </Grid>
                     <Grid Visibility="Collapsed" Name="NewImportContent">
-                        <StackPanel>
+                        <StackPanel x:Name="ImportPanel">
 
                             <StackPanel Grid.Row="1" Margin="0 16 0 0" Orientation="Horizontal">
                                 <RadioButton Name="ImportClientsNamesRadioButton" Style="{StaticResource MaterialDesignRadioButton}" Margin="0 0 4 8" VerticalAlignment="Center" IsChecked="True">
@@ -461,7 +464,14 @@
                             </StackPanel>
                            
                         </StackPanel>
-                     
+
+                        <TextBlock  Visibility="Collapsed" x:Name="TextBlockImport" VerticalAlignment="Top" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignDisplay1TextBlock}" Margin="16">Importing</TextBlock>
+
+                        <lottieSharp:LottieAnimationView x:Name="LottieAnimationViewImport"
+                                                     AutoPlay="True" Height="98" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                 Visibility="Collapsed"
+                                                     
+                                                  />
                     </Grid>
                    
 

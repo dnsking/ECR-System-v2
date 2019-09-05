@@ -63,6 +63,7 @@ namespace ECR_System_v2.UserControls
             StatementsCombo.SelectionChanged += (a, b) => {
                 int index = StatementsCombo.SelectedIndex;
                 StatementsSection.SelectedIndex = index;
+                Console.WriteLine("StatementsSection.SelectedIndex " + index);
                 if(index == 1) { initDetailedSche(); }
              else if (index == 2) { initExpenseItemData(); }
              else if (index == 3) { initIncomeStatementGrid(); }
@@ -71,6 +72,7 @@ namespace ECR_System_v2.UserControls
              else if (index == 6) { initStatementOfFinancialPosition(); }
    
             };
+            StatementsCombo.SelectedIndex = 0;
         }
         private Rectangle getRecFromColour(String color) {
             Rectangle mRectangle =    new Rectangle();
@@ -89,25 +91,25 @@ namespace ECR_System_v2.UserControls
             BtnStatementsRec.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString("#757575");
             BtnBalancessRec.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString("#f44336");
             FundUserControlSection.SelectedIndex = 1;
-            if (!HaveBalancesLoaded)
-            {
+            
                 HaveBalancesLoaded = true;
                 initBalances();
                 StatementsCombo.SelectionChanged += (a, b) => {
 
                 };
-            }
+            
             
         }
         private async void initIncomeStatementGrid()
         {
-            IncomeStatementInvestmentIncomeGrid.Items.Clear();
-            IncomeStatementExpenseGrid.Items.Clear();
+           // IncomeStatementInvestmentIncomeGrid.Items.Clear();
+           //IncomeStatementExpenseGrid.Items.Clear();
 
             String[] Types = new String[] {
                  App.Types.PropertyType
                 ,App.Types.GovernmentBondType
                 ,App.Types.GovernmentTreasuryBillType
+                ,App.Types.TermDepositType
                 ,App.Types.OtherInvestmentsType
                 ,App.Types.ListedEquityType
                 ,App.Types.UnlistedEquityType
@@ -139,18 +141,21 @@ namespace ECR_System_v2.UserControls
             double Balance = 0;
             var mNow = DateUtils.TicksToMillis(DateTime.Now.Ticks);
             ItemValue[][] Values = await mDataLoader.fetchStatementOfFinancialPosition(mFund.Name, mNow);
+            int k = 0;
             foreach(ItemValue[] items in Values)
             {
                 foreach(ItemValue item in items) {
+                    if(k==0)
                     Balance += Double.Parse(item.Value);
-                    item.Value = StringUtils.Format(Double.Parse(item.Value)) + " ZWK";
+                    item.Value = StringUtils.Format(Double.Parse(item.Value)) + " "+mFund.Currency.Substring(mFund.Currency.Length - 4, 3); ;
                 }
+                k++;
             }
 
             AssetsSOFPDataGrid.ItemsSource = Values[0];
             LiabilitesSOFPDataGrid.ItemsSource = Values[1];
             CapitalSOFPDataGrid.ItemsSource = Values[2];
-            AssetsSOFPDataGridBalance.Text = StringUtils.Format(Balance) + " ZWK";
+            //AssetsSOFPDataGridBalance.Text = (Balance==0? StringUtils.Format(Balance): StringUtils.Format(Balance/2)) + " " + mFund.Currency.Substring(mFund.Currency.Length - 4, 3); ;
         }
 
         private async void initBankDetails()
@@ -167,6 +172,7 @@ namespace ECR_System_v2.UserControls
                  App.Types.PropertyType
                 ,App.Types.GovernmentBondType
                 ,App.Types.GovernmentTreasuryBillType
+                ,App.Types.TermDepositType
                 ,App.Types.OtherInvestmentsType
                 ,App.Types.ListedEquityType
                 ,App.Types.UnlistedEquityType
@@ -183,12 +189,12 @@ namespace ECR_System_v2.UserControls
                     if (mItemValue.Value != null)
                     {
 
-                        mItemValue.SecondaryValue = StringUtils.Format(Double.Parse(mItemValue.Value)) + " ZWK";
+                        mItemValue.SecondaryValue = StringUtils.Format(Double.Parse(mItemValue.Value)) + " " + mFund.Currency.Substring(mFund.Currency.Length - 4, 3); ;
                         Balance += Double.Parse(mItemValue.Value);
                     }
                 }
             }
-            StatmentsDataGrid.Columns.Clear();
+           StatmentsDataGrid.Columns.Clear();
             StatmentsDataGrid.HeadersVisibility = DataGridHeadersVisibility.None;
             String[] Bindings = new String[] { "Name", "SecondaryValue" };
 
@@ -203,9 +209,11 @@ namespace ECR_System_v2.UserControls
                 
 
             }
-            StatmentsDataGridBalance.Text = StringUtils.Format(Balance) + " ZWK"; 
+            StatmentsDataGridBalance.Text = StringUtils.Format(Balance) + " " + mFund.Currency.Substring(mFund.Currency.Length - 4, 3); ; 
             StatmentsDataGrid.ItemsSource = Values;
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e) { }
         private  void SelectStatement(object sender, RoutedEventArgs e)
         {
             ObservableCollection<ItemValue> items =  IncomeStatementDataGrid.ItemsSource as ObservableCollection<ItemValue>;
@@ -237,6 +245,7 @@ namespace ECR_System_v2.UserControls
                  App.Types.PropertyType
                 ,App.Types.GovernmentBondType
                 ,App.Types.GovernmentTreasuryBillType
+                ,App.Types.TermDepositType
                 ,App.Types.OtherInvestmentsType
                 ,App.Types.ListedEquityType
                 ,App.Types.UnlistedEquityType
@@ -344,7 +353,7 @@ namespace ECR_System_v2.UserControls
                 ItemValue[] Values = await mDataLoader.fetchBalances(mFund.Name, mFirstDayOfQuater, mNow, Types[index]);
                 foreach(ItemValue mItemValue in Values)
                 {
-                    mItemValue.SecondaryValue = "ZMW";
+                    mItemValue.SecondaryValue = mFund.Currency.Substring(mFund.Currency.Length-4, 3);
                     mItemValue.Value = StringUtils.Format(Double.Parse(mItemValue.Value));
                     if (SupoortedBalacneTypes[index].Contains(mItemValue.Name))
                         SupportedValues.Add(mItemValue);
@@ -358,6 +367,7 @@ namespace ECR_System_v2.UserControls
                     , new String[] {"Asset", "Purchase","Maturity","Nominal Value", "Value at Start of Quater", "Interest Received","Accured Interest", "Value" }
                     , new String[] {"Asset", "Purchase","Maturity","Nominal Value", "Value at Start of Quater", "Interest Received","Accured Interest", "Value" }
                     , new String[] {"Asset", "Purchase","Maturity","Nominal Value", "Value at Start of Quater", "Interest Received","Accured Interest", "Value" }
+                    , new String[] {"Asset", "Purchase","Maturity","Nominal Value", "Value at Start of Quater", "Interest Received","Accured Interest", "Value" }
                     , new String[] {"Equity", "Purchase","Number of Shares", "Value at Start of Quater", "Value" }
                     , new String[] {"Equity", "Purchase","Number of Shares", "Value at Start of Quater", "Value" }
                     , new String[] {"CIS", "Purchase","Number of Units", "Value at Start of Quater", "Value" }
@@ -365,6 +375,7 @@ namespace ECR_System_v2.UserControls
                   };
                 String[][] ColumnBindings = new String[][] {
                     new String[] { "Name", "DateFormated", "CurrentFormated", "EndValueFormated" }
+                    , new String[] { "Name", "DateFormated", "MaturityDateFormated", "Value", "CurrentFormated", "InterestReceivedFormated", "AccuredInterestFormated", "EndValueFormated" }
                     , new String[] { "Name", "DateFormated", "MaturityDateFormated", "Value", "CurrentFormated", "InterestReceivedFormated", "AccuredInterestFormated", "EndValueFormated" }
                     , new String[] { "Name", "DateFormated", "MaturityDateFormated", "Value", "CurrentFormated", "InterestReceivedFormated", "AccuredInterestFormated", "EndValueFormated" }
                     , new String[] { "Name", "DateFormated", "MaturityDateFormated", "Value", "CurrentFormated", "InterestReceivedFormated", "AccuredInterestFormated", "EndValueFormated" }
@@ -414,23 +425,25 @@ namespace ECR_System_v2.UserControls
             long start = DateUtils.TicksToMillis(DateTime.Now.Ticks);
             long end = DateUtils.TicksToMillis(DateTime.Now.AddMonths(-6).Ticks);
 
-            String[] Types = new String[] {App.Types.PropertyType,App.Types.GovernmentBondType,App.Types.GovernmentTreasuryBillType,
+            String[] Types = new String[] {App.Types.PropertyType,App.Types.GovernmentBondType,App.Types.GovernmentTreasuryBillType
+                ,App.Types.TermDepositType,
                 App.Types.OtherInvestmentsType,App.Types.ListedEquityType
                            ,App.Types.UnlistedEquityType,App.Types.CISType,App.Types.PropertyType,"*"};
 
             String[] TypesMinusOne = new String[] {App.Types.PropertyType,App.Types.GovernmentBondType,App.Types.GovernmentTreasuryBillType,
+                App.Types.TermDepositType,
                 App.Types.OtherInvestmentsType,App.Types.ListedEquityType
                            ,App.Types.UnlistedEquityType,App.Types.CISType,App.Types.PropertyType};
 
             List<Double[]> ChartValues = new List<double[]>();
-            String[] Names = new String[] {"Investment Properties","Investment Bonds","Investment Treasury Bills","Funds Placements And Other Investments","Listed Equities"
+            String[] Names = new String[] {"Investment Properties","Investment Bonds","Investment Treasury Bills","Investment Term Deposit","Funds Placements And Other Investments","Listed Equities"
                            ,"Unlisted Equities","Collective Investment Schemes","Loans And Recievables","Total Investment Income"};
 
-            String[] NamesShort= new String[] {"Property","Bonds","Treasury Bills","Other Investments","Equities"
+            String[] NamesShort= new String[] {"Property","Bonds","Treasury Bills","Term Deposits","Other Investments","Equities"
                            ,"Unlisted Equities","CIS","Loans And Recievables","Total Investment Income"};
             
 
-            ShadowDepth[] ValuesObjs = new ShadowDepth[] { ShadowDepth.Depth0, ShadowDepth.Depth0, ShadowDepth.Depth0, ShadowDepth.Depth0, ShadowDepth.Depth0
+            ShadowDepth[] ValuesObjs = new ShadowDepth[] { ShadowDepth.Depth0, ShadowDepth.Depth0, ShadowDepth.Depth0, ShadowDepth.Depth0, ShadowDepth.Depth0, ShadowDepth.Depth0
                 ,ShadowDepth.Depth0, ShadowDepth.Depth0, ShadowDepth.Depth0, ShadowDepth.Depth0 };
             List<ItemValue> mItemValues = new List<ItemValue>();
 
@@ -438,7 +451,7 @@ namespace ECR_System_v2.UserControls
 
             for (int i=0;i< Values.Length; i++) {
                 
-                mItemValues.Add(new ItemValue(Names[i], StringUtils.Format(Values[i]) + " ZWK", ValuesObjs[i]));
+                mItemValues.Add(new ItemValue(Names[i], StringUtils.Format(Values[i]) + " ", ValuesObjs[i]));
             }
 
             IncomeStatementDataGrid.ItemsSource =new ObservableCollection<ItemValue> (mItemValues);

@@ -54,9 +54,12 @@ namespace ECR_System_v2
         }
         private void ImportNext(object sender, RoutedEventArgs e)
         {
+            ImportPanel.Visibility = Visibility.Collapsed;
+            LottieAnimationViewImport.Visibility = Visibility.Visible;
+            TextBlockImport.Visibility = Visibility.Visible;
             if (mImportClientsNames!=null && mImportClientId!=null&& mImportAmount!=null&& mImportDate!=null)
             {
-                ImportProgess.SelectedIndex = ImportProgess.SelectedIndex + 1;
+           //     ImportProgess.SelectedIndex = ImportProgess.SelectedIndex + 1;
             }
         }
 
@@ -152,6 +155,10 @@ namespace ECR_System_v2
             mImportEmailAddresses = null;
             mImportDate = null;
             mImportAmount = null;
+
+            LottieAnimationViewImport.PauseAnimation();
+            LottieAnimationViewImport.FileName = "./Resources/4547-simple-sliding-bars.json";
+            LottieAnimationViewImport.PlayAnimation();
 
             excelGrid.Load(szFilePath);
 
@@ -364,8 +371,15 @@ namespace ECR_System_v2
                     setAssetDetailPaneVisibility(AssetDetailPanes, 3);
                 }
             };
+            
             NewPurchaseContentGovernmentTBRadioBtn.Checked += (a, b) => {
                 if ((Boolean)NewPurchaseContentGovernmentTBRadioBtn.IsChecked)
+                {
+                    setAssetDetailPaneVisibility(AssetDetailPanes, 3);
+                }
+            };
+            NewPurchaseContentTBRadioBtn.Checked += (a, b) => {
+                if ((Boolean)NewPurchaseContentTBRadioBtn.IsChecked)
                 {
                     setAssetDetailPaneVisibility(AssetDetailPanes, 3);
                 }
@@ -557,7 +571,7 @@ namespace ECR_System_v2
                 else if (headerText.Equals("Asset Details"))
                 {
 
-                    PurchaseDatePicker.SelectedDate = (DateTime)Calendar.SelectedDate;
+                    PurchaseDatePicker.SelectedDate = Calendar.SelectedDate!=null?(DateTime)Calendar.SelectedDate: DateTime.Now;
                     CisNameTextBox.Text = AssetNameTextBox.Text;
                 }
             }
@@ -623,6 +637,14 @@ namespace ECR_System_v2
                         mSecurity.MaturityDate = DateUtils.TicksToMillis(((DateTime)MaturityDatePicker.SelectedDate).Ticks);
                     }
 
+                    else if ((Boolean)NewPurchaseContentTBRadioBtn.IsChecked)
+                    {
+                        //mSecurity.Type = "Government Treasury Bill";
+                        mSecurity.Type = NewPurchaseContentTBRadioBtn.Content.ToString();
+                        mSecurity.Value = Double.Parse(NominalValueTextBox.Text);
+                        mSecurity.DailyInterest = Double.Parse(DailyInterestTextBox.Text);
+                        mSecurity.MaturityDate = DateUtils.TicksToMillis(((DateTime)MaturityDatePicker.SelectedDate).Ticks);
+                    }
                     ReturnResult mReturnResult = await mDataLoader.AddSecurity(mSecurity) as ReturnResult;
 
                     NewPurchaseContentPropertyRadioBtn.IsChecked = true;
