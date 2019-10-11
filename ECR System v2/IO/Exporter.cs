@@ -530,7 +530,8 @@ namespace ECR_System_v2.IO
             }
             catch(Exception e) { }
         }
-        public static  void ExportPdf( FundUnitTrans[] mFundUnitTrans, Fund mFund,String clientName) {
+
+        public static  void ExportPdf( FundUnitTrans[] mFundUnitTrans, Fund mFund,String clientName,String dir) {
            Console.WriteLine("Exporting PDF for "+ clientName);
 
                 
@@ -539,7 +540,7 @@ namespace ECR_System_v2.IO
                 float PADDING = 50f;
 
                 PDDocument document = new PDDocument();
-                PDPage page = new PDPage(PDRectangle.A4);
+                PDPage page = new PDPage(PDRectangle.A2);
 
                 float startY = page.getMediaBox().getHeight() - PADDING;
 
@@ -555,39 +556,332 @@ namespace ECR_System_v2.IO
                 java.util.List data = new java.util.ArrayList();
 
                 data.add(new java.util.ArrayList(
-                               java.util.Arrays.asList("Description", "Transaction Value", "Acc. Transaction Value"
+                               java.util.Arrays.asList("Date","Description", "Transaction Value", "Acc. Transaction Value"
                                , "Change in Units", "Acc. No. of Units", "Unit Price"
                                , "Total Capital Gains", "Gross Investment Amount")));
                 if (mFundUnitTrans != null)
                 {
                     double previousAmount = 0;
                     double previousUnits = 0;
+                double previosunitprice = 0;
                     foreach (FundUnitTrans mFundUnitTran in mFundUnitTrans)
                     {
-                        String description = (mFundUnitTran.TransactionType== App.Purchase)?"Purchase of Units": "Redemption of Units";
-                        previousAmount = (mFundUnitTran.TransactionType == App.Purchase) ? previousAmount+mFundUnitTran.Amount : previousAmount - mFundUnitTran.Amount;
-                        previousUnits = (mFundUnitTran.TransactionType == App.Purchase) ? previousUnits + mFundUnitTran.Units : previousUnits - mFundUnitTran.Units;
-                        double unitprice = mFundUnitTran.Amount / mFundUnitTran.Units;
+                        String description = (mFundUnitTran.TransactionType== App.Purchase)
+                        ?"Purchase of Units": (mFundUnitTran.TransactionType == App.Redemption) ? "Redemption of Units" : "N/A";
+                        previousAmount = (mFundUnitTran.TransactionType == App.Purchase) ? previousAmount+mFundUnitTran.Amount 
+                        : (mFundUnitTran.TransactionType == App.Redemption) ? previousAmount - mFundUnitTran.Amount:
+                        mFundUnitTran.Amount;
+                    previousUnits = (mFundUnitTran.TransactionType == App.Purchase) ? previousUnits + mFundUnitTran.Units 
+                        : (mFundUnitTran.TransactionType == App.Redemption) ? previousUnits - mFundUnitTran.Units:
+                        previousUnits;
+                    double unitprice = 0;
+                    if (mFund.Name.Equals("ZICA") && mFundUnitTran.DateInMillis < App.ZicaDefaults.DefaultZicaDate)
+                        unitprice = 10;
+                    else
+                     unitprice = mFundUnitTran.Amount / mFundUnitTran.Units;
+                    var tansValue = (mFundUnitTran.TransactionType == App.All) ? "" : mFundUnitTran.Amount + " " + mFund.Currency;
+                    var chaingInUnits = (mFundUnitTran.TransactionType == App.All) ? "" : mFundUnitTran.Units.ToString();
+                      double capitalGain = (unitprice- previosunitprice)*previousUnits;
+
+                    previosunitprice = unitprice;
                         data.add(new java.util.ArrayList(
-                                       java.util.Arrays.asList(description, mFundUnitTran.Amount+" "+ mFund.Currency, previousAmount + " " + mFund.Currency
-                                       , mFundUnitTran.Units.ToString(), previousUnits.ToString(), unitprice.ToString()
-                                       , "0", previousAmount)));
+                                       java.util.Arrays.asList(mFundUnitTran.DateInMillisFormted,description, tansValue, previousAmount + " " + mFund.Currency
+                                       , chaingInUnits, previousUnits.ToString(), unitprice.ToString()
+                                       ,MathUtils.round( capitalGain,2), MathUtils.round(previousAmount,2))));
                     }
                 }
-              
-                BaseTable dataTable = new BaseTable(yStart, yStartNewPage, bottomMargin, tableWidth, margin, document, page, true, true);
-                DataTable t = new DataTable(dataTable, page);
-                t.addListToTable(data, DataTable.HASHEADER);
-                dataTable.draw();
+            Console.WriteLine("img path " + System.IO.Directory.GetCurrentDirectory() + "/Resources/erc_start_logo.png");
+            be.quodlibet.boxable.image.Image image = new be.quodlibet.boxable.image.Image(javax.imageio.ImageIO.read(new java.io.File(System.IO.Directory.GetCurrentDirectory() + "/Resources/erc_start_logo_out.png")));
+            // imagine we have pretty big logo and we want scale that a little bit
+            float imageWidth = 175;
+            image = image.scaleByWidth(imageWidth);
 
-                contentStream.close();
+
+                BaseTable dataTable = new BaseTable(yStart, yStartNewPage, bottomMargin, tableWidth, margin, document, page, true, true);
+
+            be.quodlibet.boxable.Row headerRow = dataTable.createRow(15f);
+            for(int i=0;i< ((java.util.ArrayList)data.get(0) ).size(); i++)
+            {
+               var value = ((java.util.ArrayList)data.get(0)).get(i).ToString();
+
+                be.quodlibet.boxable.Cell cell = headerRow.createCell(100f/9f, value);
+                cell.setFont(PDType1Font.HELVETICA);
+                cell.setFillColor(Color.decode("#ff9800"));
+
+
+            }
+
+            dataTable.addHeaderRow(headerRow);
+            for (int i=1;i< data.size();i++)
+            {
+                be.quodlibet.boxable.Row row = dataTable.createRow(10f);
+
+                for (int k = 0; k < ((java.util.ArrayList)data.get(i)).size(); k++)
+                {
+                    var value = ((java.util.ArrayList)data.get(i)).get(k).ToString();
+
+                    be.quodlibet.boxable.Cell cell = row.createCell(100f / 9f, value);
+                    cell.setFont(PDType1Font.HELVETICA);
+                    cell.setFillColor(Color.decode("#fafafa"));
+
+                }
+                
+            }
+
+            //   DataTable t = new DataTable(dataTable, page);
+
+            //   t.addListToTable(data, DataTable.HASHEADER);
+
+            dataTable.draw();
+
+            image.draw(document, contentStream, 50, page.getMediaBox().getHeight()-25);
+
+            contentStream.close();
                 document.addPage(page);
-                document.save("./"+ clientName+" test.pdf");
+                document.save(dir+"/" + clientName+".pdf");
                 document.close();
 
                 Console.WriteLine("Complete Exporting PDF");
            
             }
+        public static async void ExportChartValuesNampak(List<ItemValue> mItemValues, Security[] mSecurities, String outpath)
+        {
+            await Task.Run(() =>
+            {
+
+                XSSFWorkbook templateworkbook;
+                var path = System.IO.Directory.GetCurrentDirectory() + "/Resources/monthly_template.xlsx";
+                using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+                {
+                    templateworkbook = new XSSFWorkbook(fs);
+
+
+                }
+                var newsheetName = "sheet1";
+                //  XSSFWorkbook workBookExport = new XSSFWorkbook();
+
+                //((XSSFSheet)templateworkbook.GetSheetAt(0)).CopyTo(workBookExport, newsheetName, true, true);
+                XSSFSheet Sheet = (XSSFSheet)templateworkbook.GetSheetAt(0);
+                //replaceInSheet(Sheet, new Item(date, Name, Amount, Units, MemberId, Email), first);
+
+                IEnumerator rowIterator = Sheet.GetEnumerator();
+                List<Object> data = new List<Object>();
+                String preDate = "";
+                while (rowIterator.MoveNext())
+                {
+                    IRow row = (IRow)rowIterator.Current;
+                    IEnumerator<ICell> cellIterator = row.GetEnumerator();
+
+                    while (cellIterator.MoveNext())
+                    {
+                        ICell cell = cellIterator.Current;
+                        int mCellIndex = cell.ColumnIndex;
+                        int rowIndex = cell.RowIndex;
+
+                        if (rowIndex == 2 && mCellIndex == 1)
+                        {
+                            double value = 0;
+                            foreach (var itemValue in mItemValues)
+                            {
+                                if (itemValue.Name.Equals("Bonds") || itemValue.Name.Equals("Treasury Bills"))
+                                {
+                                    value += Double.Parse(itemValue.Value);
+                                }
+                            }
+
+                            cell.SetCellValue(value);
+                        }
+
+                        else if (rowIndex == 3 && mCellIndex == 1)
+                        {
+                            double value = 0;
+                            foreach (var itemValue in mItemValues)
+                            {
+                                if (itemValue.Name.Equals("Equities"))
+                                {
+                                    value += Double.Parse(itemValue.Value);
+                                }
+                            }
+
+                            cell.SetCellValue(value);
+                        }
+
+
+                        else if (rowIndex == 4 && mCellIndex == 1)
+                        {
+                            double value = 0;
+                            foreach (var itemValue in mItemValues)
+                            {
+                                if (itemValue.Name.Equals("Cash"))
+                                {
+                                    value += Double.Parse(itemValue.Value);
+                                }
+                            }
+
+                            cell.SetCellValue(value);
+                        }
+
+                        else if (rowIndex == 5 && mCellIndex == 1)
+                        {
+                            double value = 0;
+                            foreach (var itemValue in mItemValues)
+                            {
+                                if (itemValue.Name.Equals("Term Deposits"))
+                                {
+                                    value += Double.Parse(itemValue.Value);
+                                }
+                            }
+
+                            cell.SetCellValue(value);
+                        }
+
+
+                    }
+
+
+                }
+
+                String[] equitColms = new String[] {  "Stock","No. of shares","Monthly Price","Opening Value"
+                    ,"Sold/Purchased","Dividens Applicable",
+                "Monthly Change","Month end prices","Closing value","Portfolio performance"};
+                var columCount = equitColms.Length;
+                int currentRowIndex = 15;
+                currentRowIndex++;
+                IRow secRow = Sheet.CreateRow(currentRowIndex);
+                for (int i = 0; i < equitColms.Length; i++)
+                {
+                    XSSFFont fontHeader = secRow.Sheet.Workbook.CreateFont() as XSSFFont;
+                    fontHeader.FontHeightInPoints = ((short)11);
+                    fontHeader.FontName = ("Arial Narrow");
+                    fontHeader.IsBold = true;
+
+                    XSSFCellStyle style = secRow.Sheet.Workbook.CreateCellStyle() as XSSFCellStyle;
+                    style.SetFont(fontHeader);
+                    ICell cell = secRow.CreateCell(i);
+                    cell.CellStyle = style;
+                    cell.SetCellValue(equitColms[i]);
+
+
+                }
+                foreach (Security mSecurity in mSecurities)
+                {
+                    if (mSecurity.Type.Equals(App.Types.ListedEquityType))
+                    {
+                        currentRowIndex++;
+                        secRow = Sheet.CreateRow(currentRowIndex);
+                        for (int i=0;i< equitColms.Length; i++)
+                        {ICell cell = secRow.CreateCell(i);
+                            if (i == 0)
+                                cell.SetCellValue(mSecurity.Name);
+                            else if (i == 1)
+                                cell.SetCellValue(mSecurity.Nshares);
+
+                            else if (i == 2)
+                                cell.SetCellValue(mSecurity.Value);
+
+                            else if (i == 3)
+                                cell.SetCellValue(mSecurity.Value * mSecurity.Nshares);
+                            else if (i == 6)
+                                cell.SetCellValue((mSecurity.EndValue ) - (mSecurity.Value * mSecurity.Nshares));
+                            else if (i == 7)
+                                cell.SetCellValue(mSecurity.EndValue / mSecurity.Nshares);
+                            else if (i == 8)
+                                cell.SetCellValue(mSecurity.EndValue );
+                        }
+                    }
+                }
+
+                equitColms = new String[] {  "FIXED INCOME","COST","Accrued Interest","Market Value"
+                    ,"Interest Received","Monthly Interest",
+                "Monthly ROI%","Holding Return"};
+                currentRowIndex++;
+                currentRowIndex++;
+                secRow = Sheet.CreateRow(currentRowIndex);
+                // currentRowIndex = 15;
+                for (int i = 0; i < equitColms.Length; i++)
+                {
+                    XSSFFont fontHeader = secRow.Sheet.Workbook.CreateFont() as XSSFFont;
+                    fontHeader.FontHeightInPoints = ((short)11);
+                    fontHeader.FontName = ("Arial Narrow");
+                    fontHeader.IsBold = true;
+
+                    XSSFCellStyle style = secRow.Sheet.Workbook.CreateCellStyle() as XSSFCellStyle;
+                    style.SetFont(fontHeader);
+                    ICell cell = secRow.CreateCell(i);
+                    cell.CellStyle = style;
+                    cell.SetCellValue(equitColms[i]);
+
+
+                }
+
+
+
+                foreach (Security mSecurity in mSecurities)
+                {
+                    if (!mSecurity.Type.Equals(App.Types.ListedEquityType))
+                    {
+                        currentRowIndex++;
+                        secRow = Sheet.CreateRow(currentRowIndex);
+                        for (int i = 0; i < equitColms.Length; i++)
+                        {
+                            ICell cell = secRow.CreateCell(i);
+                            if (i == 0)
+                                cell.SetCellValue(mSecurity.Name);
+                            else if (i == 1)
+                                cell.SetCellValue(mSecurity.Value);
+
+                            else if (i == 2)
+                                cell.SetCellValue(mSecurity.AccuredInterest);
+
+                            else if (i == 3)
+                                cell.SetCellValue(mSecurity.CurrentValue);
+                            else if (i == 4)
+                                cell.SetCellValue((mSecurity.InterestReceived));
+                            else if (i == 5)
+                                cell.SetCellValue(mSecurity.DailyInterest *30);
+                            else if (i == 6)
+                            {
+                                
+                                
+                            XSSFCellStyle style = secRow.Sheet.Workbook.CreateCellStyle() as XSSFCellStyle;
+                            style.SetDataFormat(secRow.Sheet.Workbook.CreateDataFormat().GetFormat("0.000%"));
+
+                                cell.SetCellValue(((mSecurity.DailyInterest * 30) / mSecurity.Value) );
+                                cell.CellStyle = style;
+
+                            }
+                            else if (i == 7)
+                            {
+
+
+                                XSSFCellStyle style = secRow.Sheet.Workbook.CreateCellStyle() as XSSFCellStyle;
+                                style.SetDataFormat(secRow.Sheet.Workbook.CreateDataFormat().GetFormat("0.000%"));
+
+                                cell.SetCellValue(((mSecurity.AccuredInterest) / mSecurity.Value));
+                                cell.CellStyle = style;
+
+                            }
+                        }
+                    }
+                }
+
+
+                for (int i = 0; i < columCount; i++)
+                {
+                    Sheet.AutoSizeColumn(i);
+
+                }
+                XSSFFormulaEvaluator.EvaluateAllFormulaCells(templateworkbook);
+
+                using (FileStream file = new FileStream(outpath, FileMode.Create, FileAccess.Write))
+                {
+                    templateworkbook.Write(file);
+                    file.Close();
+                }
+
+            });
+
+        }
         public async void Import(String path)
         {
 
@@ -746,7 +1040,7 @@ namespace ECR_System_v2.IO
                         catch (Exception e) { }
         }*/
                   //  CopyStyle(workBookExportfinal);
-                    
+
                     //evaluator.EvaluateAll();
 
                 });

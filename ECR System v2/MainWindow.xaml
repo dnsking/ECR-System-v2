@@ -264,6 +264,7 @@
                                                 <ComboBox materialDesign:HintAssist.Hint="Fund" Name="NewPurchaseContentFundCombo"  Width="200" materialDesign:HintAssist.IsFloating="True"
                                   MaxDropDownHeight="200"
                                   VerticalAlignment="Center" Margin="16 0 0 0">
+                                                    
                                                 </ComboBox>
                                             </StackPanel>
 
@@ -278,7 +279,6 @@
                                     </model:Step.Header>
                                     <model:Step.Content>
                                         <StackPanel Orientation="Vertical">
-
                                             <Calendar x:Name="Calendar" Background="Transparent" />
                                             <controls:StepButtonBar  Back="BACK"  Continue="CONTINUE"  />
                                         </StackPanel>
@@ -453,25 +453,36 @@
                             </StackPanel>
                                     <rg:ReoGridControl Margin="0 16 0 0" x:Name="excelGrid" Width="800"  Height="402" HorizontalAlignment="Center">
                             </rg:ReoGridControl>
-                            <StackPanel Orientation="Horizontal">
+                            <Grid>
 
-                                <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="8" Width="150" Click="ImportPrev">
-                                    Cancle
-                                </Button>
-                                <Button Style="{StaticResource MaterialDesignRaisedButton}" Margin="8" Width="150" Click="ImportNext">
-                                    Import
-                                </Button>
-                            </StackPanel>
+                                <StackPanel Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Left">
+
+                                    <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="8" Width="150" Click="ImportPrev">
+                                        Cancle
+                                    </Button>
+                                    <Button Style="{StaticResource MaterialDesignRaisedButton}" Margin="8" Width="150" Click="ImportNext">
+                                        Import
+                                    </Button>
+                                </StackPanel>
+                                <TextBlock   VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignHeadlineTextBlock}" Margin="0 0 16 0" FontWeight="Black">Ctrl+C To Select Values</TextBlock>
+
+                            </Grid>
                            
                         </StackPanel>
+                        <StackPanel>
 
-                        <TextBlock  Visibility="Collapsed" x:Name="TextBlockImport" VerticalAlignment="Top" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignDisplay1TextBlock}" Margin="16">Importing</TextBlock>
+                            <TextBlock  Visibility="Collapsed" x:Name="TextBlockImport" VerticalAlignment="Top" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignDisplay1TextBlock}" Margin="16">Importing</TextBlock>
 
-                        <lottieSharp:LottieAnimationView x:Name="LottieAnimationViewImport"
-                                                     AutoPlay="True" Height="98" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                 Visibility="Collapsed"
+                            <lottieSharp:LottieAnimationView x:Name="LottieAnimationViewImporting"
+                                                     AutoPlay="True"  VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                 Visibility="Collapsed" Height="300" Width="300"
                                                      
                                                   />
+                            <ProgressBar   
+                     IsIndeterminate="False" Maximum="100" Minimum="0" Value="0"  x:Name="ImportingProgressBar" Height="4" Width="300" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                 Visibility="Collapsed"/>
+                        </StackPanel>
+                      
                     </Grid>
                    
 
@@ -778,6 +789,20 @@
             </Grid>
 
         </materialDesign:DialogHost>
+
+        <materialDesign:Card  Name="OpeningPanel" Visibility="Collapsed" materialDesign:ShadowAssist.ShadowDepth="Depth1" Padding="16" Height="300" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#e1f5fe" >
+            <StackPanel Height="300" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#e1f5fe">
+                <lottieSharp:LottieAnimationView x:Name="LottieAnimationViewImport"
+                                                     AutoPlay="True" Height="208" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                     
+                                                  />
+
+                <TextBlock  Style="{StaticResource MaterialDesignSubheadingTextBlock}" FontWeight="Medium"  HorizontalAlignment="Center" Foreground="#212121" Margin="8" >OPENING</TextBlock>
+
+                <TextBlock Name="OpeningPanelTextBlock"  Style="{StaticResource MaterialDesignSubheadingTextBlock}" FontWeight="Medium" Foreground="#212121" Margin="8" TextAlignment="Justify" >someFIle.xsl</TextBlock>
+            </StackPanel>
+        </materialDesign:Card>
+       
         <Grid Visibility="Collapsed" Name="DragOverlay"
             Background="#73fafafa" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Grid Width="400" Height="500" Background="#fafafa" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -794,6 +819,8 @@
                                                   />
             </Grid>
         </Grid>
+        
+        
     </Grid>
 
 </Window>

@@ -33,8 +33,9 @@
                                                      AutoPlay="True" VerticalAlignment="Center" HorizontalAlignment="Center"
                                                      Height="300" Width="300"
                                                   />
+                    <TextBlock Name="ExportProgressTextBlock"  FontSize="18" Foreground="#424242" FontWeight="Medium" HorizontalAlignment="Center"  ></TextBlock>
 
-                    <ProgressBar Orientation="Horizontal"  IsIndeterminate="True" HorizontalAlignment="Center" Width="200"  Margin="8" />
+                    <ProgressBar Orientation="Horizontal" Name="ExportProgressBar"  IsIndeterminate="False" HorizontalAlignment="Center" Width="200"  Margin="8" />
 
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
@@ -104,30 +105,30 @@
                         Redemptions
                     </CheckBox>
 
-                    <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="16 0 8 8" Width="200"
+                    <Button Click="ShowExportPopup" Style="{StaticResource MaterialDesignFlatButton}" Margin="16 0 8 8" Width="200"
                         Grid.Column="1"
                     >
                         Export Statements</Button>
 
                     <materialDesign:PopupBox  StaysOpen="True"
-                                     Margin="0 0 48 0">
+                                     Margin="0 0 48 0" Name="ExportPopup">
                         <StackPanel Width="300" Margin="8,8,8,8">
 
-                            <ComboBox  materialDesign:HintAssist.Hint="Statements Format" Width="300" materialDesign:HintAssist.IsFloating="True"
+                            <ComboBox Visibility="Collapsed" Name="ExportFormatCombox" materialDesign:HintAssist.Hint="Statements Format" Width="300" materialDesign:HintAssist.IsFloating="True"
                                   MaxDropDownHeight="300" Margin="0 8 0 0" HorizontalAlignment="Left">
 
                                 <ComboBoxItem IsSelected="True">PDF</ComboBoxItem>
                                 <ComboBoxItem>Excel</ComboBoxItem>
                             </ComboBox>
 
-                            <ComboBox  materialDesign:HintAssist.Hint="Month" Width="300" materialDesign:HintAssist.IsFloating="True"
+                            <ComboBox Name="ExportMonthCombox" materialDesign:HintAssist.Hint="Month" Width="300" materialDesign:HintAssist.IsFloating="True"
                                   MaxDropDownHeight="300" Margin="0 8 0 0" HorizontalAlignment="Left">
 
                                 <ComboBoxItem IsSelected="True">All</ComboBoxItem>
                                 <ComboBoxItem>Jan 2018</ComboBoxItem>
                             </ComboBox>
 
-                            <ComboBox  materialDesign:HintAssist.Hint="Send Via Email" Width="300" materialDesign:HintAssist.IsFloating="True"
+                            <ComboBox Name="ExportSendMailCombox" materialDesign:HintAssist.Hint="Send Via Email" Width="300" materialDesign:HintAssist.IsFloating="True"
                                   MaxDropDownHeight="300" Margin="0 8 0 0" HorizontalAlignment="Left">
 
                                 <ComboBoxItem IsSelected="True">Yes</ComboBoxItem>
@@ -214,7 +215,7 @@
                         Binding="{Binding DateInMillisFormted}"
                                             />
                                         <DataGridTextColumn 
-                                            Header="Client Name"
+                                            Header="Client ID"
                                                          Width="1*"
                         Binding="{Binding Client}"
                                             />

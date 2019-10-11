@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using MaterialDesignThemes.Wpf.Transitions;
+using Notifications.Wpf;
 
 namespace ECR_System_v2.Utils
 {
@@ -14,6 +15,21 @@ namespace ECR_System_v2.Utils
         public static void ClearText(TextBox[] mTextBoxs) {
             foreach (TextBox mTextBox in mTextBoxs)
                 mTextBox.Text = "";
+        }
+
+        public static void ShowNotification(String message, NotificationType notitype)
+        {
+            var notificationManager = new NotificationManager();
+            notificationManager.Show(new NotificationContent
+            {
+                Title = "ECR System",
+                Message = message,
+                Type = notitype
+            });
+        }
+        public static void ShowNotification(String message)
+        {
+            ShowNotification(message, NotificationType.Information);
         }
 
         public static void AnimateSlider(Transitioner mTransitioner, int ControlIndex)

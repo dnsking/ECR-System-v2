@@ -17,6 +17,11 @@ namespace ECR_System_v2.Data
         private Object thirdValue;
         private Object forthValue;
         public ItemValue() { }
+        public ItemValue(String Name, String Value)
+        {
+            this.name = Name;
+            this.value = Value;
+        }
         public ItemValue(String Name, String Value, Object ValueDouble)
         {
             this.name = Name;

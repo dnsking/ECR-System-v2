@@ -21,6 +21,7 @@ using ECR_System_v2.Loaders.Listeners;
 using ECR_System_v2.Utils;
 using MaterialDesignExtensions.Controls;
 using MaterialDesignExtensions.Model;
+using Notifications.Wpf;
 
 namespace ECR_System_v2
 {
@@ -52,15 +53,156 @@ namespace ECR_System_v2
             // new Exporter().SendMails();
             initInput();
         }
-        private void ImportNext(object sender, RoutedEventArgs e)
+        private async void ImportNext(object sender, RoutedEventArgs e)
         {
-            ImportPanel.Visibility = Visibility.Collapsed;
-            LottieAnimationViewImport.Visibility = Visibility.Visible;
-            TextBlockImport.Visibility = Visibility.Visible;
-            if (mImportClientsNames!=null && mImportClientId!=null&& mImportAmount!=null&& mImportDate!=null)
+            if (mImportClientsNames != null && mImportClientId != null && mImportAmount != null && mImportDate != null)
             {
-           //     ImportProgess.SelectedIndex = ImportProgess.SelectedIndex + 1;
+               // UiUnits.ShowNotification("Importing " + szFilePath + " into " + mFundSelected.Name);
+                ImportPanel.Visibility = Visibility.Collapsed;
+                LottieAnimationViewImporting.Visibility = Visibility.Visible;
+                TextBlockImport.Visibility = Visibility.Visible;
+                ImportingProgressBar.Visibility = Visibility.Visible;
+
+                var mClientList = new List<Client>();
+                var mFundUnitTransList = new List<FundUnitTrans>();
+
+                long dayMillis = 86400000;
+
+
+                for (int i = 0; i < mImportClientsNames.Length; i++)
+                {
+                    try
+                    {
+
+                        // var mNow = DateUtils.TicksToMillis(DateTime.ParseExact(mImportDate[i].Replace('.', '/').Replace(' ', '/'), "dd/MM/yyyy", null).Ticks) - dayMillis;
+                        var mNow = DateUtils.TicksToMillis(DateTime.ParseExact(mImportDate[i].Replace('.', '/').Replace(' ', '/'), "dd/MM/yyyy", null).Ticks);
+                        //var mFirstDayOfQuater = mNow - dayMillis;
+
+
+                        Client mClient = new Client();
+                        mClient.Fund = mFundSelected.Name;
+                        mClient.ClientName = mImportClientsNames[i];
+                        mClient.ClientPhysicalAdress = "";
+                        mClient.DateCreated = mNow;
+                        mClient.ClientId = mImportClientId[i];
+                        mClient.Open = App.Open;
+                        if (mImportEmailAddresses != null)
+                            mClient.ClientEmailAdress = mImportEmailAddresses[i];
+                        else
+                            mClient.ClientEmailAdress = "";
+
+                        mClientList.Add(mClient);
+
+                        FundUnitTrans mFundUnitTrans = new FundUnitTrans();
+                        mFundUnitTrans.Amount = Double.Parse(mImportAmount[i]);
+                        mFundUnitTrans.Client = mImportClientId[i];
+                        mFundUnitTrans.DateInMillis = mNow;
+                        mFundUnitTrans.Fund = mFundSelected.Name;
+                        //   mFundUnitTrans.Units = Double.Parse(mImportAmount[i]) / unitPrice;
+                        mFundUnitTrans.TransactionType = 0;
+
+                        mFundUnitTransList.Add(mFundUnitTrans);
+                    }
+                    catch(Exception ex) {
+                        var sizes = new long[] { mImportClientsNames.Length ,
+                        mImportClientId.Length,mImportAmount.Length,mImportDate.Length};
+                        if(sizes.Length != sizes.Distinct().Count())
+                        {
+                            double price;
+                            bool isDouble = Double.TryParse(mImportAmount[i], out price);
+                            if(isDouble)
+                            UiUnits.ShowNotification("Unable to import date "+ mImportDate[i]+". Date must be in dd/MM/yyyy format", NotificationType.Error);
+                            else UiUnits.ShowNotification("Unable to import amount " + mImportAmount[i] , NotificationType.Error);
+
+                        }
+                        else {
+                            UiUnits.ShowNotification("Number of Client Names, Client Ids, Transaction Amounts or Dates are not the same" , NotificationType.Error);
+
+                        }
+
+                        ImportPanel.Visibility = Visibility.Visible;
+                        ImportingProgressBar.Visibility = Visibility.Collapsed;
+                        TextBlockImport.Visibility = Visibility.Collapsed;
+                        break;
+                    }
+                }
+                if (ImportPanel.Visibility == Visibility.Visible)
+                {
+
+                    return;
+                }
+
+                mClientList.Sort((x, y) => x.DateCreated.CompareTo(y.DateCreated));
+                mFundUnitTransList.Sort((x, y) => x.DateInMillis.CompareTo(y.DateInMillis));
+               // var defaultZicaDate = DateUtils.TicksToMillis(DateTime.ParseExact("01/05/2019".Replace('.', '/').Replace(' ', '/'), "dd/MM/yyyy", null).Ticks);
+                for (int i = 0; i < mClientList.Count; i++)
+                {
+
+                    Client mClient = mClientList[i];
+                    if(mClient.ClientId!=null&& mClient.ClientId.Length > 0)
+                    {
+
+                        FundUnitTrans mFundUnitTrans = mFundUnitTransList[i];
+
+                        Console.WriteLine("date " + mFundUnitTrans.DateInMillisFormted);
+                        var mNow = mFundUnitTrans.DateInMillis - dayMillis;
+                        var mFirstDayOfQuater = mNow - dayMillis;
+                        double result = 0;
+                        if (mFundSelected.Name.Equals("ZICA") && mNow <App.ZicaDefaults.DefaultZicaDate)
+                            result = 10;
+                        else
+                            result = await FundUnits.GetUnitPrice(mFundSelected.Name, mFirstDayOfQuater, mNow);
+                        mFundUnitTrans.Units = mFundUnitTrans.Amount / result;
+                        ImportingProgressBar.Value = ((Convert.ToDouble(i + 1) / Convert.ToDouble(mClientList.Count)) * 100);
+                        Console.WriteLine("FUnd unit price " + result + " progressbar " + ((Convert.ToDouble(i + 1) / Convert.ToDouble(mClientList.Count)) * 100));
+
+                        await mDataLoader.addFundUnitClients(mClient);
+
+                        await mDataLoader.addFundUnitTransItem(mFundUnitTrans);
+                    }
+                    else {
+                        UiUnits.ShowNotification("Client ID for "+ mClient.ClientName+" missing. Entry skipped ", NotificationType.Error);
+
+                    }
+                }
+
+                  /*  foreach (var date in mImportDate)
+                {
+                    Console.WriteLine("date " + date);
+                    var mNow = DateUtils.TicksToMillis(DateTime.ParseExact(date.Replace('.', '/').Replace(' ', '/'), "dd/MM/yyyy", null).Ticks) - dayMillis;
+                    var mFirstDayOfQuater = mNow - dayMillis;
+                 var result=   await FundUnits.GetUnitPrice(mFundSelected.Name, mFirstDayOfQuater, mNow);
+                    Console.WriteLine("FUnd unit price " + result);
+                }*/
+                //     ImportProgess.SelectedIndex = ImportProgess.SelectedIndex + 1;
             }
+            else if(mImportClientsNames == null)
+            {
+                UiUnits.ShowNotification("Client Names Missing", NotificationType.Error);
+            }
+            else if (mImportClientId == null)
+            {
+                UiUnits.ShowNotification("Client Ids Missing", NotificationType.Error);
+            }
+            else if (mImportAmount == null)
+            {
+                UiUnits.ShowNotification("Transaction Amounts Missing", NotificationType.Error);
+            }
+            else if (mImportDate == null)
+            {
+                UiUnits.ShowNotification("Transaction Dates Missing", NotificationType.Error);
+            }
+
+            DialogGrid.IsOpen = false;
+            ImportPanel.Visibility = Visibility.Visible;
+            ImportingProgressBar.Visibility = Visibility.Collapsed;
+            TextBlockImport.Visibility = Visibility.Collapsed;
+
+            LottieAnimationViewImporting.Visibility = Visibility.Collapsed;
+
+            UiUnits.ShowNotification("Importation complete", NotificationType.Information);
+            ClientUserControl.load(mFundSelected);
+
         }
 
         private void ImportPrev(object sender, RoutedEventArgs e)
@@ -82,31 +224,32 @@ namespace ECR_System_v2
             // Handle your clipboard update here, debug logging example:
             if (DialogGrid.IsOpen && NewImportContent.IsVisible&&Clipboard.ContainsText())
             {
-                Console.WriteLine(Clipboard.GetText());
+                 Console.WriteLine(Clipboard.GetText());
                 if ((Boolean)ImportClientsNamesRadioButton.IsChecked) {
                     ImportClientsNamesIcon.Foreground = Brushes.Green;
-                    mImportClientsNames = Clipboard.GetText().Split(  new[] { Environment.NewLine },StringSplitOptions.None);
+                    mImportClientsNames = Clipboard.GetText().Split('\n');
 
                 }
                 else if ((Boolean)ImportClientIdRadioButton.IsChecked)
                 {
                     ImportClientIdIcon.Foreground = Brushes.Green;
-                    mImportClientId = Clipboard.GetText().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                    mImportClientId = Clipboard.GetText().Split('\n');
                 }
                 else if ((Boolean)ImportEmailAddressesRadioButton.IsChecked)
                 {
                     ImportEmailAddressesIcon.Foreground = Brushes.Green;
-                    mImportEmailAddresses = Clipboard.GetText().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                    mImportEmailAddresses = Clipboard.GetText().Split('\n');
                 }
                 else if ((Boolean)ImportDateRadioButton.IsChecked)
                 {
                     ImportDateIcon.Foreground = Brushes.Green;
-                    mImportDate = Clipboard.GetText().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                    mImportDate = Clipboard.GetText().Split('\n');
                 }
                 else if ((Boolean)ImportAmountRadioButton.IsChecked)
                 {
                     ImportAmountIcon.Foreground = Brushes.Green;
-                    mImportAmount = Clipboard.GetText().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                    mImportAmount= Clipboard.GetText().Split('\n');
+                    //   mImportAmount = Clipboard.GetText().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
                 }
             }
         }
@@ -137,15 +280,16 @@ namespace ECR_System_v2
         private void selectFund(Fund mFund)
         {
             ContentTransitioner.SelectedIndex = 1;
-            FundControl.load( mFund);
+            FundControl.load( mFund);   
+            this.mFundSelected = mFund; 
         }
-
-        private void DragFile_DragDrop(object sender, DragEventArgs e)
+        private Fund mFundSelected;
+        private async void DragFile_DragDrop(object sender, DragEventArgs e)
         {
-                Array szFile = (Array)e.Data.GetData(DataFormats.FileDrop);
-                szFilePath = szFile.GetValue(0).ToString();
+            Array szFile = (Array)e.Data.GetData(DataFormats.FileDrop);
+            szFilePath = szFile.GetValue(0).ToString();
             Console.WriteLine("szFilePath " + szFilePath);
-            DialogGrid.IsOpen = true;
+
 
             NewFundContent.Visibility = Visibility.Collapsed;
             NewPurchaseContent.Visibility = Visibility.Collapsed;
@@ -156,11 +300,40 @@ namespace ECR_System_v2
             mImportDate = null;
             mImportAmount = null;
 
+            OpeningPanelTextBlock.Text= System.IO.Path.GetFileName(szFilePath);
+
+            
             LottieAnimationViewImport.PauseAnimation();
-            LottieAnimationViewImport.FileName = "./Resources/4547-simple-sliding-bars.json";
+            LottieAnimationViewImport.FileName = "./Resources/985-phonological.json";
             LottieAnimationViewImport.PlayAnimation();
 
-            excelGrid.Load(szFilePath);
+
+
+
+            LottieAnimationViewImporting.PauseAnimation();
+            LottieAnimationViewImporting.FileName = "./Resources/985-phonological.json";
+            LottieAnimationViewImporting.PlayAnimation();
+
+
+            OpeningPanel.Visibility = Visibility.Visible;
+            excelGrid.Loaded += (a, b) => {
+
+                OpeningPanel.Visibility = Visibility.Collapsed;
+                DialogGrid.IsOpen = true;
+
+            };
+            try {
+
+                excelGrid.Load(szFilePath);
+               DialogGrid.IsOpen = true;
+            }
+            catch(Exception ex) {
+
+                UiUnits.ShowNotification("Excel Sheet Is Opened Or Is Invalid", NotificationType.Error);
+
+                OpeningPanel.Visibility = Visibility.Collapsed;
+            }
+            
 
             //    new Exporter().ImportData(szFilePath);
             /*
@@ -178,7 +351,7 @@ namespace ECR_System_v2
                 Array szFile = (Array)e.Data.GetData(DataFormats.FileDrop);
                 String szFilePath = szFile.GetValue(0).ToString();
                 InputFileName.Text = System.IO.Path.GetFileName(szFilePath);
-                OpenAnimation();
+               // OpenAnimation();
                 e.Effects = DragDropEffects.Copy; }
 
         }
@@ -186,11 +359,11 @@ namespace ECR_System_v2
         private void DragFile_DragExist(object sender, DragEventArgs e)
         {
 
-            DragOverlay.Visibility = Visibility.Collapsed;
+          //  DragOverlay.Visibility = Visibility.Collapsed;
         }
         private void OpenAnimation()
         {
-            DragOverlay.Visibility = Visibility.Visible;
+          //  DragOverlay.Visibility = Visibility.Visible;
             //LottieAnimationView.PauseAnimation();
            // LottieAnimationView.FileName = "./Resources/4920-google-forms.json";
            // LottieAnimationView.PlayAnimation();
@@ -200,6 +373,7 @@ namespace ECR_System_v2
         {
             ContentTransitioner.SelectedIndex = 2;
             ClientUserControl.load(mFund);
+            mFundSelected = mFund;
         }
         private void SwitchToSignIn(object sender, RoutedEventArgs e)
         {

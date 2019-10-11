@@ -2,6 +2,7 @@ C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\b
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Resources\4900-files-transfer-animation.json
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Resources\5095-google-form.json
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Resources\4920-google-forms.json
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Resources\4547-simple-sliding-bars.json
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\ECR System v2.exe.config
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\ECR System v2.exe
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\ECR System v2.pdb
@@ -58,6 +59,7 @@ C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\b
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\MaterialDesignExtensions.dll
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\MaterialDesignThemes.Wpf.dll
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Newtonsoft.Json.dll
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Notifications.Wpf.dll
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\NPOI.dll
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\NPOI.OOXML.dll
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\NPOI.OpenXml4Net.dll
@@ -89,6 +91,7 @@ C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\b
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Dragablz.pdb
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Dragablz.xml
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\GemBox.Spreadsheet.xml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\ICSharpCode.SharpZipLib.xml
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\LiveCharts.pdb
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\LiveCharts.xml
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\LiveCharts.Wpf.pdb
@@ -136,6 +139,7 @@ C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\o
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\ECR System v2.csproj.GenerateResource.Cache
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\ECR System v2.exe
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\ECR System v2.pdb
-C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\ICSharpCode.SharpZipLib.xml
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Resources\985-phonological.json
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Resources\monthly_template.xlsx
 C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\obj\Debug\ECR System v2.csprojResolveAssemblyReference.cache
-C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Resources\4547-simple-sliding-bars.json
+C:\Users\pc\Documents\Visual Studio 2015\Projects2\ECR System v2\ECR System v2\bin\Debug\Resources\erc_start_logo_out.png

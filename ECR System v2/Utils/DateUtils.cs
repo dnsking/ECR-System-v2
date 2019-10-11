@@ -15,6 +15,17 @@ namespace ECR_System_v2.Utils
         public static readonly String[] monthsShort = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
         public static readonly String[] quatersName = {"First Quater", "Second Quater", "Third Quater", "Forth Quater" };
        
+        public static DateTime NextMonth(DateTime date)
+        {
+            var next = date.AddMonths(1);
+           return next.AddDays(DateTime.DaysInMonth(date.Year, date.Month) - date.Day);
+           /* if (date.Day != DateTime.DaysInMonth(date.Year, date.Month))
+                return date.(1);
+            else
+                return date.AddDays(1).AddMonths(1).AddDays(-1);*/
+
+
+        }
         public static String ReplaceDate(String date)
         {
             for (int i = 0; i < monthsShort.Length; i++)

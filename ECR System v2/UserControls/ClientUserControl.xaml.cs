@@ -58,25 +58,97 @@ namespace ECR_System_v2.UserControls
 
         private async void SendReport(object sender, RoutedEventArgs e)
         {
-            DialogGrid.IsOpen = true;
+
+            ExportPopup.IsPopupOpen = false;
 
             LottieAnimationView.PauseAnimation();
             LottieAnimationView.FileName = "./Resources/4900-files-transfer-animation.json";
             LottieAnimationView.PlayAnimation();
 
             var mNow = DateUtils.TicksToMillis(DateTime.Now.Ticks);
-            for (int i=0;i < mClients.Length; i++)
+            using (var dirPicker = new System.Windows.Forms.FolderBrowserDialog())
             {
-                Client mClient = mClients[i];
-                var mFundUnitTrans = await mDataLoader.fetchFundUnitTransItems(mFund.Name, mNow, mClient.ClientId, App.All) as FundUnitTrans[];
+                System.Windows.Forms.DialogResult result = dirPicker.ShowDialog();
 
-                await Task.Run(() =>
+                DialogGrid.IsOpen = true;
+                String dir = dirPicker.SelectedPath;
+                if (dir != null)
                 {
 
-                    Exporter.ExportPdf(mFundUnitTrans, mFund, mClient.ClientName);
-                });
+                    for (int i = 0; i < mClients.Length; i++)
+                    {
+                        Client mClient = mClients[i];
+                        ExportProgressTextBlock.Text = "Exporting statement for " + mClient.ClientName + " with Id " + mClient.ClientId;
+                        var mFundUnitTrans = await mDataLoader.fetchFundUnitTransItems(mFund.Name, mNow, mClient.ClientId, App.All) as FundUnitTrans[];
+                        var lastTransDate = new DateTime(DateUtils.MillisToTicks(mFundUnitTrans[mFundUnitTrans.Length - 1].DateInMillis));
+                        lastTransDate=DateUtils.NextMonth(lastTransDate);
+
+                        double previousAmount = 0;
+                        double previousUnits = 0;
+                        foreach (FundUnitTrans mFundUnitTran in mFundUnitTrans)
+                        {
+                            previousAmount = (mFundUnitTran.TransactionType == App.Purchase) ? previousAmount + mFundUnitTran.Amount
+                            : previousAmount - mFundUnitTran.Amount ;
+                            previousUnits = (mFundUnitTran.TransactionType == App.Purchase) ? previousUnits + mFundUnitTran.Units
+                                : previousUnits - mFundUnitTran.Units;
+                        }
+                        while (lastTransDate < DateTime.Now)
+                        {
+                            double UnitPriceNow = 0;
+                            if (mFund.Name.Equals("ZICA") && DateUtils.TicksToMillis(lastTransDate.Ticks) < App.ZicaDefaults.DefaultZicaDate)
+                                UnitPriceNow = 10;
+                            else
+                             UnitPriceNow = await FundUnits.GetUnitPrice(mFund.Name, DateUtils.TicksToMillis(lastTransDate.AddDays(-1).Ticks)
+                                , DateUtils.TicksToMillis(lastTransDate.Ticks));
+
+                            FundUnitTrans trans = new FundUnitTrans();
+                            trans.TransactionType = App.All;
+                            trans.Amount = previousUnits * UnitPriceNow;
+                            trans.Units = previousUnits;
+                            trans.DateInMillis = DateUtils.TicksToMillis(lastTransDate.Ticks);
+                            var asList = mFundUnitTrans.ToList();
+                            asList.Add(trans);
+                            mFundUnitTrans = asList.ToArray();
+                            lastTransDate = DateUtils.NextMonth(lastTransDate);
+                        }
+                        //var UnitPrice = await FundUnits.GetUnitPrice(mFund.Name, mNow, mNow);
+                        await Task.Run(() =>
+                        {
+
+                            Exporter.ExportPdf(mFundUnitTrans, mFund, mClient.ClientName, dir);
+                        });
+                        ExportProgressBar.Value = ((Convert.ToDouble(i + 1) / Convert.ToDouble(mClientList.Count)) * 100);
+                    }
+                }
+
             }
 
+
+        }
+
+        private  void ShowExportPopup(object sender, RoutedEventArgs e)
+        {
+            var days = new List<String>();
+            long firstDay = long.MaxValue;
+            foreach (var trans in mMainFundUnitTrans)
+            {if (trans.DateInMillis < firstDay)
+                    firstDay = trans.DateInMillis;
+            }
+            var first = new DateTime(DateUtils.MillisToTicks(firstDay));
+           int between= DateUtils.daysBetween(first, DateTime.Now);
+            for(int i=0;i< between; i++)
+            {
+                var my = first.AddDays(i).ToString("MMM yyyy");
+                if(!days.Contains(my))
+                days.Add(my);
+
+            }
+            days.Reverse();
+            ExportMonthCombox.Items.Clear();
+            ExportMonthCombox.ItemsSource = null;
+            ExportMonthCombox.ItemsSource = days;
+            ExportMonthCombox.SelectedIndex = 0;
+            ExportPopup.IsPopupOpen = true;
         }
         private async void NewTranaction(object sender, RoutedEventArgs e)
         {
@@ -158,6 +230,7 @@ namespace ECR_System_v2.UserControls
             if (ClientsListCombo.SelectedIndex == -1)
                 ClientsListCombo.SelectedIndex = 0;
         }
+        private FundUnitTrans[] mMainFundUnitTrans;
         private async void initClientList(String client,int days)
         {
             prevDays = days;
@@ -169,7 +242,8 @@ namespace ECR_System_v2.UserControls
             ////Console.WriteLine(mNow);
             ////Console.WriteLine(mNow);
             var mFundUnitTrans = await mDataLoader.fetchFundUnitTransItems(mFund.Name, mNow, client, TransactionType) as FundUnitTrans[];
-              if (client.Equals(App.AllClients))
+            mMainFundUnitTrans = mFundUnitTrans;
+            if (client.Equals(App.AllClients))
               {
                 AllClientTranstionsDataGrid.ItemsSource = mFundUnitTrans;
                 long start = DateUtils.TicksToMillis(DateTime.Now.Ticks);

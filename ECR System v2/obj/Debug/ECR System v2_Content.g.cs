@@ -8,10 +8,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/erc_start_logo_out.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/2495-file-transfer.json")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/4900-files-transfer-animation.json")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/5095-google-form.json")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/4920-google-forms.json")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/4547-simple-sliding-bars.json")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/985-phonological.json")]
 
 

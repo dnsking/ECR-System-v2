@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using ECR_System_v2.Utils;
 
 namespace ECR_System_v2
 {
@@ -32,6 +33,12 @@ namespace ECR_System_v2
             public static String UnlistedEquityType = "Unlisted Equity";
             public static String CISType = "CIS";
             public static String OtherInvestmentsType = "Other Investments";
+            public static String All = "*";
+        }
+        public static class ZicaDefaults
+        {
+            public static long DefaultZicaDate = DateUtils.TicksToMillis(DateTime.ParseExact("01/05/2019".Replace('.', '/').Replace(' ', '/'), "dd/MM/yyyy", null).Ticks);
+
         }
         public static readonly int Open = 0;
         public static readonly int Closed = 1;

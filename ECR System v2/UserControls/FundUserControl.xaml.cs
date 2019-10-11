@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ECR_System_v2.Data;
+using ECR_System_v2.IO;
 using ECR_System_v2.Loaders;
 using ECR_System_v2.Loaders.Listeners;
 using ECR_System_v2.Utils;
@@ -23,6 +25,7 @@ using LiveCharts.Wpf;
 using MaterialDesignThemes.Wpf;
 using MaterialDesignThemes.Wpf.Transitions;
 using Newtonsoft.Json;
+using Notifications.Wpf;
 
 namespace ECR_System_v2.UserControls
 {
@@ -39,7 +42,16 @@ namespace ECR_System_v2.UserControls
         public FundUserControl()
         {
             InitializeComponent();
+            DateSelector.SelectedDateChanged += (a, b) => {
+                mCurrentDate = DateSelector.SelectedDate.Value; ;
+                load(Fund mFund)
+            };
         }
+        private double issuesTransAmount;
+        private double issuesTransUnits;
+        private double redemptionTransAmount;
+        private double redemptionTransUnits;
+        private DateTime mCurrentDate;
         public async void load(Fund mFund) {
             if (mDataLoader == null)
             {
@@ -47,6 +59,38 @@ namespace ECR_System_v2.UserControls
                 mDataLoader.addDataEntryListeners(this);
             }
             this.mFund = mFund;
+
+
+            IssuesCurrency.Text = mFund.Currency.Substring(mFund.Currency.Length - 4, 3);
+            var mNow = DateUtils.TicksToMillis(DateTime.Now.Ticks);
+
+            var mFundUnitIssuesTrans = await mDataLoader.fetchFundUnitTransItems(mFund.Name, mNow, App.AllClients, App.Purchase) as FundUnitTrans[];
+            issuesTransAmount = 0;
+            issuesTransUnits = 0;
+            foreach (var mFundUnitIssuesTran in mFundUnitIssuesTrans)
+            {
+                issuesTransAmount += mFundUnitIssuesTran.Amount;
+                issuesTransUnits += mFundUnitIssuesTran.Units;
+            }
+            IssuesAmount.Text = StringUtils.Format(MathUtils.round(issuesTransAmount, 2));
+            IssuesUnits.Text = StringUtils.Format(MathUtils.round(issuesTransUnits, 2)) + " units";
+
+
+
+
+            RedemptionsCurrency.Text = mFund.Currency.Substring(mFund.Currency.Length - 4, 3);
+
+            var mFundUnitRedemptionTrans = await mDataLoader.fetchFundUnitTransItems(mFund.Name, mNow, App.AllClients, App.Redemption) as FundUnitTrans[];
+            redemptionTransAmount = 0;
+            redemptionTransUnits = 0;
+            foreach (var mFundUnitIssuesTran in mFundUnitRedemptionTrans)
+            {
+                redemptionTransAmount += mFundUnitIssuesTran.Amount;
+                redemptionTransUnits += mFundUnitIssuesTran.Units;
+            }
+            RedemptionsAmount.Text = StringUtils.Format(MathUtils.round(redemptionTransAmount, 2));
+            RedemptionsUnits.Text = StringUtils.Format(MathUtils.round(redemptionTransUnits, 2)) + " units";
+
 
             mSecurities = await mDataLoader.fetchSecurities(mFund.Name) as Security[];
             if (mSecurities.Length > 0) {
@@ -73,6 +117,76 @@ namespace ECR_System_v2.UserControls
    
             };
             StatementsCombo.SelectedIndex = 0;
+
+            Grid[] AssetDetailPanes = new Grid[] { NewPurchaseContentPropertyPane, NewPurchaseContentEquityPane, NewPurchaseContentCISPane, NewPurchaseContentFixIncomePane };
+
+            NewPurchaseContentFundCombo.SelectionChanged += (a, b) =>
+            {
+                if(NewPurchaseContentFundCombo.SelectedIndex==0)
+                setAssetDetailPaneVisibility(AssetDetailPanes, 1);
+               else if (NewPurchaseContentFundCombo.SelectedIndex == 4|| NewPurchaseContentFundCombo.SelectedIndex == 5)
+                    setAssetDetailPaneVisibility(AssetDetailPanes, 0);
+                else if (NewPurchaseContentFundCombo.SelectedIndex == 6)
+                    setAssetDetailPaneVisibility(AssetDetailPanes, 2);
+                else
+                    setAssetDetailPaneVisibility(AssetDetailPanes, 3);
+            };
+
+            setAssetDetailPaneVisibility(AssetDetailPanes, 1);
+        }
+        private void setAssetDetailPaneVisibility(Grid[] AssetDetailPanes, int index)
+        {
+            for (int i = 0; i < AssetDetailPanes.Length; i++)
+                AssetDetailPanes[i].Visibility = (i == index) ? Visibility.Visible : Visibility.Collapsed;
+
+        }
+        private void MenuItemEdit(object sender, RoutedEventArgs e)
+        {
+            DetailedScheduleTransitioner.SelectedIndex = 3;
+            Console.WriteLine("MenuItemEdit " + sender.ToString());
+
+            var menuItem = (MenuItem)sender;
+
+            var contextMenu = (ContextMenu)menuItem.Parent;
+
+            var item = (DataGrid)contextMenu.PlacementTarget;
+
+            var mSecurity = (Security)item.SelectedCells[0].Item;
+
+
+            Calendar.SelectedDate = new DateTime(DateUtils.MillisToTicks(long.Parse(mSecurity.TransactionDate.ToString())));
+            AssetNameTextBox.Text = mSecurity.Name;
+
+            var mTypes = new String[] { App.Types.PropertyType, App.Types.GovernmentBondType
+            , App.Types.TermDepositType, App.Types.GovernmentTreasuryBillType, App.Types.ListedEquityType
+            , App.Types.UnlistedEquityType, App.Types.CISType, App.Types.OtherInvestmentsType};
+            for(int i=0;i< mTypes.Length; i++)
+                if (mSecurity.Type.Equals(mTypes[i]))
+                {
+                    NewPurchaseContentFundCombo.SelectedIndex = i;
+
+                    if (NewPurchaseContentFundCombo.SelectedIndex == 0) {
+                        PropertyAddressTextBox.Text = mSecurity.Address;
+                        PropertyValueTextBox.Text = mSecurity.Value.ToString();
+                    }
+                    else if (NewPurchaseContentFundCombo.SelectedIndex == 4 || NewPurchaseContentFundCombo.SelectedIndex == 5)
+                    {
+                        EquityNameTextBox.Text = mSecurity.Name;
+                        SharePriceTextBox.Text = mSecurity.Value.ToString();
+                        NumberSharesTextBox.Text = mSecurity.Nshares.ToString();
+                    }
+                    else if (NewPurchaseContentFundCombo.SelectedIndex == 6) {
+                        CisNameTextBox.Text = mSecurity.Name;
+                        UnitPriceTextBox.Text = mSecurity.Value.ToString();
+                        NumberUnitsTextBox.Text = mSecurity.Nshares.ToString();
+                    }
+                    else {
+                        
+                        NominalValueTextBox.Text = mSecurity.Value.ToString();
+                        DailyInterestTextBox.Text= mSecurity.DailyInterest.ToString();
+                        MaturityDatePicker.SelectedDate = new DateTime(DateUtils.MillisToTicks(long.Parse(mSecurity.MaturityDate.ToString())));
+                    }
+                }
         }
         private Rectangle getRecFromColour(String color) {
             Rectangle mRectangle =    new Rectangle();
@@ -145,17 +259,16 @@ namespace ECR_System_v2.UserControls
             foreach(ItemValue[] items in Values)
             {
                 foreach(ItemValue item in items) {
-                    if(k==0)
-                    Balance += Double.Parse(item.Value);
+                  //  Balance += Double.Parse(item.Value);
                     item.Value = StringUtils.Format(Double.Parse(item.Value)) + " "+mFund.Currency.Substring(mFund.Currency.Length - 4, 3); ;
                 }
                 k++;
             }
-
+         //   Balance =Double.Parse( Values[0][Values.Length - 1].Value);
             AssetsSOFPDataGrid.ItemsSource = Values[0];
             LiabilitesSOFPDataGrid.ItemsSource = Values[1];
             CapitalSOFPDataGrid.ItemsSource = Values[2];
-            //AssetsSOFPDataGridBalance.Text = (Balance==0? StringUtils.Format(Balance): StringUtils.Format(Balance/2)) + " " + mFund.Currency.Substring(mFund.Currency.Length - 4, 3); ;
+            AssetsSOFPDataGridBalance.Text = Values[0][1].Value  ;
         }
 
         private async void initBankDetails()
@@ -213,7 +326,13 @@ namespace ECR_System_v2.UserControls
             StatmentsDataGrid.ItemsSource = Values;
         }
 
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9.-]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
         private void MenuItem_Click(object sender, RoutedEventArgs e) { }
+        
         private  void SelectStatement(object sender, RoutedEventArgs e)
         {
             ObservableCollection<ItemValue> items =  IncomeStatementDataGrid.ItemsSource as ObservableCollection<ItemValue>;
@@ -386,23 +505,23 @@ namespace ECR_System_v2.UserControls
                   };
                 DetailedScheduleDataGrid.Columns.Clear();
 
-                CurrentFormatedPanel.Visibility = Visibility.Collapsed;
-                InterestReceivedFormatedPanel.Visibility = Visibility.Collapsed;
-                AccuredInterestFormatedPanel.Visibility = Visibility.Collapsed;
+               // CurrentFormatedPanel.Visibility = Visibility.Collapsed;
+               // InterestReceivedFormatedPanel.Visibility = Visibility.Collapsed;
+              //  AccuredInterestFormatedPanel.Visibility = Visibility.Collapsed;
 
                 for (int i=0;i< Headers[index].Length; i++) {
                     if (Hidden.Contains(Headers[index][i])) {
                         if (Headers[index][i].Equals(Hidden[0]))
                         {
-                            CurrentFormatedPanel.Visibility = Visibility.Visible;
+                      //      CurrentFormatedPanel.Visibility = Visibility.Visible;
                         }
                         else if (Headers[index][i].Equals(Hidden[1]))
                         {
-                            InterestReceivedFormatedPanel.Visibility = Visibility.Visible;
+                      //      InterestReceivedFormatedPanel.Visibility = Visibility.Visible;
                         }
                         else if (Headers[index][i].Equals(Hidden[2]))
                         {
-                            AccuredInterestFormatedPanel.Visibility = Visibility.Visible;
+                         //   AccuredInterestFormatedPanel.Visibility = Visibility.Visible;
                         }
                     }
                     else {
@@ -418,6 +537,34 @@ namespace ECR_System_v2.UserControls
                 }
                 DetailedScheduleDataGrid.ItemsSource = mSecurities;
             }
+        }
+        private Double[][] mChartValuesReceived;
+        private List<String> DateLables;
+        private List<DateTime> DateLablesRow;
+        private void initSelectedPieChart(int position) {
+
+            SeriesCollection mSeriesCollection = new SeriesCollection();
+            String[] NamesShort = new String[] {"Property","Bonds","Treasury Bills","Term Deposits","Other Investments","Equities"
+                           ,"Unlisted Equities","CIS","Loans And Recievables","Total Investment Income"};
+            Double[] mValues = new Double[NamesShort.Length - 1];
+            for (int m = 0; m < mValues.Length; m++)
+            {
+                Console.WriteLine("init selected position " + position + " m " + m);
+              //  Console.WriteLine("data " + mChartValuesReceived);
+                mSeriesCollection.Add(new PieSeries
+                {
+
+                    Values = new ChartValues<double>(new double[] { MathUtils.round( mChartValuesReceived[m][position],2) })
+                    ,DataLabels=true,
+                    Title = NamesShort[m],
+                    LabelPoint  = chartPoint =>
+                 string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
+
+            });
+            }
+
+            ReturnDataGridPieChart.Series= mSeriesCollection;
+            ReturnDataGridPieChart.AxisY[0].Title = DateLables[position];
         }
         private async void initBalances()
         {
@@ -442,7 +589,6 @@ namespace ECR_System_v2.UserControls
             String[] NamesShort= new String[] {"Property","Bonds","Treasury Bills","Term Deposits","Other Investments","Equities"
                            ,"Unlisted Equities","CIS","Loans And Recievables","Total Investment Income"};
             
-
             ShadowDepth[] ValuesObjs = new ShadowDepth[] { ShadowDepth.Depth0, ShadowDepth.Depth0, ShadowDepth.Depth0, ShadowDepth.Depth0, ShadowDepth.Depth0, ShadowDepth.Depth0
                 ,ShadowDepth.Depth0, ShadowDepth.Depth0, ShadowDepth.Depth0, ShadowDepth.Depth0 };
             List<ItemValue> mItemValues = new List<ItemValue>();
@@ -458,14 +604,17 @@ namespace ECR_System_v2.UserControls
 
 
 
-            ReturnDataGridChart.DisableAnimations = true;
+            ReturnDataGridChart.DisableAnimations = false;
             SeriesCollection mSeriesCollection = new SeriesCollection();
             Double[][] mValuesReceived = await mDataLoader.fetchSecuritiesPresentValueRangeType(mFund.Name, start, end, days, TypesMinusOne) as Double[][];
            ChartValues.AddRange(mValuesReceived);
+            mChartValuesReceived = ChartValues.ToArray() ;
             int count = ChartValues[0].Length;
-            List<String> DateLables = new List<string>();
-            for(int i=0;i< count; i++)
+             DateLables = new List<string>();
+            DateLablesRow = new List<DateTime>();
+            for (int i=0;i< count; i++)
             {
+                DateLablesRow.Add(DateTime.Now.AddDays(-1 * (30 * (i))));
                 DateLables.Add(DateTime.Now.AddDays(-1 * (30 * (i))).ToString("dd MMM yyyy"));
             }
             var StackedColumnSeriesCollection = new List<StackedColumnSeries>();
@@ -487,12 +636,69 @@ namespace ECR_System_v2.UserControls
                 
             }
 
+            DateLables.Reverse();
+            mSeriesCollection.Reverse();
+            DateLablesRow.Reverse();
+
             mSeriesCollection.AddRange(StackedColumnSeriesCollection);
             ReturnDataGridChart.AxisX[0].Title = "Date";
             ReturnDataGridChart.AxisX[0].Labels = DateLables;
 
             ReturnDataGridChart.AxisY[0].Title = "Market Value";
             ReturnDataGridChart.Series = mSeriesCollection;
+        }
+        private int selectedChartPoint;
+        private void ReturnDataGridChart_OnDataClick(object sender, ChartPoint chartpoint)
+        {
+            DetailedScheduleTransitioner.SelectedIndex = 2;
+            selectedChartPoint = chartpoint.Key;
+            initSelectedPieChart(chartpoint.Key);
+          //  MessageBox.Show(chartpoint.Key.ToString());
+        }
+        private void BackToValuesChart(object sender, RoutedEventArgs chartpoint)
+        {
+            DetailedScheduleTransitioner.SelectedIndex = 0;
+            //  MessageBox.Show(chartpoint.Key.ToString());
+        }
+
+        private async void ExportValuesFromChart(object sender, RoutedEventArgs chartpoint)
+        {
+            int position = selectedChartPoint;
+            String[] NamesShort = new String[] {"Property","Bonds","Treasury Bills","Term Deposits","Other Investments","Equities"
+                           ,"Unlisted Equities","CIS","Loans And Recievables","Total Investment Income"};
+            Double[] mValues = new Double[NamesShort.Length - 1];
+            List<ItemValue> mItemValues = new List<ItemValue>();
+            for (int m = 0; m < mValues.Length; m++)
+            {
+                Console.WriteLine("init selected position " + position + " m " + m);
+                var value = MathUtils.round(mChartValuesReceived[m][position], 2);
+                if (value > 0)
+                {
+                    mItemValues.Add(new ItemValue(NamesShort[m], value.ToString()));
+                }
+
+            }
+            var mNowFirst = DateUtils.TicksToMillis(DateLablesRow[position].AddMonths(-1).Ticks);
+            var mNow = DateUtils.TicksToMillis(DateLablesRow[position].Ticks);
+
+            using (var dirPicker = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                System.Windows.Forms.DialogResult result = dirPicker.ShowDialog();
+
+                String dir = dirPicker.SelectedPath;
+                if (dir != null)
+                {
+                    UiUnits.ShowNotification("Exporting to " + dir, NotificationType.Information);
+
+                    Security[] mSecurities = await mDataLoader.fetchSecurities(mFund.Name, mNowFirst, mNow, App.Types.All);
+                    Exporter.ExportChartValuesNampak(mItemValues, mSecurities, dir + "/" + DateLablesRow[position].ToString("mm MMM yyyy") + ".xlsx");
+
+                }
+
+
+            }
+
+            //  MessageBox.Show(chartpoint.Key.ToString());
         }
         private void initFundUi() {
             FundTransDataGrid.ItemsSource = mSecurities;
@@ -521,6 +727,41 @@ namespace ECR_System_v2.UserControls
             };
             FundValueCartesianChart.Series = mSeriesCollection;
 
+
+            if (issuesTransAmount > 0 && mValues.Length>0)
+            {
+
+                var mFirstDayOfQuater = DateUtils.TicksToMillis(DateUtils.FirstDayOfQuater(DateTime.Now).Ticks);
+                var mNow = DateUtils.TicksToMillis(DateTime.Now.Ticks);
+                Security[] mSecurities = await mDataLoader.fetchSecurities(mFund.Name, mFirstDayOfQuater, mNow, App.Types.All);
+                double totalSecValues = 0;
+                foreach (Security mSecurity in mSecurities)
+                {
+                    if (mSecurity.Nshares > 0)
+                    {
+                        totalSecValues += (mSecurity.Nshares * mSecurity.Value);
+                    }
+                    else
+                    {
+
+                        totalSecValues += (mSecurity.Value);
+                    }
+                }
+                Console.WriteLine("totalSecValues " + totalSecValues);
+                if (totalSecValues >= issuesTransAmount)
+                {
+                    FundSizeUnitPrice.Text = StringUtils.Format(MathUtils.round((mValues[0] / (issuesTransUnits - Math.Abs(redemptionTransUnits))), 2));
+
+                }
+                else {
+                    FundSizeUnitPrice.Text = StringUtils.Format(MathUtils.round(((mValues[0]+(issuesTransAmount- totalSecValues)) / (issuesTransUnits - Math.Abs(redemptionTransUnits))), 2));
+
+                }
+
+
+                //  FundSizeUnitPrice.Text = StringUtils.Format(MathUtils.round(((issuesTransAmount - Math.Abs(redemptionTransAmount)) / (issuesTransUnits - Math.Abs(redemptionTransUnits))), 2));
+                FundSizeTotalUnits.Text = StringUtils.Format(MathUtils.round((issuesTransUnits - Math.Abs(redemptionTransUnits)), 2))+" Units";
+            }
         }
 
         private void PurchaseSecurity(object sender, RoutedEventArgs e)

@@ -19,922 +19,910 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="#ffffff"
         FontFamily="{DynamicResource MaterialDesignFont}">
-    <Grid>
+    <StackPanel>
+        <DatePicker Name="DateSelector" ></DatePicker>
         <Grid>
+            <Grid>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="72"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <Grid >
-                <StackPanel Grid.Column="0"
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="72"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid >
+                    <StackPanel Grid.Column="0"
                   Orientation="Horizontal">
-                    <Button Click="ShowStatements" Style="{StaticResource MaterialDesignFlatButton}"  Height="Auto"  Margin="0 8 0 8">
-                        <StackPanel>
-                            <TextBlock  Name="Statementsext"  Text="Statements" Foreground="#757575"  Style="{StaticResource MaterialDesignSubheadingTextBlock}" FontWeight="Light"/>
+                        <Button Click="ShowStatements" Style="{StaticResource MaterialDesignFlatButton}"  Height="Auto"  Margin="0 8 0 8">
+                            <StackPanel>
+                                <TextBlock  Name="Statementsext"  Text="Statements" Foreground="#757575"  Style="{StaticResource MaterialDesignSubheadingTextBlock}" FontWeight="Light"/>
 
-                            <Rectangle Name="BtnStatementsRec" Opacity="1" Height="2" Margin="0 4 0 0">
-                                <Rectangle.Fill  >
-                                    <SolidColorBrush Color="#f44336"></SolidColorBrush>
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </StackPanel>
-                    </Button>
-                    <Button Click="ShowBalances" Style="{StaticResource MaterialDesignFlatButton}"  Height="Auto"  Margin="0 8 0 8">
-                        <StackPanel>
-                            <TextBlock Name="BalancesText"  Text="Balances" Foreground="#757575"  Style="{StaticResource MaterialDesignSubheadingTextBlock}" FontWeight="Light"/>
+                                <Rectangle Name="BtnStatementsRec" Opacity="1" Height="2" Margin="0 4 0 0">
+                                    <Rectangle.Fill  >
+                                        <SolidColorBrush Color="#f44336"></SolidColorBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </StackPanel>
+                        </Button>
+                        <Button Click="ShowBalances" Style="{StaticResource MaterialDesignFlatButton}"  Height="Auto"  Margin="0 8 0 8">
+                            <StackPanel>
+                                <TextBlock Name="BalancesText"  Text="Balances" Foreground="#757575"  Style="{StaticResource MaterialDesignSubheadingTextBlock}" FontWeight="Light"/>
 
-                            <Rectangle  Name="BtnBalancessRec" Opacity="1" Height="2" Margin="0 4 0 0">
-                                <Rectangle.Fill >
-                                    <SolidColorBrush Color="#757575"></SolidColorBrush>
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource MaterialDesignFlatButton}" 
+                                <Rectangle  Name="BtnBalancessRec" Opacity="1" Height="2" Margin="0 4 0 0">
+                                    <Rectangle.Fill >
+                                        <SolidColorBrush Color="#757575"></SolidColorBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" 
                    Height="48" Width="180" VerticalAlignment="Center" Visibility="Collapsed" >
-                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal">
 
-                            <iconPacks:PackIconMaterial Height="18" Foreground="#424242" Margin="8" Kind="CashMultiple" VerticalAlignment="Center" />
-                            <Label Margin="8" Foreground="#424242" VerticalAlignment="Center">Add Interest</Label>
-                        </StackPanel>
+                                <iconPacks:PackIconMaterial Height="18" Foreground="#424242" Margin="8" Kind="CashMultiple" VerticalAlignment="Center" />
+                                <Label Margin="8" Foreground="#424242" VerticalAlignment="Center">Add Interest</Label>
+                            </StackPanel>
 
-                    </Button>
-                    <ComboBox Visibility="Collapsed" materialDesign:HintAssist.Hint="Statements" Width="200" materialDesign:HintAssist.IsFloating="True"
+                        </Button>
+                        <ComboBox Visibility="Collapsed" materialDesign:HintAssist.Hint="Statements" Width="200" materialDesign:HintAssist.IsFloating="True"
                                   MaxDropDownHeight="200"
                                   VerticalAlignment="Center" Margin="16 0 0 0">
-                        <ComboBoxItem IsSelected="True">Income Statement</ComboBoxItem>
-                        <ComboBoxItem>Changes In Equity</ComboBoxItem>
-                        <ComboBoxItem>Statement Of Financial Position</ComboBoxItem>
-                        <ComboBoxItem>Average Return On The Fund</ComboBoxItem>
-                        <ComboBoxItem>Net Asset Value</ComboBoxItem>
-                        <ComboBoxItem>Detailed Income Schedule</ComboBoxItem>
-                        <ComboBoxItem>Expenses</ComboBoxItem>
-                        <ComboBoxItem>Investment Properties</ComboBoxItem>
-                        <ComboBoxItem>Government Bonds</ComboBoxItem>
-                        <ComboBoxItem>Government Treasury Bills</ComboBoxItem>
-                        <ComboBoxItem>Term Deposits</ComboBoxItem>
-                        <ComboBoxItem>Investment In Listed Equities</ComboBoxItem>
-                        <ComboBoxItem>Investment In Unlisted Equities</ComboBoxItem>
-                        <ComboBoxItem>Loans And Receivables</ComboBoxItem>
-                        <ComboBoxItem>Investment In CIS</ComboBoxItem>
-                        <ComboBoxItem>Other Investments</ComboBoxItem>
-                        <ComboBoxItem>Accounts Receivable</ComboBoxItem>
-                        <ComboBoxItem>Related Party Transactions</ComboBoxItem>
-                        <ComboBoxItem>Accounts Payable</ComboBoxItem>
-                        <ComboBoxItem>Bank And Cash Balances</ComboBoxItem>
-                        <ComboBoxItem>Counter Party Risk</ComboBoxItem>
-                    </ComboBox>
+                            <ComboBoxItem IsSelected="True">Income Statement</ComboBoxItem>
+                            <ComboBoxItem>Changes In Equity</ComboBoxItem>
+                            <ComboBoxItem>Statement Of Financial Position</ComboBoxItem>
+                            <ComboBoxItem>Average Return On The Fund</ComboBoxItem>
+                            <ComboBoxItem>Net Asset Value</ComboBoxItem>
+                            <ComboBoxItem>Detailed Income Schedule</ComboBoxItem>
+                            <ComboBoxItem>Expenses</ComboBoxItem>
+                            <ComboBoxItem>Investment Properties</ComboBoxItem>
+                            <ComboBoxItem>Government Bonds</ComboBoxItem>
+                            <ComboBoxItem>Government Treasury Bills</ComboBoxItem>
+                            <ComboBoxItem>Term Deposits</ComboBoxItem>
+                            <ComboBoxItem>Investment In Listed Equities</ComboBoxItem>
+                            <ComboBoxItem>Investment In Unlisted Equities</ComboBoxItem>
+                            <ComboBoxItem>Loans And Receivables</ComboBoxItem>
+                            <ComboBoxItem>Investment In CIS</ComboBoxItem>
+                            <ComboBoxItem>Other Investments</ComboBoxItem>
+                            <ComboBoxItem>Accounts Receivable</ComboBoxItem>
+                            <ComboBoxItem>Related Party Transactions</ComboBoxItem>
+                            <ComboBoxItem>Accounts Payable</ComboBoxItem>
+                            <ComboBoxItem>Bank And Cash Balances</ComboBoxItem>
+                            <ComboBoxItem>Counter Party Risk</ComboBoxItem>
+                        </ComboBox>
 
-                </StackPanel>
-            </Grid>
-            <Grid Name="ContentPane"  Visibility="Collapsed" Grid.Row="1">
+                    </StackPanel>
+                </Grid>
+                <Grid Name="ContentPane"  Visibility="Collapsed" Grid.Row="1">
 
-                <materialDesign:Transitioner Name="FundUserControlSection"   SelectedIndex="0" >
-                    <materialDesign:TransitionerSlide>
-                        <materialDesign:TransitionerSlide.OpeningEffects>
-                            <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
-                        </materialDesign:TransitionerSlide.OpeningEffects>
-                        <Grid >
-                            <StackPanel>
+                    <materialDesign:Transitioner Name="FundUserControlSection"   SelectedIndex="0" >
+                        <materialDesign:TransitionerSlide>
+                            <materialDesign:TransitionerSlide.OpeningEffects>
+                                <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
+                            </materialDesign:TransitionerSlide.OpeningEffects>
+                            <Grid >
+                                <StackPanel>
 
-                                <StackPanel Orientation="Horizontal" Background="#ffffff" Margin="16 16 0 0">
+                                    <StackPanel Orientation="Horizontal" Background="#ffffff" Margin="16 16 0 0">
 
-                                    <TextBlock HorizontalAlignment="Left"  FontSize="28" FontWeight="Medium" Foreground="#9E9E9E" Margin="0 0 0 8">Fund Value</TextBlock>
-                                    <ComboBox Margin="16 0 0 0" materialDesign:HintAssist.Hint="Changes From" Width="78"  VerticalAlignment="Center" materialDesign:HintAssist.IsFloating="True">
-                                        <ComboBoxItem Content="1D"/>
-                                        <ComboBoxItem Content="1W"/>
-                                        <ComboBoxItem Content="1M"/>
-                                        <ComboBoxItem IsSelected="True" Content="1Q"/>
-                                        <ComboBoxItem Content="1/2 Y"/>
-                                        <ComboBoxItem Content="1Y"/>
-                                    </ComboBox>
+                                        <TextBlock HorizontalAlignment="Left"  FontSize="28" FontWeight="Medium" Foreground="#9E9E9E" Margin="0 0 0 8">Fund Value</TextBlock>
+                                        <ComboBox Margin="16 0 0 0" materialDesign:HintAssist.Hint="Changes From" Width="78"  VerticalAlignment="Center" materialDesign:HintAssist.IsFloating="True">
+                                            <ComboBoxItem Content="1D"/>
+                                            <ComboBoxItem Content="1W"/>
+                                            <ComboBoxItem Content="1M"/>
+                                            <ComboBoxItem IsSelected="True" Content="1Q"/>
+                                            <ComboBoxItem Content="1/2 Y"/>
+                                            <ComboBoxItem Content="1Y"/>
+                                        </ComboBox>
 
-                                    <ComboBox materialDesign:HintAssist.Hint="Statements" Width="200" materialDesign:HintAssist.IsFloating="True"
+                                        <ComboBox materialDesign:HintAssist.Hint="Statements" Width="200" materialDesign:HintAssist.IsFloating="True"
                                   MaxDropDownHeight="200"
                                   VerticalAlignment="Center" Margin="16 0 0 0" Name="StatementsCombo">
 
-                                        <ComboBoxItem IsSelected="True">Overview</ComboBoxItem>
-                                        <ComboBoxItem>Detailed Income Schedule</ComboBoxItem>
-                                        <ComboBoxItem>Expenses</ComboBoxItem>
-                                        <ComboBoxItem >Income Statement</ComboBoxItem>
-                                        <ComboBoxItem>Bank</ComboBoxItem>
-                                        <ComboBoxItem>Changes In Equity</ComboBoxItem>
-                                        <ComboBoxItem>Statement Of Financial Position</ComboBoxItem>
-                                    </ComboBox>
-                                </StackPanel>
+                                            <ComboBoxItem IsSelected="True">Overview</ComboBoxItem>
+                                            <ComboBoxItem>Detailed Income Schedule</ComboBoxItem>
+                                            <ComboBoxItem>Expenses</ComboBoxItem>
+                                            <ComboBoxItem >Income Statement</ComboBoxItem>
+                                            <ComboBoxItem>Bank</ComboBoxItem>
+                                            <ComboBoxItem>Changes In Equity</ComboBoxItem>
+                                            <ComboBoxItem>Statement Of Financial Position</ComboBoxItem>
+                                        </ComboBox>
+                                    </StackPanel>
 
-                                <materialDesign:Transitioner Name="StatementsSection"   SelectedIndex="0" >
-                                    <materialDesign:TransitionerSlide>
-                                        <materialDesign:TransitionerSlide.OpeningEffects>
-                                            <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
-                                        </materialDesign:TransitionerSlide.OpeningEffects>
-                                        <StackPanel>
-                                            <lvc:CartesianChart Name="FundValueCartesianChart"  LegendLocation="Right"  Height="200" >
-                                                <lvc:CartesianChart.Resources>
-                                                    <Style TargetType="lvc:LineSeries">
-                                                        <Setter Property="StrokeThickness" Value="1"></Setter>
-                                                        <Setter Property="Fill" Value="#4EFFFFFF"></Setter>
-                                                        <Setter Property="PointGeometrySize" Value="3"></Setter>
-                                                        <Setter Property="LineSmoothness" Value="0"></Setter>
-                                                    </Style>
-                                                    <Style TargetType="lvc:DefaultLegend">
-                                                        <Setter Property="Foreground" Value="#424242"></Setter>
-                                                    </Style>
-                                                    <Style TargetType="lvc:Axis">
-                                                        <Setter Property="ShowLabels" Value="True"></Setter>
-                                                        <Setter Property="IsEnabled" Value="False"></Setter>
-                                                        <Setter Property="Foreground" Value="#424242"></Setter>
-                                                    </Style>
-                                                </lvc:CartesianChart.Resources>
-                                                <lvc:CartesianChart.AxisX>
-                                                    <lvc:Axis Title="Date" IsEnabled="False" ShowLabels="False" ></lvc:Axis>
-                                                </lvc:CartesianChart.AxisX>
-                                                <lvc:CartesianChart.AxisY>
-                                                    <lvc:Axis Title="Value" IsEnabled="False" ShowLabels="False" ></lvc:Axis>
-                                                </lvc:CartesianChart.AxisY>
-                                            </lvc:CartesianChart>
+                                    <materialDesign:Transitioner Name="StatementsSection"   SelectedIndex="0" >
+                                        <materialDesign:TransitionerSlide>
+                                            <materialDesign:TransitionerSlide.OpeningEffects>
+                                                <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
+                                            </materialDesign:TransitionerSlide.OpeningEffects>
+                                            <StackPanel>
+                                                <lvc:CartesianChart Name="FundValueCartesianChart"  LegendLocation="Right"  Height="200" >
+                                                    <lvc:CartesianChart.Resources>
+                                                        <Style TargetType="lvc:LineSeries">
+                                                            <Setter Property="StrokeThickness" Value="1"></Setter>
+                                                            <Setter Property="Fill" Value="#4EFFFFFF"></Setter>
+                                                            <Setter Property="PointGeometrySize" Value="3"></Setter>
+                                                            <Setter Property="LineSmoothness" Value="0"></Setter>
+                                                        </Style>
+                                                        <Style TargetType="lvc:DefaultLegend">
+                                                            <Setter Property="Foreground" Value="#424242"></Setter>
+                                                        </Style>
+                                                        <Style TargetType="lvc:Axis">
+                                                            <Setter Property="ShowLabels" Value="True"></Setter>
+                                                            <Setter Property="IsEnabled" Value="False"></Setter>
+                                                            <Setter Property="Foreground" Value="#424242"></Setter>
+                                                        </Style>
+                                                    </lvc:CartesianChart.Resources>
+                                                    <lvc:CartesianChart.AxisX>
+                                                        <lvc:Axis Title="Date" IsEnabled="False" ShowLabels="False" ></lvc:Axis>
+                                                    </lvc:CartesianChart.AxisX>
+                                                    <lvc:CartesianChart.AxisY>
+                                                        <lvc:Axis Title="Value" IsEnabled="False" ShowLabels="False" ></lvc:Axis>
+                                                    </lvc:CartesianChart.AxisY>
+                                                </lvc:CartesianChart>
 
-                                            <TextBlock HorizontalAlignment="Left"  FontSize="28" FontWeight="Medium" Foreground="#9E9E9E" Margin="0 0 0 8">Fund Transactions</TextBlock>
+                                                <TextBlock HorizontalAlignment="Left"  FontSize="28" FontWeight="Medium" Foreground="#9E9E9E" Margin="0 0 0 8">Fund Transactions</TextBlock>
 
-                                            <DataGrid Height="200"  Name="FundTransDataGrid"  HorizontalAlignment="Left" Grid.Row="0"   IsReadOnly='True' CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
+                                                <DataGrid Height="200"  Name="FundTransDataGrid"  HorizontalAlignment="Left" Grid.Row="0"   IsReadOnly='True' CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
                       materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="Transparent" >
-                                                <DataGrid.Columns>
+                                                    <DataGrid.Columns>
 
-                                                    <DataGridTextColumn 
+                                                        <DataGridTextColumn 
                                             Header="Date"
                                                          Width="1*"
                         Binding="{Binding DateFormated}"
                                             />
-                                                    <DataGridTextColumn 
+                                                        <DataGridTextColumn 
                                             Header="Name"
                                                          Width="1*"
                         Binding="{Binding Name}"
                                             />
 
-                                                    <DataGridTextColumn 
+                                                        <DataGridTextColumn 
                                             Header="Asset Type"
                                                          Width="1*"
                         Binding="{Binding Type}"
                                             />
-                                                    <DataGridTextColumn 
+                                                        <DataGridTextColumn 
                                             Header="Asset Value"
                                                          Width="1*"
                         Binding="{Binding Value}"
                                             />
-                                                </DataGrid.Columns>
-                                            </DataGrid>
+                                                    </DataGrid.Columns>
+                                                </DataGrid>
 
-                                        </StackPanel>
-                                    </materialDesign:TransitionerSlide>
-                                    <materialDesign:TransitionerSlide>
-                                        <materialDesign:TransitionerSlide.OpeningEffects>
-                                            <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
-                                        </materialDesign:TransitionerSlide.OpeningEffects>
-                                        <Grid>
-                                            <StackPanel>
+                                            </StackPanel>
+                                        </materialDesign:TransitionerSlide>
+                                        <materialDesign:TransitionerSlide>
+                                            <materialDesign:TransitionerSlide.OpeningEffects>
+                                                <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
+                                            </materialDesign:TransitionerSlide.OpeningEffects>
+                                            <Grid>
+                                                <StackPanel>
 
-                                                <DataGrid Name="StatmentsDataGrid" VerticalAlignment="Top" Height="340"  IsReadOnly="True" Margin="0 8 0 0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
+                                                    <DataGrid Name="StatmentsDataGrid" VerticalAlignment="Top" Height="340"  IsReadOnly="True" Margin="0 8 0 0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
                       materialDesign:DataGridAssist.CellPadding="13 8 8 8"  materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="#ffffff">
+                                                        <DataGrid.Resources>
+                                                            <Style TargetType="ToolTip">
+                                                            </Style>
+                                                        </DataGrid.Resources>
+
+                                                        <DataGrid.Columns>
+
+                                                        </DataGrid.Columns>
+                                                    </DataGrid>
+                                                    <StackPanel Orientation="Horizontal" Margin="0 16 0 0">
+                                                        <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="8" VerticalAlignment="Center" FontWeight="Medium">Balance</TextBlock>
+                                                        <TextBlock Name="StatmentsDataGridBalance" Style="{StaticResource MaterialDesignDisplay1TextBlock}" Foreground="#37474F" Margin="8">0.0 ZMW</TextBlock>
+
+
+                                                    </StackPanel>
+
+                                                </StackPanel>
+
+                                            </Grid>
+                                        </materialDesign:TransitionerSlide>
+                                        <materialDesign:TransitionerSlide>
+                                            <materialDesign:TransitionerSlide.OpeningEffects>
+                                                <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
+                                            </materialDesign:TransitionerSlide.OpeningEffects>
+                                            <StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Expander HorizontalAlignment="Stretch"
+                      Header="Add Provision" Margin="8">
+                                                        <StackPanel Orientation="Horizontal"
+                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                            Margin="16">
+                                                            <TextBox 
+				    x:Name="ProvisionAmountTextBox"
+				    materialDesign:HintAssist.Hint="Amount" Width="180"/>
+                                                            <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Margin="8 0 0 0" Width="100">
+                                                                Done
+                                                            </Button>
+                                                        </StackPanel>
+                                                    </Expander>
+                                                    <Expander HorizontalAlignment="Stretch"
+                      Header="Add Payment"  Margin="8">
+                                                        <StackPanel Orientation="Horizontal"
+                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                            Margin="16">
+                                                            <TextBox 
+				    x:Name="PaymentAmountTextBox"
+				    materialDesign:HintAssist.Hint="Amount" Width="180"/>
+                                                            <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Margin="8 0 0 0" Width="100">
+                                                                Done
+                                                            </Button>
+                                                        </StackPanel>
+                                                    </Expander>
+                                                </StackPanel>
+                                                <DataGrid  SelectionUnit="FullRow"  Name="ExpensesStatementDataGrid"  HorizontalAlignment="Left" Grid.Column="1"   IsReadOnly='True' CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
+                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="#ffffff" >
                                                     <DataGrid.Resources>
                                                         <Style TargetType="ToolTip">
+                                                            <Setter Property="Background" Value="#37474F"></Setter>
+                                                        </Style>
+                                                        <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
+
+                                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                            <Style.Triggers>
+
+                                                                <Trigger Property="IsSelected" Value="True">
+                                                                    <Setter Property="Background" Value="Transparent"></Setter>
+                                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                                </Trigger>
+                                                                <Trigger Property="IsFocused" Value="True">
+                                                                    <Setter Property="Background" Value="Transparent"></Setter>
+                                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                                </Trigger>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Background" Value="Transparent"></Setter>
+                                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                        <Style TargetType="{x:Type DataGridRow}">
+
+                                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                            <Style.Triggers>
+
+                                                                <Trigger Property="IsSelected" Value="True">
+                                                                    <Setter Property="Background" Value="Transparent"></Setter>
+                                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                                </Trigger>
+                                                                <Trigger Property="IsFocused" Value="True">
+                                                                    <Setter Property="Background" Value="Transparent"></Setter>
+                                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                                </Trigger>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Background" Value="Transparent"></Setter>
+                                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </DataGrid.Resources>
+                                                    <DataGrid.Columns>
+                                                        <DataGridTemplateColumn Header="Expense">
+                                                            <DataGridTemplateColumn.CellTemplate>
+                                                                <DataTemplate>
+
+
+                                                                    <TextBlock  Text="{Binding Expense}" Foreground="#607D8B" Style="{StaticResource MaterialDesignCaptionTextBlock}"  />
+                                                                </DataTemplate>
+                                                            </DataGridTemplateColumn.CellTemplate>
+                                                        </DataGridTemplateColumn>
+                                                        <DataGridTemplateColumn Header="Opening Balance">
+                                                            <DataGridTemplateColumn.CellTemplate>
+                                                                <DataTemplate>
+
+
+                                                                    <TextBlock  Text="{Binding OpeningBalanceFormated}" Foreground="#212121" Style="{StaticResource MaterialDesignCaptionTextBlock}"  />
+                                                                </DataTemplate>
+                                                            </DataGridTemplateColumn.CellTemplate>
+                                                        </DataGridTemplateColumn>
+                                                        <DataGridTemplateColumn Header="Payments">
+                                                            <DataGridTemplateColumn.CellTemplate>
+                                                                <DataTemplate>
+                                                                    <TextBlock  Text="{Binding PaymentsFormated}" Background="#4DD0E1" Foreground="#212121" Style="{StaticResource MaterialDesignCaptionTextBlock}"  />
+                                                                </DataTemplate>
+                                                            </DataGridTemplateColumn.CellTemplate>
+                                                        </DataGridTemplateColumn>
+
+                                                        <DataGridTemplateColumn Header="Provisions">
+                                                            <DataGridTemplateColumn.CellTemplate>
+                                                                <DataTemplate>
+                                                                    <TextBlock  Text="{Binding ProvisionsFormated}" Background="#FFD54F" Foreground="#212121" Style="{StaticResource MaterialDesignCaptionTextBlock}"  />
+                                                                </DataTemplate>
+                                                            </DataGridTemplateColumn.CellTemplate>
+                                                        </DataGridTemplateColumn>
+
+                                                        <DataGridTemplateColumn Header="Closing Balance">
+                                                            <DataGridTemplateColumn.CellTemplate>
+                                                                <DataTemplate>
+                                                                    <TextBlock  Text="{Binding ClosingBalanceFormated}" Foreground="#212121" Style="{StaticResource MaterialDesignCaptionTextBlock}"  />
+                                                                </DataTemplate>
+                                                            </DataGridTemplateColumn.CellTemplate>
+                                                        </DataGridTemplateColumn>
+                                                    </DataGrid.Columns>
+                                                </DataGrid>
+
+                                            </StackPanel>
+                                        </materialDesign:TransitionerSlide>
+                                        <materialDesign:TransitionerSlide>
+                                            <materialDesign:TransitionerSlide.OpeningEffects>
+                                                <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
+                                            </materialDesign:TransitionerSlide.OpeningEffects>
+                                            <StackPanel>
+                                                <Grid Height="330"  Background="#fafafa">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="1*"/>
+                                                        <ColumnDefinition Width="2"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Separator Width="2" Foreground="#424242"></Separator>
+
+                                                    <DataGrid Name="IncomeStatementInvestmentIncomeGrid" Background="#fafafa" Margin="0 8 0 0"  CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
+                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" IsReadOnly="True" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+                                                        <DataGrid.Columns>
+                                                            <DataGridTextColumn Binding="{Binding Name}"
+                                            Header="Investment Income" Width="1*"
+                                            />
+                                                            <DataGridTextColumn Binding="{Binding Value}"
+                                            Header="Amount" Width="1*"
+                                            />
+
+                                                        </DataGrid.Columns>
+                                                    </DataGrid>
+                                                    <DataGrid Grid.Column="2" Background="#fafafa" Name="IncomeStatementExpenseGrid" Margin="0 8 0 0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
+                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" IsReadOnly="True" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+                                                        <DataGrid.Columns>
+                                                            <DataGridTextColumn Binding="{Binding Name}"
+                                            Header="Expense" Width="1*"
+                                            />
+                                                            <DataGridTextColumn Binding="{Binding Value}"
+                                            Header="Amount" Width="1*"
+                                            />
+
+                                                        </DataGrid.Columns>
+                                                    </DataGrid>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="1*"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackPanel>
+                                                        <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="8">Total Income</TextBlock>
+                                                        <TextBlock Style="{StaticResource MaterialDesignDisplay1TextBlock}" Foreground="#37474F" Name="IncomeStatmentTotalIncomeTextBlock" Margin="8">0.0 ZMW</TextBlock>
+
+                                                    </StackPanel>
+                                                    <StackPanel Grid.Column="1">
+                                                        <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="8">Period Surplus(Deficit)</TextBlock>
+                                                        <TextBlock Style="{StaticResource MaterialDesignDisplay1TextBlock}" Foreground="#37474F" Name="IncomeStatmentPeriodSurplusTextBlock" Margin="8">0.0 ZMW</TextBlock>
+
+                                                    </StackPanel>
+                                                </Grid>
+                                            </StackPanel>
+
+                                        </materialDesign:TransitionerSlide>
+                                        <materialDesign:TransitionerSlide>
+                                            <materialDesign:TransitionerSlide.OpeningEffects>
+                                                <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
+                                            </materialDesign:TransitionerSlide.OpeningEffects>
+                                            <StackPanel>
+
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Expander HorizontalAlignment="Stretch"
+                      Header="Add Transtion" Margin="8">
+                                                        <StackPanel Orientation="Horizontal"
+                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                            Margin="16">
+                                                            <TextBox 
+				    x:Name="AccountNameTextBox"
+				    materialDesign:HintAssist.Hint="Account Name" Width="180"/>
+
+                                                            <TextBox 
+				    x:Name="AccountAmountTextBox"
+				    materialDesign:HintAssist.Hint="Amount" Width="180" Margin="8 0 0 0"/>
+                                                            <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Margin="8 0 0 0" Width="100">
+                                                                Done
+                                                            </Button>
+                                                        </StackPanel>
+                                                    </Expander>
+                                                </StackPanel>
+                                                <DataGrid Name="BankDataGrid" IsReadOnly="True" Margin="32 8 0 0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
+                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="#ffffff">
+                                                    <DataGrid.Resources>
+                                                        <Style TargetType="ToolTip">
+                                                            <Setter Property="Background" Value="#37474F"></Setter>
                                                         </Style>
                                                     </DataGrid.Resources>
 
                                                     <DataGrid.Columns>
-
-                                                    </DataGrid.Columns>
-                                                </DataGrid>
-                                                <StackPanel Orientation="Horizontal" Margin="0 16 0 0">
-                                                    <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="8" VerticalAlignment="Center" FontWeight="Medium">Balance</TextBlock>
-                                                    <TextBlock Name="StatmentsDataGridBalance" Style="{StaticResource MaterialDesignDisplay1TextBlock}" Foreground="#37474F" Margin="8">0.0 ZMW</TextBlock>
-
-
-                                                </StackPanel>
-
-                                            </StackPanel>
-
-                                        </Grid>
-                                    </materialDesign:TransitionerSlide>
-                                    <materialDesign:TransitionerSlide>
-                                        <materialDesign:TransitionerSlide.OpeningEffects>
-                                            <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
-                                        </materialDesign:TransitionerSlide.OpeningEffects>
-                                        <StackPanel>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Expander HorizontalAlignment="Stretch"
-                      Header="Add Provision" Margin="8">
-                                                    <StackPanel Orientation="Horizontal"
-                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                            Margin="16">
-                                                        <TextBox 
-				    x:Name="ProvisionAmountTextBox"
-				    materialDesign:HintAssist.Hint="Amount" Width="180"/>
-                                                        <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Margin="8 0 0 0" Width="100">
-                                                            Done
-                                                        </Button>
-                                                    </StackPanel>
-                                                </Expander>
-                                                <Expander HorizontalAlignment="Stretch"
-                      Header="Add Payment"  Margin="8">
-                                                    <StackPanel Orientation="Horizontal"
-                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                            Margin="16">
-                                                        <TextBox 
-				    x:Name="PaymentAmountTextBox"
-				    materialDesign:HintAssist.Hint="Amount" Width="180"/>
-                                                        <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Margin="8 0 0 0" Width="100">
-                                                            Done
-                                                        </Button>
-                                                    </StackPanel>
-                                                </Expander>
-                                            </StackPanel>
-                                            <DataGrid  SelectionUnit="FullRow"  Name="ExpensesStatementDataGrid"  HorizontalAlignment="Left" Grid.Column="1"   IsReadOnly='True' CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
-                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="#ffffff" >
-                                                <DataGrid.Resources>
-                                                    <Style TargetType="ToolTip">
-                                                        <Setter Property="Background" Value="#37474F"></Setter>
-                                                    </Style>
-                                                    <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
-
-                                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                        <Style.Triggers>
-
-                                                            <Trigger Property="IsSelected" Value="True">
-                                                                <Setter Property="Background" Value="Transparent"></Setter>
-                                                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                            </Trigger>
-                                                            <Trigger Property="IsFocused" Value="True">
-                                                                <Setter Property="Background" Value="Transparent"></Setter>
-                                                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                            </Trigger>
-                                                            <Trigger Property="IsMouseOver" Value="True">
-                                                                <Setter Property="Background" Value="Transparent"></Setter>
-                                                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                            </Trigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                    <Style TargetType="{x:Type DataGridRow}">
-
-                                                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                        <Style.Triggers>
-
-                                                            <Trigger Property="IsSelected" Value="True">
-                                                                <Setter Property="Background" Value="Transparent"></Setter>
-                                                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                            </Trigger>
-                                                            <Trigger Property="IsFocused" Value="True">
-                                                                <Setter Property="Background" Value="Transparent"></Setter>
-                                                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                            </Trigger>
-                                                            <Trigger Property="IsMouseOver" Value="True">
-                                                                <Setter Property="Background" Value="Transparent"></Setter>
-                                                                <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                            </Trigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </DataGrid.Resources>
-                                                <DataGrid.Columns>
-                                                    <DataGridTemplateColumn Header="Expense">
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-
-
-                                                                <TextBlock  Text="{Binding Expense}" Foreground="#607D8B" Style="{StaticResource MaterialDesignCaptionTextBlock}"  />
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
-                                                    <DataGridTemplateColumn Header="Opening Balance">
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-
-
-                                                                <TextBlock  Text="{Binding OpeningBalanceFormated}" Foreground="#212121" Style="{StaticResource MaterialDesignCaptionTextBlock}"  />
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
-                                                    <DataGridTemplateColumn Header="Payments">
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <TextBlock  Text="{Binding PaymentsFormated}" Background="#4DD0E1" Foreground="#212121" Style="{StaticResource MaterialDesignCaptionTextBlock}"  />
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
-
-                                                    <DataGridTemplateColumn Header="Provisions">
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <TextBlock  Text="{Binding ProvisionsFormated}" Background="#FFD54F" Foreground="#212121" Style="{StaticResource MaterialDesignCaptionTextBlock}"  />
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
-
-                                                    <DataGridTemplateColumn Header="Closing Balance">
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <TextBlock  Text="{Binding ClosingBalanceFormated}" Foreground="#212121" Style="{StaticResource MaterialDesignCaptionTextBlock}"  />
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
-                                                </DataGrid.Columns>
-                                            </DataGrid>
-
-                                        </StackPanel>
-                                    </materialDesign:TransitionerSlide>
-                                    <materialDesign:TransitionerSlide>
-                                        <materialDesign:TransitionerSlide.OpeningEffects>
-                                            <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
-                                        </materialDesign:TransitionerSlide.OpeningEffects>
-                                        <StackPanel>
-                                            <Grid Height="330"  Background="#fafafa">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="1*"/>
-                                                    <ColumnDefinition Width="2"/>
-                                                    <ColumnDefinition Width="1*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <Separator Width="2" Foreground="#424242"></Separator>
-
-                                                <DataGrid Name="IncomeStatementInvestmentIncomeGrid" Background="#fafafa" Margin="0 8 0 0"  CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
-                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" IsReadOnly="True" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
-                                                    <DataGrid.Columns>
                                                         <DataGridTextColumn Binding="{Binding Name}"
-                                            Header="Investment Income" Width="1*"
-                                            />
-                                                        <DataGridTextColumn Binding="{Binding Value}"
-                                            Header="Amount" Width="1*"
-                                            />
-
-                                                    </DataGrid.Columns>
-                                                </DataGrid>
-                                                <DataGrid Grid.Column="2" Background="#fafafa" Name="IncomeStatementExpenseGrid" Margin="0 8 0 0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
-                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" IsReadOnly="True" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
-                                                    <DataGrid.Columns>
-                                                        <DataGridTextColumn Binding="{Binding Name}"
-                                            Header="Expense" Width="1*"
-                                            />
-                                                        <DataGridTextColumn Binding="{Binding Value}"
-                                            Header="Amount" Width="1*"
-                                            />
-
-                                                    </DataGrid.Columns>
-                                                </DataGrid>
-                                            </Grid>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="1*"/>
-                                                    <ColumnDefinition Width="1*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <StackPanel>
-                                                    <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="8">Total Income</TextBlock>
-                                                    <TextBlock Style="{StaticResource MaterialDesignDisplay1TextBlock}" Foreground="#37474F" Name="IncomeStatmentTotalIncomeTextBlock" Margin="8">0.0 ZMW</TextBlock>
-
-                                                </StackPanel>
-                                                <StackPanel Grid.Column="1">
-                                                    <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="8">Period Surplus(Deficit)</TextBlock>
-                                                    <TextBlock Style="{StaticResource MaterialDesignDisplay1TextBlock}" Foreground="#37474F" Name="IncomeStatmentPeriodSurplusTextBlock" Margin="8">0.0 ZMW</TextBlock>
-
-                                                </StackPanel>
-                                            </Grid>
-                                        </StackPanel>
-                                       
-                                    </materialDesign:TransitionerSlide>
-                                    <materialDesign:TransitionerSlide>
-                                        <materialDesign:TransitionerSlide.OpeningEffects>
-                                            <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
-                                        </materialDesign:TransitionerSlide.OpeningEffects>
-                                        <StackPanel>
-
-                                            <StackPanel Orientation="Horizontal">
-                                                <Expander HorizontalAlignment="Stretch"
-                      Header="Add Transtion" Margin="8">
-                                                    <StackPanel Orientation="Horizontal"
-                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                            Margin="16">
-                                                        <TextBox 
-				    x:Name="AccountNameTextBox"
-				    materialDesign:HintAssist.Hint="Account Name" Width="180"/>
-
-                                                        <TextBox 
-				    x:Name="AccountAmountTextBox"
-				    materialDesign:HintAssist.Hint="Amount" Width="180" Margin="8 0 0 0"/>
-                                                        <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Margin="8 0 0 0" Width="100">
-                                                            Done
-                                                        </Button>
-                                                    </StackPanel>
-                                                </Expander>
-                                            </StackPanel>
-                                            <DataGrid Name="BankDataGrid" IsReadOnly="True" Margin="32 8 0 0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
-                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="#ffffff">
-                                                <DataGrid.Resources>
-                                                    <Style TargetType="ToolTip">
-                                                        <Setter Property="Background" Value="#37474F"></Setter>
-                                                    </Style>
-                                                </DataGrid.Resources>
-
-                                                <DataGrid.Columns>
-                                                    <DataGridTextColumn Binding="{Binding Name}"
                                             Header="Bank" Width="1*"
                                             />
-                                                    <DataGridTextColumn Binding="{Binding AccountName}"
+                                                        <DataGridTextColumn Binding="{Binding AccountName}"
                                             Header="Account Name" Width="1*"
                                             />
-                                                    <DataGridTextColumn Binding="{Binding AccountNumber}"
+                                                        <DataGridTextColumn Binding="{Binding AccountNumber}"
                                             Header="Account Number" Width="1*"
                                             />
-                                                    <DataGridTextColumn Binding="{Binding AmountFormated}"
+                                                        <DataGridTextColumn Binding="{Binding AmountFormated}"
                                             Header="Amount" Width="1*"
                                             />
-                                                </DataGrid.Columns>
-                                            </DataGrid>
+                                                    </DataGrid.Columns>
+                                                </DataGrid>
 
-                                        </StackPanel>
-                                    </materialDesign:TransitionerSlide>
-                                    <materialDesign:TransitionerSlide>
-                                        <materialDesign:TransitionerSlide.OpeningEffects>
-                                            <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
-                                        </materialDesign:TransitionerSlide.OpeningEffects>
-                                        <StackPanel>
-                                    
-                                                    <DataGrid Name="ChangeInEquityDataGrid" IsReadOnly="True" Margin="32 8 0 0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
+                                            </StackPanel>
+                                        </materialDesign:TransitionerSlide>
+                                        <materialDesign:TransitionerSlide>
+                                            <materialDesign:TransitionerSlide.OpeningEffects>
+                                                <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
+                                            </materialDesign:TransitionerSlide.OpeningEffects>
+                                            <StackPanel>
+
+                                                <DataGrid Name="ChangeInEquityDataGrid" IsReadOnly="True" Margin="32 8 0 0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
                       materialDesign:DataGridAssist.CellPadding="13 8 8 8" Height="330" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="#ffffff">
-                                                <DataGrid.Resources>
-                                                    <Style TargetType="ToolTip">
-                                                        <Setter Property="Background" Value="#37474F"></Setter>
-                                                    </Style>
-                                                </DataGrid.Resources>
+                                                    <DataGrid.Resources>
+                                                        <Style TargetType="ToolTip">
+                                                            <Setter Property="Background" Value="#37474F"></Setter>
+                                                        </Style>
+                                                    </DataGrid.Resources>
 
-                                                <DataGrid.Columns>
-                                                    <DataGridTextColumn Binding="{Binding Name}"
+                                                    <DataGrid.Columns>
+                                                        <DataGridTextColumn Binding="{Binding Name}"
                                             Header="" Width="1*"
                                             />
-                                                    <DataGridTextColumn Binding="{Binding Value}"
+                                                        <DataGridTextColumn Binding="{Binding Value}"
                                             Header="Units" Width="1*"
                                             />
-                                                    <DataGridTextColumn Binding="{Binding SecondaryValue}"
+                                                        <DataGridTextColumn Binding="{Binding SecondaryValue}"
                                             Header="Members Fund" Width="1*"
                                             />
-                                                    <DataGridTextColumn Binding="{Binding ThirdValue}"
+                                                        <DataGridTextColumn Binding="{Binding ThirdValue}"
                                             Header="Retained Earnings" Width="1*"
                                             />
-                                                    <DataGridTextColumn Binding="{Binding ForthValue}"
+                                                        <DataGridTextColumn Binding="{Binding ForthValue}"
                                             Header="Total" Width="1*"
                                             />
-                                                </DataGrid.Columns>
-                                            </DataGrid>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="1*"/>
-                                                    <ColumnDefinition Width="1*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <StackPanel Grid.Column="0">
-                                                    <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="8">Opening Balance</TextBlock>
-                                                    <TextBlock Style="{StaticResource MaterialDesignDisplay1TextBlock}" Foreground="#37474F" Margin="8">0.0 ZMW</TextBlock>
-
-                                                </StackPanel>
-                                                <StackPanel Grid.Column="1" HorizontalAlignment="Right">
-                                                    <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="8">Opening Balance</TextBlock>
-                                                    <TextBlock Style="{StaticResource MaterialDesignDisplay1TextBlock}" Foreground="#37474F" Margin="8">0.0 ZMW</TextBlock>
-
-                                                </StackPanel>
-                                            </Grid>
-                                        </StackPanel>
-                                    </materialDesign:TransitionerSlide>
-                                    <materialDesign:TransitionerSlide>
-                                        <materialDesign:TransitionerSlide.OpeningEffects>
-                                            <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
-                                        </materialDesign:TransitionerSlide.OpeningEffects>
-                                        <StackPanel>
-
-                                            <StackPanel Orientation="Horizontal" Margin="0 16 0 0">
-                                                <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="8" VerticalAlignment="Center" >Balance</TextBlock>
-                                                <TextBlock Name="AssetsSOFPDataGridBalance" Style="{StaticResource MaterialDesignDisplay1TextBlock}" Foreground="#37474F" Margin="8">0.0 ZMW</TextBlock>
-
-
-                                            </StackPanel>
-                                            <controls:Stepper Name="DataEntryStepper"   IsLinear="True"  Height="420" Layout="Vertical"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                <model:Step>
-                                                    <model:Step.Header>
-                                                        <model:StepTitleHeader FirstLevelTitle="Assets" />
-                                                    </model:Step.Header>
-                                                    <model:Step.Content>
-                                                        <StackPanel>
-
-                                                            <controls:StepButtonBar  Continue="Continue" />
-                                                            <DataGrid Name="AssetsSOFPDataGrid" IsReadOnly="True" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
-                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" Height="270" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="#ffffff">
-                                                                <DataGrid.Resources>
-                                                                    <Style TargetType="ToolTip">
-                                                                        <Setter Property="Background" Value="#37474F"></Setter>
-                                                                    </Style>
-                                                                </DataGrid.Resources>
-
-                                                                <DataGrid.Columns>
-                                                                    <DataGridTextColumn Binding="{Binding Name}"
-                                            Header="" Width="1*"
-                                            />
-                                                                    <DataGridTextColumn Binding="{Binding Value}"
-                                            Header="Amount" Width="1*"
-                                            />
-                                                                </DataGrid.Columns>
-                                                            </DataGrid>
-
-                                                        </StackPanel>
-                                         
-                                                    </model:Step.Content>
-                                                </model:Step>
-                                                <model:Step>
-                                                    <model:Step.Header>
-                                                        <model:StepTitleHeader FirstLevelTitle="Liabilities" />
-                                                    </model:Step.Header>
-                                                    <model:Step.Content>
-                                                        <StackPanel>
-
-                                                                <controls:StepButtonBar  Back="BACK" Continue="Continue" />
-                                                            <DataGrid Name="LiabilitesSOFPDataGrid" IsReadOnly="True" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
-                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" Height="330" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="#ffffff">
-                                                                <DataGrid.Resources>
-                                                                    <Style TargetType="ToolTip">
-                                                                        <Setter Property="Background" Value="#37474F"></Setter>
-                                                                    </Style>
-                                                                </DataGrid.Resources>
-
-                                                                <DataGrid.Columns>
-                                                                    <DataGridTextColumn Binding="{Binding Name}"
-                                            Header="" Width="1*"
-                                            />
-                                                                    <DataGridTextColumn Binding="{Binding Value}"
-                                            Header="Amount" Width="1*"
-                                            />
-                                                                </DataGrid.Columns>
-                                                            </DataGrid>
-
-                                                        </StackPanel>
-                                   
-                                                    </model:Step.Content>
-                                                </model:Step>
-                                                <model:Step>
-                                                    <model:Step.Header>
-                                                        <model:StepTitleHeader FirstLevelTitle="Capital And Reserves" />
-                                                    </model:Step.Header>
-                                                    <model:Step.Content>
-                                                        <StackPanel>
-
-                                                            <controls:StepButtonBar  Back="BACK"  />
-                                                            <DataGrid Name="CapitalSOFPDataGrid" IsReadOnly="True"  Height="168" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
-                      materialDesign:DataGridAssist.CellPadding="13 8 8 8"  materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="#ffffff">
-                                                                <DataGrid.Resources>
-                                                                    <Style TargetType="ToolTip">
-                                                                        <Setter Property="Background" Value="#37474F"></Setter>
-                                                                    </Style>
-                                                                </DataGrid.Resources>
-
-                                                                <DataGrid.Columns>
-                                                                    <DataGridTextColumn Binding="{Binding Name}"
-                                            Header="" Width="1*"
-                                            />
-                                                                    <DataGridTextColumn Binding="{Binding Value}"
-                                            Header="Amount" Width="1*"
-                                            />
-                                                                </DataGrid.Columns>
-                                                            </DataGrid>
-
-                                                        </StackPanel>
-                                  
-                                                    </model:Step.Content>
-                                                </model:Step>
-
-                                            </controls:Stepper>
-                                        </StackPanel>
-                                    </materialDesign:TransitionerSlide>
-                                    <materialDesign:TransitionerSlide>
-                                        <materialDesign:TransitionerSlide.OpeningEffects>
-                                            <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
-                                        </materialDesign:TransitionerSlide.OpeningEffects>
-                                        <StackPanel>
-
-                                            <DataGrid Name="SecurityDetailDataGrid" IsReadOnly="True" Margin="32 8 0 0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
-                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" Height="330" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="#ffffff">
-                                                <DataGrid.Resources>
-                                                    <Style TargetType="ToolTip">
-                                                        <Setter Property="Background" Value="#37474F"></Setter>
-                                                    </Style>
-                                                </DataGrid.Resources>
-
-                                                <DataGrid.Columns>
-                                                    <DataGridTextColumn Binding="{Binding Name}"
-                                            Header="" Width="1*"
-                                            />
-                                                    <DataGridTextColumn Binding="{Binding Value}"
-                                            Header="" Width="1*"
-                                            />
-                                                </DataGrid.Columns>
-                                            </DataGrid>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="1*"/>
-                                                    <ColumnDefinition Width="1*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <StackPanel Grid.Column="0">
-                                                    <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="8">Opening Balance</TextBlock>
-                                                    <TextBlock Style="{StaticResource MaterialDesignDisplay1TextBlock}" Foreground="#37474F" Margin="8">0.0 ZMW</TextBlock>
-
-                                                </StackPanel>
-                                                <StackPanel Grid.Column="1" HorizontalAlignment="Right">
-                                                    <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="8">Opening Balance</TextBlock>
-                                                    <TextBlock Style="{StaticResource MaterialDesignDisplay1TextBlock}" Foreground="#37474F" Margin="8">0.0 ZMW</TextBlock>
-
-                                                </StackPanel>
-                                            </Grid>
-                                        </StackPanel>
-                                    </materialDesign:TransitionerSlide>
-
-                                </materialDesign:Transitioner>
-                                      
-
-                            </StackPanel>
-
-                        </Grid>
-
-
-                    </materialDesign:TransitionerSlide>
-                    <materialDesign:TransitionerSlide>
-                        <materialDesign:TransitionerSlide.OpeningEffects>
-                            <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
-                        </materialDesign:TransitionerSlide.OpeningEffects>
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="3*"/>
-                                <RowDefinition Height="1.5*"/>
-                            </Grid.RowDefinitions>
-                            <Grid Margin="0 0 0 16">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="1.2*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid  >
-
-                                    <materialDesign:Transitioner Name="DetailedScheduleTransitioner"   Grid.Row="1" SelectedIndex="0" >
-                                        <materialDesign:TransitionerSlide>
-                                            <materialDesign:TransitionerSlide.OpeningEffects>
-                                                <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
-                                            </materialDesign:TransitionerSlide.OpeningEffects>
-                                            <Grid>
-                                                <lvc:CartesianChart  x:Name="ReturnDataGridChart"   LegendLocation="Bottom" Margin="16">
-                                                    <lvc:CartesianChart.AxisX >
-                                                        <lvc:Axis  IsEnabled="True" ShowLabels="True" >
-                                                            <lvc:Axis.Separator>
-                                                                <lvc:Separator StrokeThickness="0" IsEnabled="False">
-
-                                                                </lvc:Separator>
-                                                            </lvc:Axis.Separator>
-                                                        </lvc:Axis>
-
-                                                    </lvc:CartesianChart.AxisX>
-                                                    <lvc:CartesianChart.AxisY>
-                                                        <lvc:Axis IsEnabled="True" ShowLabels="True" >
-
-                                                            <lvc:Axis.Separator>
-                                                                <lvc:Separator StrokeThickness="0" IsEnabled="False">
-
-                                                                </lvc:Separator>
-                                                            </lvc:Axis.Separator>
-                                                        </lvc:Axis>
-                                                    </lvc:CartesianChart.AxisY>
-                                                </lvc:CartesianChart>
-
-                                            </Grid>
-
-                                        </materialDesign:TransitionerSlide>
-                                        <materialDesign:TransitionerSlide>
-                                            <materialDesign:TransitionerSlide.OpeningEffects>
-                                                <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
-                                            </materialDesign:TransitionerSlide.OpeningEffects>
-                                            <DataGrid Name="DetailedScheduleDataGrid" IsReadOnly="True" Margin="32 8 0 0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
-                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="#ffffff">
-                                                <DataGrid.Resources>
-                                                    <Style TargetType="ToolTip">
-                                                        <Setter Property="Background" Value="#fafafa"></Setter>
-                                                    </Style>
-                                                </DataGrid.Resources>
-
-
-                                                <DataGrid.ContextMenu>
-                                                    <ContextMenu>
-                                                        <MenuItem Header="View Asset" Click="MenuItem_Click" />
-                                                        <MenuItem Header="Edit Asset" Click="MenuItem_Click" />
-                                                        <MenuItem Header="Delete Asset" Click="MenuItem_Click" />
-                                                    </ContextMenu>
-                                                </DataGrid.ContextMenu>
-                                                <DataGrid.ToolTip>
-                                                    <StackPanel Margin="8">
-                                                        <StackPanel Name="CurrentFormatedPanel" Visibility="Collapsed">
-                                                            <TextBlock Margin="8"  Text="Value at Start of Quater"   Style="{StaticResource MaterialDesignSubheadingTextBlock}"   ></TextBlock>
-                                                            <TextBlock Margin="8"  Text="{Binding CurrentFormated}"   Style="{StaticResource MaterialDesignSubheadingTextBlock}"   ></TextBlock>
-
-                                                        </StackPanel>
-                                                        <StackPanel Name="InterestReceivedFormatedPanel" Visibility="Collapsed">
-                                                            <TextBlock Margin="8"  Text="Interest Received"   Style="{StaticResource MaterialDesignSubheadingTextBlock}"   ></TextBlock>
-                                                            <TextBlock Margin="8"  Text="{Binding InterestReceivedFormated}"   Style="{StaticResource MaterialDesignSubheadingTextBlock}"   ></TextBlock>
-
-                                                        </StackPanel>
-                                                        <StackPanel Name="AccuredInterestFormatedPanel" Visibility="Collapsed">
-                                                            <TextBlock Margin="8"  Text="Accured Interest"   Style="{StaticResource MaterialDesignSubheadingTextBlock}"   ></TextBlock>
-                                                            <TextBlock Margin="8"  Text="{Binding AccuredInterestFormated}"   Style="{StaticResource MaterialDesignSubheadingTextBlock}"   ></TextBlock>
-
-                                                        </StackPanel>
+                                                    </DataGrid.Columns>
+                                                </DataGrid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="1*"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackPanel Grid.Column="0">
+                                                        <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="8">Opening Balance</TextBlock>
+                                                        <TextBlock Style="{StaticResource MaterialDesignDisplay1TextBlock}" Foreground="#37474F" Margin="8">0.0 ZMW</TextBlock>
 
                                                     </StackPanel>
-                                                </DataGrid.ToolTip>
-                                                <DataGrid.Columns>
+                                                    <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                                                        <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="8">Opening Balance</TextBlock>
+                                                        <TextBlock Style="{StaticResource MaterialDesignDisplay1TextBlock}" Foreground="#37474F" Margin="8">0.0 ZMW</TextBlock>
 
-                                                </DataGrid.Columns>
-                                            </DataGrid>
-
+                                                    </StackPanel>
+                                                </Grid>
+                                            </StackPanel>
                                         </materialDesign:TransitionerSlide>
+                                        <materialDesign:TransitionerSlide>
+                                            <materialDesign:TransitionerSlide.OpeningEffects>
+                                                <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
+                                            </materialDesign:TransitionerSlide.OpeningEffects>
+                                            <StackPanel>
+
+                                                <StackPanel Orientation="Horizontal" Margin="0 16 0 0">
+                                                    <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="8" VerticalAlignment="Center" >Balance</TextBlock>
+                                                    <TextBlock Name="AssetsSOFPDataGridBalance" Style="{StaticResource MaterialDesignDisplay1TextBlock}" Foreground="#37474F" Margin="8">0.0 ZMW</TextBlock>
+
+
+                                                </StackPanel>
+                                                <controls:Stepper Name="DataEntryStepper"   IsLinear="True"  Height="420" Layout="Vertical"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                    <model:Step>
+                                                        <model:Step.Header>
+                                                            <model:StepTitleHeader FirstLevelTitle="Assets" />
+                                                        </model:Step.Header>
+                                                        <model:Step.Content>
+                                                            <StackPanel>
+
+                                                                <controls:StepButtonBar  Continue="Continue" />
+                                                                <DataGrid Name="AssetsSOFPDataGrid" IsReadOnly="True" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
+                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" Height="270" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="#ffffff">
+                                                                    <DataGrid.Resources>
+                                                                        <Style TargetType="ToolTip">
+                                                                            <Setter Property="Background" Value="#37474F"></Setter>
+                                                                        </Style>
+                                                                    </DataGrid.Resources>
+
+                                                                    <DataGrid.Columns>
+                                                                        <DataGridTextColumn Binding="{Binding Name}"
+                                            Header="" Width="1*"
+                                            />
+                                                                        <DataGridTextColumn Binding="{Binding Value}"
+                                            Header="Amount" Width="1*"
+                                            />
+                                                                    </DataGrid.Columns>
+                                                                </DataGrid>
+
+                                                            </StackPanel>
+
+                                                        </model:Step.Content>
+                                                    </model:Step>
+                                                    <model:Step>
+                                                        <model:Step.Header>
+                                                            <model:StepTitleHeader FirstLevelTitle="Liabilities" />
+                                                        </model:Step.Header>
+                                                        <model:Step.Content>
+                                                            <StackPanel>
+
+                                                                <controls:StepButtonBar  Back="BACK" Continue="Continue" />
+                                                                <DataGrid Name="LiabilitesSOFPDataGrid" IsReadOnly="True" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
+                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" Height="330" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="#ffffff">
+                                                                    <DataGrid.Resources>
+                                                                        <Style TargetType="ToolTip">
+                                                                            <Setter Property="Background" Value="#37474F"></Setter>
+                                                                        </Style>
+                                                                    </DataGrid.Resources>
+
+                                                                    <DataGrid.Columns>
+                                                                        <DataGridTextColumn Binding="{Binding Name}"
+                                            Header="" Width="1*"
+                                            />
+                                                                        <DataGridTextColumn Binding="{Binding Value}"
+                                            Header="Amount" Width="1*"
+                                            />
+                                                                    </DataGrid.Columns>
+                                                                </DataGrid>
+
+                                                            </StackPanel>
+
+                                                        </model:Step.Content>
+                                                    </model:Step>
+                                                    <model:Step>
+                                                        <model:Step.Header>
+                                                            <model:StepTitleHeader FirstLevelTitle="Capital And Reserves" />
+                                                        </model:Step.Header>
+                                                        <model:Step.Content>
+                                                            <StackPanel>
+
+                                                                <controls:StepButtonBar  Back="BACK"  />
+                                                                <DataGrid Name="CapitalSOFPDataGrid" IsReadOnly="True"  Height="168" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
+                      materialDesign:DataGridAssist.CellPadding="13 8 8 8"  materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="#ffffff">
+                                                                    <DataGrid.Resources>
+                                                                        <Style TargetType="ToolTip">
+                                                                            <Setter Property="Background" Value="#37474F"></Setter>
+                                                                        </Style>
+                                                                    </DataGrid.Resources>
+
+                                                                    <DataGrid.Columns>
+                                                                        <DataGridTextColumn Binding="{Binding Name}"
+                                            Header="" Width="1*"
+                                            />
+                                                                        <DataGridTextColumn Binding="{Binding Value}"
+                                            Header="Amount" Width="1*"
+                                            />
+                                                                    </DataGrid.Columns>
+                                                                </DataGrid>
+
+                                                            </StackPanel>
+
+                                                        </model:Step.Content>
+                                                    </model:Step>
+
+                                                </controls:Stepper>
+                                            </StackPanel>
+                                        </materialDesign:TransitionerSlide>
+                                        <materialDesign:TransitionerSlide>
+                                            <materialDesign:TransitionerSlide.OpeningEffects>
+                                                <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
+                                            </materialDesign:TransitionerSlide.OpeningEffects>
+                                            <StackPanel>
+
+                                                <DataGrid Name="SecurityDetailDataGrid" IsReadOnly="True" Margin="32 8 0 0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
+                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" Height="330" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="#ffffff">
+                                                    <DataGrid.Resources>
+                                                        <Style TargetType="ToolTip">
+                                                            <Setter Property="Background" Value="#37474F"></Setter>
+                                                        </Style>
+                                                    </DataGrid.Resources>
+
+                                                    <DataGrid.Columns>
+                                                        <DataGridTextColumn Binding="{Binding Name}"
+                                            Header="" Width="1*"
+                                            />
+                                                        <DataGridTextColumn Binding="{Binding Value}"
+                                            Header="" Width="1*"
+                                            />
+                                                    </DataGrid.Columns>
+                                                </DataGrid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="1*"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackPanel Grid.Column="0">
+                                                        <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="8">Opening Balance</TextBlock>
+                                                        <TextBlock Style="{StaticResource MaterialDesignDisplay1TextBlock}" Foreground="#37474F" Margin="8">0.0 ZMW</TextBlock>
+
+                                                    </StackPanel>
+                                                    <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                                                        <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="8">Opening Balance</TextBlock>
+                                                        <TextBlock Style="{StaticResource MaterialDesignDisplay1TextBlock}" Foreground="#37474F" Margin="8">0.0 ZMW</TextBlock>
+
+                                                    </StackPanel>
+                                                </Grid>
+                                            </StackPanel>
+                                        </materialDesign:TransitionerSlide>
+
                                     </materialDesign:Transitioner>
 
-                                </Grid>
-                                <DataGrid  SelectionUnit="FullRow" GridLinesVisibility="None" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Name="IncomeStatementDataGrid"  HorizontalAlignment="Left" Grid.Column="1"   IsReadOnly='True' CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
-                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="#ffffff" >
-                                    <DataGrid.Resources>
-                                        <Style TargetType="ToolTip">
-                                            <Setter Property="Background" Value="#37474F"></Setter>
-                                        </Style>
-                                        <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
 
-                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                            <Style.Triggers>
+                                </StackPanel>
 
-                                                <Trigger Property="IsSelected" Value="True">
-                                                    <Setter Property="Background" Value="Transparent"></Setter>
-                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                </Trigger>
-                                                <Trigger Property="IsFocused" Value="True">
-                                                    <Setter Property="Background" Value="Transparent"></Setter>
-                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="Transparent"></Setter>
-                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                        <Style TargetType="{x:Type DataGridRow}">
-
-                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                            <Style.Triggers>
-
-                                                <Trigger Property="IsSelected" Value="True">
-                                                    <Setter Property="Background" Value="Transparent"></Setter>
-                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                </Trigger>
-                                                <Trigger Property="IsFocused" Value="True">
-                                                    <Setter Property="Background" Value="Transparent"></Setter>
-                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="Transparent"></Setter>
-                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </DataGrid.Resources>
-                                    <DataGrid.Columns>
-                                        <DataGridTemplateColumn>
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-
-
-                                                    <Button  Click="SelectStatement" materialDesign:ShadowAssist.ShadowDepth="{Binding SecondaryValue, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Margin="0 8 8 0" HorizontalAlignment="Right" >
-
-                                                        <TextBlock  Text="{Binding Name}"  TextDecorations="Underline" Style="{StaticResource MaterialDesignCaptionTextBlock}"   ></TextBlock>
-
-                                                    </Button>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                        <DataGridTemplateColumn>
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-
-                                                    <TextBlock  Text="{Binding Value}"  VerticalAlignment="Center"  Style="{StaticResource MaterialDesignCaptionTextBlock}"   ></TextBlock>
-
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                    </DataGrid.Columns>
-                                </DataGrid>
                             </Grid>
-                            <materialDesign:Transitioner Name="BalancesTransitioner"   Grid.Row="1" SelectedIndex="0" >
-                                <materialDesign:TransitionerSlide>
-                                    <materialDesign:TransitionerSlide.OpeningEffects>
-                                        <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
-                                    </materialDesign:TransitionerSlide.OpeningEffects>
-                                    <StackPanel Orientation="Horizontal">
 
-                                        <materialDesign:Card Margin="16 4 0 0" Background="#E91E63"
-                  Foreground="#fafafa"
-                  Padding="8" Width="300" Height="140">
-                                            <StackPanel>
 
-                                                <StackPanel Orientation="Horizontal">
+                        </materialDesign:TransitionerSlide>
+                        <materialDesign:TransitionerSlide>
+                            <materialDesign:TransitionerSlide.OpeningEffects>
+                                <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
+                            </materialDesign:TransitionerSlide.OpeningEffects>
 
-                                                    <TextBlock FontSize="24" FontWeight="Medium" Foreground="#E0E0E0">Issues</TextBlock>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="3*"/>
+                                    <RowDefinition Height="1.5*"/>
+                                </Grid.RowDefinitions>
+                                <Grid Margin="0 0 0 16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="1.2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid  >
+
+                                        <materialDesign:Transitioner Name="DetailedScheduleTransitioner"   Grid.Row="1" SelectedIndex="0" >
+                                            <materialDesign:TransitionerSlide>
+                                                <materialDesign:TransitionerSlide.OpeningEffects>
+                                                    <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
+                                                </materialDesign:TransitionerSlide.OpeningEffects>
+                                                <Grid>
+                                                    <lvc:CartesianChart DataClick="ReturnDataGridChart_OnDataClick"  x:Name="ReturnDataGridChart"   LegendLocation="Bottom" Margin="16">
+                                                        <lvc:CartesianChart.AxisX >
+                                                            <lvc:Axis  IsEnabled="True" ShowLabels="True" >
+                                                                <lvc:Axis.Separator>
+                                                                    <lvc:Separator StrokeThickness="0" IsEnabled="False">
+
+                                                                    </lvc:Separator>
+                                                                </lvc:Axis.Separator>
+                                                            </lvc:Axis>
+
+                                                        </lvc:CartesianChart.AxisX>
+                                                        <lvc:CartesianChart.AxisY>
+                                                            <lvc:Axis IsEnabled="True" ShowLabels="True" >
+
+                                                                <lvc:Axis.Separator>
+                                                                    <lvc:Separator StrokeThickness="0" IsEnabled="False">
+
+                                                                    </lvc:Separator>
+                                                                </lvc:Axis.Separator>
+                                                            </lvc:Axis>
+                                                        </lvc:CartesianChart.AxisY>
+                                                    </lvc:CartesianChart>
+
+                                                </Grid>
+
+                                            </materialDesign:TransitionerSlide>
+                                            <materialDesign:TransitionerSlide>
+                                                <materialDesign:TransitionerSlide.OpeningEffects>
+                                                    <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
+                                                </materialDesign:TransitionerSlide.OpeningEffects>
+                                                <DataGrid Name="DetailedScheduleDataGrid" IsReadOnly="True" Margin="32 8 0 0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
+                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="#ffffff">
+                                                    <DataGrid.Resources>
+                                                        <Style TargetType="ToolTip">
+                                                            <Setter Property="Background" Value="#fafafa"></Setter>
+                                                        </Style>
+                                                    </DataGrid.Resources>
+
+
+                                                    <DataGrid.ContextMenu>
+                                                        <ContextMenu>
+                                                            <MenuItem Header="View Asset" Click="MenuItem_Click" />
+                                                            <MenuItem Header="Edit Asset" Click="MenuItemEdit" />
+                                                            <MenuItem Header="Delete Asset" Click="MenuItem_Click" />
+                                                        </ContextMenu>
+                                                    </DataGrid.ContextMenu>
+                                                    <DataGrid.Columns>
+
+                                                    </DataGrid.Columns>
+                                                </DataGrid>
+
+                                            </materialDesign:TransitionerSlide>
+                                            <materialDesign:TransitionerSlide>
+                                                <materialDesign:TransitionerSlide.OpeningEffects>
+                                                    <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
+                                                </materialDesign:TransitionerSlide.OpeningEffects>
+                                                <StackPanel>
+                                                    <Grid Margin="16 0 16 0">
+
+                                                        <Button Click="BackToValuesChart" HorizontalAlignment="Left" Width="112" Style="{StaticResource MaterialDesignFlatButton}"    >
+
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}"  VerticalAlignment="Center" Foreground="#BDBDBD" >Back</TextBlock>
+                                                                <iconPacks:PackIconFontAwesome  Foreground="#BDBDBD"  VerticalAlignment="Center" Kind="ArrowLeftSolid" Height="38" Margin="8" />
+                                                            </StackPanel>
+                                                        </Button>
+
+                                                        <Button Click="ExportValuesFromChart" HorizontalAlignment="Right" Width="112" Style="{StaticResource MaterialDesignFlatButton}"    >
+
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}"  VerticalAlignment="Center" Foreground="#BDBDBD" >Export</TextBlock>
+                                                                <iconPacks:PackIconEntypo  Foreground="#BDBDBD"  VerticalAlignment="Center" Kind="Export" Height="38" Margin="8" />
+                                                            </StackPanel>
+                                                        </Button>
+                                                    </Grid>
+                                                    <lvc:PieChart Height="300"   x:Name="ReturnDataGridPieChart"   LegendLocation="Bottom" Margin="16">
+
+                                                        <lvc:PieChart.AxisX >
+                                                            <lvc:Axis  IsEnabled="True" ShowLabels="True" >
+                                                                <lvc:Axis.Separator>
+                                                                    <lvc:Separator StrokeThickness="0" IsEnabled="False">
+
+                                                                    </lvc:Separator>
+                                                                </lvc:Axis.Separator>
+                                                            </lvc:Axis>
+
+                                                        </lvc:PieChart.AxisX>
+                                                        <lvc:PieChart.AxisY>
+                                                            <lvc:Axis IsEnabled="True" ShowLabels="True" >
+
+                                                                <lvc:Axis.Separator>
+                                                                    <lvc:Separator StrokeThickness="0" IsEnabled="False">
+
+                                                                    </lvc:Separator>
+                                                                </lvc:Axis.Separator>
+                                                            </lvc:Axis>
+                                                        </lvc:PieChart.AxisY>
+                                                    </lvc:PieChart>
+
 
                                                 </StackPanel>
-                                                <StackPanel Orientation="Horizontal">
 
-                                                    <TextBlock FontSize="11" FontWeight="Light" Foreground="#FFC107" Margin="4" VerticalAlignment="Top">K</TextBlock>
+                                            </materialDesign:TransitionerSlide>
+                                            <materialDesign:TransitionerSlide>
+                                                <materialDesign:TransitionerSlide.OpeningEffects>
+                                                    <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
+                                                </materialDesign:TransitionerSlide.OpeningEffects>
+                                                <StackPanel Margin="16">
+                                                    <StackPanel Orientation="Horizontal" Margin="8">
 
-                                                    <TextBlock FontSize="32" FontWeight="Light" Foreground="#FFC107" Margin="4" VerticalAlignment="Top">125,000</TextBlock>
+                                                        <Button Width="100" Style="{StaticResource MaterialDesignRaisedButton}" Margin="8" 
+                    HorizontalAlignment="Center">Save
+                                                        </Button>
+                                                        <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="8"   Width="100" VerticalAlignment="Center">
+                                                            Cancle
+                                                        </Button>
+                                                    </StackPanel>
+                                                    <Grid Margin="8">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="0.6*"/>
+                                                            <ColumnDefinition Width="1*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <StackPanel>
+                                                            <TextBox Name="AssetNameTextBox"  Margin="0 8 0 0" materialDesign:HintAssist.Hint="Asset Name"  Width="200" FontSize="18"  HorizontalAlignment="Left"  />
 
-                                                    <TextBlock FontSize="11" FontWeight="Light" Foreground="#F5F5F5" Margin="4" VerticalAlignment="Bottom">11,000 units</TextBlock>
+                                                            <ComboBox materialDesign:HintAssist.Hint="Asset Type" Name="NewPurchaseContentFundCombo"  Width="200" materialDesign:HintAssist.IsFloating="True"
+                                  MaxDropDownHeight="200"
+                                  HorizontalAlignment="Left" Margin="0 8 0 0" SelectedIndex="0">
+
+                                                                <ComboBoxItem>Property</ComboBoxItem>
+                                                                <ComboBoxItem>Govt Bond</ComboBoxItem>
+                                                                <ComboBoxItem>Term Deposit</ComboBoxItem>
+                                                                <ComboBoxItem>Govt Treasury Bill</ComboBoxItem>
+                                                                <ComboBoxItem>Listed Equity</ComboBoxItem>
+                                                                <ComboBoxItem>Unlisted Equity</ComboBoxItem>
+                                                                <ComboBoxItem>CIS</ComboBoxItem>
+                                                                <ComboBoxItem>Other Investments</ComboBoxItem>
+                                                            </ComboBox>
+
+                                                            <DatePicker x:Name="Calendar" Width="182" HorizontalAlignment="Left" Margin="0 16 0 0" 
+                        materialDesign:HintAssist.Hint="Purchase Date"   materialDesign:HintAssist.IsFloating="True" SelectedDate="26 June 2018" 
+                                                           
+                                                         SelectedDateFormat="Long"   >
+                                                            </DatePicker>
+                                                        </StackPanel>
+
+                                                        <Grid Grid.Column="1" Visibility="Collapsed" Name="NewPurchaseContentEquityPane">
+
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBox Name="EquityNameTextBox" Width="182"   HorizontalAlignment="Left"  
+                                                               materialDesign:HintAssist.IsFloating="True"
+                                                              materialDesign:HintAssist.Hint="Equity Name"  />
+                                                                <TextBox Name="SharePriceTextBox"  Margin="16 0 0 0"  Width="182" PreviewTextInput="NumberValidationTextBox" Text="0.00" HorizontalAlignment="Left"  
+                                                               materialDesign:HintAssist.IsFloating="True"
+                                                              materialDesign:HintAssist.Hint="Share Price"  />
+                                                                <TextBox Name="NumberSharesTextBox"  Margin="16 0 0 0"  Width="182" PreviewTextInput="NumberValidationTextBox" Text="0.00" HorizontalAlignment="Left"  
+                                                               materialDesign:HintAssist.IsFloating="True"
+                                                              materialDesign:HintAssist.Hint="Number of Shares"  />
+                                                            </StackPanel>
+                                                        </Grid>
+                                                        <Grid Grid.Column="1" Name="NewPurchaseContentPropertyPane">
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBox  Name="PropertyAddressTextBox" Width="182"   HorizontalAlignment="Left"  
+                                                               materialDesign:HintAssist.IsFloating="True"
+                                                              materialDesign:HintAssist.Hint="Property Address"  />
+                                                                <TextBox  Name="PropertyValueTextBox"  Margin="16 0 0 0"  Width="182" PreviewTextInput="NumberValidationTextBox" Text="0.00" HorizontalAlignment="Left"  
+                                                               materialDesign:HintAssist.IsFloating="True"
+                                                              materialDesign:HintAssist.Hint="Property Value"  />
+                                                            </StackPanel>
+                                                        </Grid>
+                                                        <Grid Grid.Column="1" Visibility="Collapsed" Name="NewPurchaseContentCISPane">
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBox Name="CisNameTextBox" Width="182"   HorizontalAlignment="Left"  
+                                                               materialDesign:HintAssist.IsFloating="True"
+                                                              materialDesign:HintAssist.Hint="Collect Investment Scheme Name"  />
+                                                                <TextBox  Name="UnitPriceTextBox" Margin="16 0 0 0"  Width="182" PreviewTextInput="NumberValidationTextBox" Text="0.00" HorizontalAlignment="Left"  
+                                                               materialDesign:HintAssist.IsFloating="True"
+                                                              materialDesign:HintAssist.Hint="Unit Price"  />
+                                                                <TextBox   Name="NumberUnitsTextBox"  Margin="16 0 0 0"  Width="182" PreviewTextInput="NumberValidationTextBox" Text="0.00" HorizontalAlignment="Left"  
+                                                               materialDesign:HintAssist.IsFloating="True"
+                                                              materialDesign:HintAssist.Hint="Number of Units"  />
+                                                            </StackPanel>
+                                                        </Grid>
+                                                        <Grid Grid.Column="1" Visibility="Collapsed" Name="NewPurchaseContentFixIncomePane">
+                                                            <StackPanel >
+
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <TextBox  Name="NominalValueTextBox"  HorizontalAlignment="Left" Text="0.00"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="182" Height="54" 
+                 >
+                                                                        <materialDesign:HintAssist.Hint>
+                                                                            <StackPanel Orientation="Horizontal" >
+
+                                                                                <TextBlock Margin="4" VerticalAlignment="Center">Nominal Value</TextBlock>
+                                                                                <TextBlock Margin="4" VerticalAlignment="Center" FontWeight="SemiBold">ZMW</TextBlock>
+                                                                            </StackPanel>
+                                                                        </materialDesign:HintAssist.Hint>
+                                                                    </TextBox>
+                                                                    <TextBox Name="DailyInterestTextBox" Margin="16 0 0 0" Text="0.00" HorizontalAlignment="Left"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="182" Height="54" 
+                 >
+                                                                        <materialDesign:HintAssist.Hint>
+                                                                            <StackPanel Orientation="Horizontal" >
+
+                                                                                <TextBlock Margin="4" VerticalAlignment="Center">Daily Interest</TextBlock>
+                                                                                <TextBlock Margin="4" VerticalAlignment="Center" FontWeight="SemiBold">ZMW</TextBlock>
+                                                                            </StackPanel>
+                                                                        </materialDesign:HintAssist.Hint>
+                                                                    </TextBox>
+
+
+                                                                </StackPanel>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <DatePicker x:Name="PurchaseDatePicker" Width="182" HorizontalAlignment="Left" Margin="0 24 0 0" 
+                        materialDesign:HintAssist.Hint="Purchase Date"   materialDesign:HintAssist.IsFloating="True" SelectedDate="26 June 2018" 
+                                                           
+                                                         SelectedDateFormat="Long"   >
+                                                                    </DatePicker>
+
+                                                                    <DatePicker x:Name="MaturityDatePicker" Width="182" HorizontalAlignment="Left" Margin="16 24 0 0" 
+                        materialDesign:HintAssist.Hint="Maturity Date"  materialDesign:HintAssist.IsFloating="True"  SelectedDate="26 June 2019"
+                                                             SelectedDateFormat="Long">
+                                                                    </DatePicker>
+                                                                </StackPanel>
+                                                            </StackPanel>
+
+                                                        </Grid>
+
+                                                    </Grid>
                                                 </StackPanel>
-
-                                                <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="0 8 8 0" HorizontalAlignment="Right" >
-
-                                                    <TextBlock FontSize="11" TextDecorations="Underline" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Foreground="#fafafa"  >View More</TextBlock>
-
-                                                </Button>
-                                            </StackPanel>
-                                        </materialDesign:Card>
-
-                                        <materialDesign:Card Margin="16 4 0 0" Background="#9C27B0"
-                  Foreground="#fafafa"
-                  Padding="8"  Width="300" Height="140">
-                                            <StackPanel>
-
-                                                <TextBlock  FontSize="24" FontWeight="Medium" Foreground="#F5F5F5">Redemptions</TextBlock>
-                                                <StackPanel Orientation="Horizontal">
-
-                                                    <TextBlock FontSize="11" FontWeight="Light" Foreground="#FFC107" Margin="4" VerticalAlignment="Top">K</TextBlock>
-
-                                                    <TextBlock FontSize="32" FontWeight="Light" Foreground="#FFC107" Margin="4" VerticalAlignment="Top">125,000</TextBlock>
-
-                                                    <TextBlock FontSize="11" FontWeight="Light" Foreground="#F5F5F5" Margin="4" VerticalAlignment="Bottom">11,000 units</TextBlock>
-                                                </StackPanel>
+                                            </materialDesign:TransitionerSlide>
+                                        </materialDesign:Transitioner>
 
 
-                                                <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="0 8 8 0" HorizontalAlignment="Right" >
-
-                                                    <TextBlock FontSize="11" TextDecorations="Underline" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Foreground="#fafafa"  >View More</TextBlock>
-
-                                                </Button>
-                                            </StackPanel>
-                                        </materialDesign:Card>
-
-                                        <materialDesign:Card Margin="16 4 0 0" Background="#FFC107"
-                  Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
-                  Padding="8"  Width="300" Height="140">
-                                            <StackPanel>
-
-                                                <TextBlock  FontSize="24" FontWeight="Medium" Foreground="#F5F5F5">Fund Units</TextBlock>
-                                                <StackPanel Orientation="Horizontal">
-
-                                                    <TextBlock FontSize="11" FontWeight="Light" Foreground="#009688" Margin="4" VerticalAlignment="Top">K</TextBlock>
-
-                                                    <TextBlock FontSize="32" FontWeight="Light" Foreground="#009688" Margin="4" VerticalAlignment="Top">125,000</TextBlock>
-
-                                                    <TextBlock FontSize="11" FontWeight="Light" Foreground="#424242" Margin="4" VerticalAlignment="Bottom">11,000 units</TextBlock>
-                                                </StackPanel>
-
-                                                <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="0 8 8 0" HorizontalAlignment="Right" >
-
-                                                    <TextBlock FontSize="11" TextDecorations="Underline" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Foreground="#424242"  >View More</TextBlock>
-
-                                                </Button>
-                                            </StackPanel>
-                                        </materialDesign:Card>
-                                    </StackPanel>
-
-                                </materialDesign:TransitionerSlide>
-
-                                <materialDesign:TransitionerSlide  >
-                                    <materialDesign:TransitionerSlide.OpeningEffects>
-                                        <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
-                                    </materialDesign:TransitionerSlide.OpeningEffects>
-                                    <DataGrid Name="BalancesDataGrid" GridLinesVisibility="None" HeadersVisibility="None" IsReadOnly="True" Margin="32 8 0 0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
-                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
-                                        <DataGrid.LayoutTransform>
-                                            <TransformGroup>
-                                                <RotateTransform Angle="90"/>
-                                                <MatrixTransform Matrix="-1,0,0,1,0,0"/>
-                                            </TransformGroup>
-                                        </DataGrid.LayoutTransform>
+                                    </Grid>
+                                    <DataGrid  SelectionUnit="FullRow" GridLinesVisibility="None" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Name="IncomeStatementDataGrid"  HorizontalAlignment="Left" Grid.Column="1"   IsReadOnly='True' CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
+                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" Background="#ffffff" >
                                         <DataGrid.Resources>
                                             <Style TargetType="ToolTip">
                                                 <Setter Property="Background" Value="#37474F"></Setter>
                                             </Style>
                                             <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
-                                                <Setter Property="LayoutTransform">
-                                                    <Setter.Value>
-                                                        <TransformGroup>
-                                                            <RotateTransform Angle="-90"/>
-                                                            <ScaleTransform ScaleX="1" ScaleY="-1" />
-                                                        </TransformGroup>
-                                                    </Setter.Value>
-                                                </Setter>
+
                                                 <Setter Property="BorderBrush" Value="Transparent"></Setter>
                                                 <Style.Triggers>
 
@@ -973,48 +961,222 @@
                                             </Style>
                                         </DataGrid.Resources>
                                         <DataGrid.Columns>
+                                            <DataGridTemplateColumn>
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
 
-                                            <DataGridTemplateColumn >
-                                                <DataGridTemplateColumn.CellTemplate >
-                                                    <DataTemplate  >
-                                                        <StackPanel>
-                                                            <TextBlock FontSize="11" FontWeight="Light"  Foreground="#212121" Grid.Column="0" Text="{Binding Name}" ></TextBlock>
 
-                                                            <StackPanel Orientation="Horizontal">
-                                                                <TextBlock FontSize="24" FontWeight="Light" VerticalAlignment="Bottom"   Foreground="#616161" Grid.Column="1"  Text="{Binding Value}" ></TextBlock>
-                                                                <TextBlock FontSize="11" FontWeight="Light" VerticalAlignment="Bottom" Margin="4 0 0 0" Foreground="#616161" Grid.Column="2"  Text="{Binding SecondaryValue}" ></TextBlock>
+                                                        <Button  Click="SelectStatement" materialDesign:ShadowAssist.ShadowDepth="{Binding SecondaryValue, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Margin="0 8 8 0" HorizontalAlignment="Right" >
 
-                                                            </StackPanel>
-                                                        </StackPanel>
+                                                            <TextBlock  Text="{Binding Name}"  TextDecorations="Underline" Style="{StaticResource MaterialDesignCaptionTextBlock}"   ></TextBlock>
+
+                                                        </Button>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn>
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
 
+                                                        <TextBlock  Text="{Binding Value}"  VerticalAlignment="Center"  Style="{StaticResource MaterialDesignCaptionTextBlock}"   ></TextBlock>
+
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
-                                </materialDesign:TransitionerSlide>
-                            </materialDesign:Transitioner>
-                        </Grid>
+                                </Grid>
+                                <materialDesign:Transitioner Name="BalancesTransitioner"   Grid.Row="1" SelectedIndex="0" >
+                                    <materialDesign:TransitionerSlide>
+                                        <materialDesign:TransitionerSlide.OpeningEffects>
+                                            <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
+                                        </materialDesign:TransitionerSlide.OpeningEffects>
+                                        <StackPanel Orientation="Horizontal">
 
-                    </materialDesign:TransitionerSlide>
-                </materialDesign:Transitioner>
-      
+                                            <materialDesign:Card Margin="16 4 0 0" Background="#E91E63"
+                  Foreground="#fafafa"
+                  Padding="8" Width="300" Height="140">
+                                                <StackPanel>
+
+                                                    <StackPanel Orientation="Horizontal">
+
+                                                        <TextBlock  FontSize="24" FontWeight="Medium" Foreground="#E0E0E0">Issues</TextBlock>
+
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+
+                                                        <TextBlock Name="IssuesCurrency" FontSize="11" FontWeight="Light" Foreground="#FFC107" Margin="4" VerticalAlignment="Top">K</TextBlock>
+
+                                                        <TextBlock Name="IssuesAmount" FontSize="32" FontWeight="Light" Foreground="#FFC107" Margin="4" VerticalAlignment="Top">0</TextBlock>
+
+                                                        <TextBlock Name="IssuesUnits" FontSize="11" FontWeight="Light" Foreground="#F5F5F5" Margin="4" VerticalAlignment="Bottom">0 units</TextBlock>
+                                                    </StackPanel>
+
+                                                    <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="0 8 8 0" HorizontalAlignment="Right" Visibility="Collapsed" >
+
+                                                        <TextBlock FontSize="11" TextDecorations="Underline" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Foreground="#fafafa"  >View More</TextBlock>
+
+                                                    </Button>
+                                                </StackPanel>
+                                            </materialDesign:Card>
+
+                                            <materialDesign:Card Margin="16 4 0 0" Background="#9C27B0"
+                  Foreground="#fafafa"
+                  Padding="8"  Width="300" Height="140">
+                                                <StackPanel>
+
+                                                    <TextBlock  FontSize="24" FontWeight="Medium" Foreground="#F5F5F5">Redemptions</TextBlock>
+                                                    <StackPanel Orientation="Horizontal">
+
+                                                        <TextBlock  Name="RedemptionsCurrency" FontSize="11" FontWeight="Light" Foreground="#FFC107" Margin="4" VerticalAlignment="Top">K</TextBlock>
+
+                                                        <TextBlock  Name="RedemptionsAmount" FontSize="32" FontWeight="Light" Foreground="#FFC107" Margin="4" VerticalAlignment="Top">0</TextBlock>
+
+                                                        <TextBlock Name="RedemptionsUnits"  FontSize="11" FontWeight="Light" Foreground="#F5F5F5" Margin="4" VerticalAlignment="Bottom">0 units</TextBlock>
+                                                    </StackPanel>
+
+
+                                                    <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="0 8 8 0" HorizontalAlignment="Right"  Visibility="Collapsed" >
+
+                                                        <TextBlock FontSize="11" TextDecorations="Underline" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Foreground="#fafafa"  >View More</TextBlock>
+
+                                                    </Button>
+                                                </StackPanel>
+                                            </materialDesign:Card>
+
+                                            <materialDesign:Card Margin="16 4 0 0" Background="#FFC107"
+                  Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+                  Padding="8"  Width="300" Height="140">
+                                                <StackPanel>
+
+                                                    <TextBlock  FontSize="24" FontWeight="Medium" Foreground="#F5F5F5">Fund Size</TextBlock>
+                                                    <StackPanel Orientation="Horizontal">
+
+                                                        <TextBlock FontSize="11" FontWeight="Light" Foreground="#009688" Margin="4" VerticalAlignment="Top">Unit Price</TextBlock>
+
+                                                        <TextBlock Name="FundSizeUnitPrice" FontSize="32" FontWeight="Light" Foreground="#009688" Margin="4" VerticalAlignment="Top">0</TextBlock>
+
+                                                        <TextBlock Name="FundSizeTotalUnits" FontSize="11" FontWeight="Light" Foreground="#424242" Margin="4" VerticalAlignment="Bottom">0 units</TextBlock>
+                                                    </StackPanel>
+
+                                                    <Button  Visibility="Collapsed" Style="{StaticResource MaterialDesignFlatButton}" Margin="0 8 8 0" HorizontalAlignment="Right" >
+
+                                                        <TextBlock FontSize="11" TextDecorations="Underline" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Foreground="#424242"  >View More</TextBlock>
+
+                                                    </Button>
+                                                </StackPanel>
+                                            </materialDesign:Card>
+                                        </StackPanel>
+
+                                    </materialDesign:TransitionerSlide>
+
+                                    <materialDesign:TransitionerSlide  >
+                                        <materialDesign:TransitionerSlide.OpeningEffects>
+                                            <materialDesign:TransitionEffect Kind="FadeIn" Duration="0:0:0.6" />
+                                        </materialDesign:TransitionerSlide.OpeningEffects>
+                                        <DataGrid Name="BalancesDataGrid" GridLinesVisibility="None" HeadersVisibility="None" IsReadOnly="True" Margin="32 8 0 0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False"
+                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+                                            <DataGrid.LayoutTransform>
+                                                <TransformGroup>
+                                                    <RotateTransform Angle="90"/>
+                                                    <MatrixTransform Matrix="-1,0,0,1,0,0"/>
+                                                </TransformGroup>
+                                            </DataGrid.LayoutTransform>
+                                            <DataGrid.Resources>
+                                                <Style TargetType="ToolTip">
+                                                    <Setter Property="Background" Value="#37474F"></Setter>
+                                                </Style>
+                                                <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                                                    <Setter Property="LayoutTransform">
+                                                        <Setter.Value>
+                                                            <TransformGroup>
+                                                                <RotateTransform Angle="-90"/>
+                                                                <ScaleTransform ScaleX="1" ScaleY="-1" />
+                                                            </TransformGroup>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                    <Style.Triggers>
+
+                                                        <Trigger Property="IsSelected" Value="True">
+                                                            <Setter Property="Background" Value="Transparent"></Setter>
+                                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                        </Trigger>
+                                                        <Trigger Property="IsFocused" Value="True">
+                                                            <Setter Property="Background" Value="Transparent"></Setter>
+                                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                        </Trigger>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="Transparent"></Setter>
+                                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                                <Style TargetType="{x:Type DataGridRow}">
+
+                                                    <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                    <Style.Triggers>
+
+                                                        <Trigger Property="IsSelected" Value="True">
+                                                            <Setter Property="Background" Value="Transparent"></Setter>
+                                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                        </Trigger>
+                                                        <Trigger Property="IsFocused" Value="True">
+                                                            <Setter Property="Background" Value="Transparent"></Setter>
+                                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                        </Trigger>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="Transparent"></Setter>
+                                                            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </DataGrid.Resources>
+                                            <DataGrid.Columns>
+
+                                                <DataGridTemplateColumn >
+                                                    <DataGridTemplateColumn.CellTemplate >
+                                                        <DataTemplate  >
+                                                            <StackPanel>
+                                                                <TextBlock FontSize="11" FontWeight="Light"  Foreground="#212121" Grid.Column="0" Text="{Binding Name}" ></TextBlock>
+
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <TextBlock FontSize="24" FontWeight="Light" VerticalAlignment="Bottom"   Foreground="#616161" Grid.Column="1"  Text="{Binding Value}" ></TextBlock>
+                                                                    <TextBlock FontSize="11" FontWeight="Light" VerticalAlignment="Bottom" Margin="4 0 0 0" Foreground="#616161" Grid.Column="2"  Text="{Binding SecondaryValue}" ></TextBlock>
+
+                                                                </StackPanel>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </materialDesign:TransitionerSlide>
+                                </materialDesign:Transitioner>
+                            </Grid>
+
+                        </materialDesign:TransitionerSlide>
+                    </materialDesign:Transitioner>
+
+                </Grid>
+
+            </Grid>
+            <Grid Name="EmptyPane" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" >
+
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="320">
+
+                    <TextBlock FontSize="24" VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Normal" Foreground="#9E9E9E">Sorry, no securities found in Fund :(</TextBlock>
+                    <Image Source="/Resources/empty_state.png" VerticalAlignment="Center" HorizontalAlignment="Center" Height="131" Width="141" Margin="16 16 0 0"></Image>
+                </StackPanel>
+
+                <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Margin="0 0 0 96" Width="180"
+                    HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="PurchaseSecurity">
+                    Add Security
+                </Button>
             </Grid>
 
         </Grid>
-        <Grid Name="EmptyPane" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" >
 
-            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="320">
-
-                <TextBlock FontSize="24" VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Normal" Foreground="#9E9E9E">Sorry, no securities found in Fund :(</TextBlock>
-                <Image Source="/Resources/empty_state.png" VerticalAlignment="Center" HorizontalAlignment="Center" Height="131" Width="141" Margin="16 16 0 0"></Image>
-            </StackPanel>
-
-            <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Margin="0 0 0 96" Width="180"
-                    HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="PurchaseSecurity">
-                Add Security
-            </Button>
-        </Grid>
-        
-    </Grid>
+    </StackPanel>
  </UserControl>
