@@ -38,5 +38,6 @@ namespace ECR_System_v2.Data
         public String ChangeDate { set; get; }
 
         public Brush Color { set; get; }
+
     }
 }

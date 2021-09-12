@@ -16,5 +16,6 @@ namespace ECR_System_v2.Data
         public String Date { set; get; }
         public String PercentageChange { set; get; }
         public String ChangeDate { set; get; }
+
     }
 }

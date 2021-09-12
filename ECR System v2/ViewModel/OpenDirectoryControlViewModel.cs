@@ -8,6 +8,7 @@ namespace ECR_System_v2.ViewModel
 {
     public class OpenDirectoryControlViewModel : FileSystemControlViewModel
     {
+
         public OpenDirectoryControlViewModel() : base() { }
     }
 }

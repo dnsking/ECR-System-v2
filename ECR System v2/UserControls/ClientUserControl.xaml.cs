@@ -249,6 +249,8 @@ namespace ECR_System_v2.UserControls
                 long start = DateUtils.TicksToMillis(DateTime.Now.Ticks);
                   long end = DateUtils.TicksToMillis(DateTime.Now.AddMonths(-3).Ticks);
 
+
+
                 double totalAmount = 0;
                 foreach (var item in mFundUnitTrans)
                     totalAmount += item.Amount;

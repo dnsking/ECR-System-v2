@@ -16,5 +16,6 @@ namespace ECR_System_v2.Data
         public String Date { set; get; }
         public Double Amount { set; get; }
         public String AmountFormated { get { return StringUtils.Format(Amount); } }
+
     }
 }

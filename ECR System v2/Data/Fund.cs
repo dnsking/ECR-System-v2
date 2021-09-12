@@ -23,5 +23,6 @@ namespace ECR_System_v2.Data
 
         [JsonProperty("UnitPriceFloating")]
         public String UnitPriceFloating { set; get; }
+
     }
 }

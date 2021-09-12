@@ -14,5 +14,6 @@ namespace ECR_System_v2.Data
         public String Auto { set; get; }
         public String AutoRatio { set; get; }
         public String AutoEvery { set; get; }
+
     }
 }

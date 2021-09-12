@@ -741,6 +741,7 @@ namespace ECR_System_v2.IO
 
                 }
 
+
                 String[] equitColms = new String[] {  "Stock","No. of shares","Monthly Price","Opening Value"
                     ,"Sold/Purchased","Dividens Applicable",
                 "Monthly Change","Month end prices","Closing value","Portfolio performance"};

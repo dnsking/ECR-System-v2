@@ -25,5 +25,6 @@ namespace ECR_System_v2.Data
         public Double Value { set; get; }
         public Double DailyInterest { set; get; }
         public Double MaturityDate { set; get; }
+
     }
 }

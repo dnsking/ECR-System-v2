@@ -104,6 +104,7 @@ namespace ECR_System_v2.Utils
             }
             return (((tSpan.Days / 7) * 5) + Math.Min((dowEnd + 6) - Math.Min(dowStart, 6), 5));
 
+
         }
         public static int DaysInMonth(DateTime date) {
 

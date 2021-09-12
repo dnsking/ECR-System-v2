@@ -22,6 +22,7 @@ namespace ECR_System_v2.Utils
                     , nameof(windowSource));
             }
 
+
             source.AddHook(WndProc);
 
             // get window handle for interop

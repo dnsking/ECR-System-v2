@@ -12,6 +12,7 @@ namespace ECR_System_v2.ViewModel
     {
         private List<GridListItem> m_items;
 
+
         public List<GridListItem> Items
         {
             get

@@ -34,6 +34,7 @@ namespace ECR_System_v2
             public static String CISType = "CIS";
             public static String OtherInvestmentsType = "Other Investments";
             public static String All = "*";
+
         }
         public static class ZicaDefaults
         {

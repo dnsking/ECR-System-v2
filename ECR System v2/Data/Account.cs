@@ -12,5 +12,6 @@ namespace ECR_System_v2.Data
         public String Password { set; get; }
         public String Type { set; get; }
         public String Fund { set; get; }
+
     }
 }

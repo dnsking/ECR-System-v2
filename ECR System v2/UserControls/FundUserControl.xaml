@@ -19,6 +19,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="#ffffff"
         FontFamily="{DynamicResource MaterialDesignFont}">
+    
     <StackPanel>
         <DatePicker Name="DateSelector" ></DatePicker>
         <Grid>

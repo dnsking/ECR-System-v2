@@ -9,6 +9,7 @@ namespace ECR_System_v2.ViewModel
 {
     public class ViewModel : INotifyPropertyChanged
     {
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ViewModel() { }

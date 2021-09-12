@@ -11,5 +11,6 @@ namespace ECR_System_v2.Data
         public String User { set; get; }
         public String Key { set; get; }
         public String Date { set; get; }
+
     }
 }

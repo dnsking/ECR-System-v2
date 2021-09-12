@@ -21,5 +21,6 @@ namespace ECR_System_v2.Data
         public String ClosingBalanceFormated { get { return StringUtils.Format(ClosingBalance); } }
         public String PaymentsFormated { get { return StringUtils.Format(Payments); } }
         public String ProvisionsFormated { get { return StringUtils.Format(Provisions); } }
+
     }
 }

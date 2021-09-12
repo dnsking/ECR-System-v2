@@ -24,6 +24,7 @@
         Background="#ffffff"
         FontFamily="{DynamicResource MaterialDesignFont}"
          WindowState="Maximized"
+        
          Icon="Resources/icon.ico">
     <Window.Resources>
         <ResourceDictionary>

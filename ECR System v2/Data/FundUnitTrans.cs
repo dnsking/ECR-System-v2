@@ -20,5 +20,6 @@ namespace ECR_System_v2.Data
 
         public String TransactionTypeFormated {  get{ return App.TransactionTypes[TransactionType]; } }
         public String AmountFormated { get { return StringUtils.Format(Amount); } }
+
     }
 }

@@ -18,6 +18,7 @@ namespace ECR_System_v2.Utils
         }
         public static String KeepOnlyLetters(String str)
         {
+
             return Regex.Replace(str,"[^A-Za-z]+", "");
         }
 

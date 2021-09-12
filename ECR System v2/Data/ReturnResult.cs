@@ -11,4 +11,5 @@ namespace ECR_System_v2.Data
         public int ReponseCode { set; get; }
         public String ReponseValue { set; get; }
     }
+
 }

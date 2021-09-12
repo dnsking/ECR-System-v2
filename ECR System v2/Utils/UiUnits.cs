@@ -20,6 +20,7 @@ namespace ECR_System_v2.Utils
         public static void ShowNotification(String message, NotificationType notitype)
         {
             var notificationManager = new NotificationManager();
+
             notificationManager.Show(new NotificationContent
             {
                 Title = "ECR System",

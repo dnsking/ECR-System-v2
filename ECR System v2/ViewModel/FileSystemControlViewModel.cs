@@ -12,6 +12,7 @@ namespace ECR_System_v2.ViewModel
         private bool m_showHiddenFilesAndDirectories;
         private bool m_showSystemFilesAndDirectories;
 
+
         public string SelectedAction
         {
             get

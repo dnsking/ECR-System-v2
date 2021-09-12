@@ -14,6 +14,7 @@ namespace ECR_System_v2.Utils
             String path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile) + "/ECR";
 
 
+
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);

@@ -11,6 +11,7 @@ namespace ECR_System_v2.ViewModel
 {
     public class StepperViewModel : ViewModel
     {
+
         private StepperLayout m_layout;
         private bool m_isLinear;
 

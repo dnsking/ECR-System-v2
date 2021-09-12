@@ -12,6 +12,7 @@ namespace ECR_System_v2.Utils
     {
         public static string GetLocalIPAddress()
         {
+
             var host = Dns.GetHostEntry(Dns.GetHostName());
             foreach (var ip in host.AddressList)
             {

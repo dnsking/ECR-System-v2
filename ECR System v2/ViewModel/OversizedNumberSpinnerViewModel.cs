@@ -12,6 +12,7 @@ namespace ECR_System_v2.ViewModel
         private int m_min;
         private int m_max;
 
+
         public int Value
         {
             get

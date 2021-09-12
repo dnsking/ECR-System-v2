@@ -30,5 +30,6 @@ namespace ECR_System_v2.Data
         public String AccuredInterestFormated { get { return StringUtils.Format(AccuredInterest); } }
         public String DateFormated { get { return new DateTime(DateUtils.MillisToTicks((long)TransactionDate)).ToString("dd MMM yyyy"); } }
         public String MaturityDateFormated { get { return new DateTime(DateUtils.MillisToTicks((long)MaturityDate)).ToString("dd MMM yyyy"); } }
+
     }
 }

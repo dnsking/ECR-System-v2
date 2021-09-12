@@ -18,6 +18,7 @@ namespace ECR_System_v2.Utils
         public static double round(double value, int places)
         {
 
+
             long factor = (long)Math.Pow(10, places);
             value = value * factor;
             double tmp = Math.Round(value);

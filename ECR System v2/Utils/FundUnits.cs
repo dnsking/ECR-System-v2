@@ -17,6 +17,7 @@ namespace ECR_System_v2.Utils
             //  var mNow = DateUtils.TicksToMillis(DateTime.Now.Ticks);
 
 
+
             Double[] mValues = await mDataLoader.fetchSecuritiesPresentValueRange(fundName, mNow, mFirstDayOfQuater, 7) as Double[];
 
             var mFundUnitIssuesTrans = await mDataLoader.fetchFundUnitTransItems(fundName, mNow, App.AllClients, App.Purchase) as FundUnitTrans[];

@@ -8,6 +8,7 @@ namespace ECR_System_v2.ViewModel
 {
     public class FileSystemDialogViewModel : FileSystemControlViewModel
     {
+
         public FileSystemDialogViewModel() : base() { }
     }
 }

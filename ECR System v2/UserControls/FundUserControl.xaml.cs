@@ -460,6 +460,7 @@ namespace ECR_System_v2.UserControls
             
 
 
+
             if (index == (IncomeStatementDataGrid.Items.Count-1))
             {
                // BalancesTransitioner.SelectedIndex = 0;

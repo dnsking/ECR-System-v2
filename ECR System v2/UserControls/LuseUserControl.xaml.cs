@@ -119,6 +119,7 @@ namespace ECR_System_v2.UserControls
             hasHistory = true;
             GoBackBtn.IsEnabled = true;
             GoForwardBtn.IsEnabled = false;
+
         }
         private async void initChartValue(String equity,String fullName, int days=7)
         {

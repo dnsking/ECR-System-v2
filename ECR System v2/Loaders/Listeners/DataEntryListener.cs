@@ -11,5 +11,6 @@ namespace ECR_System_v2.Loaders.Listeners
         void SingleEntry(Type mType,String json);
         void MultipleEntry(Type mType, String json);
         void Deletion(Type mType, String json);
+
     }
 }
