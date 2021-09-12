@@ -44,7 +44,7 @@ namespace ECR_System_v2.UserControls
             InitializeComponent();
             DateSelector.SelectedDateChanged += (a, b) => {
                 mCurrentDate = DateSelector.SelectedDate.Value; ;
-                load(Fund mFund)
+                load(mFund);
             };
         }
         private double issuesTransAmount;
